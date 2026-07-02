@@ -6,6 +6,6 @@ import { environment } from '../../environments/environment'
 @Injectable({
   providedIn: 'root',
 })
-  export class TestService {
-    supabase = createClient(environment.apiUrl, environment.apiKey);
-  }
+export class Contact {
+   supabase = createClient(environment.apiUrl, environment.apiKey);
+}
