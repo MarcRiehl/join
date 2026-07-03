@@ -8,7 +8,7 @@
 --- contacts "component"
 ---- contact-list "component"
 ---- contact-details "component"
------ contact new / edit dialog "component"
+----- contact-dialog new / edit dialog "component"
 --- help "component"
 --- privacy policy "component"
 --- legal notice "component"
