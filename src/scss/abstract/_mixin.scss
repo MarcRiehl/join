@@ -21,13 +21,13 @@
   }
 }
 
-@mixin desktop {
+@mixin desktop-s {
   @media (min-width: 881px) and (max-width: 1280px) {
     @content;
   }
 }
 
-@mixin desktop-l {
+@mixin desktop-md {
   @media (min-width: 1281px) and (max-width: 1440px) {
     @content;
   }
