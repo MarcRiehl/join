@@ -1,0 +1,30 @@
+- app
+-- pages
+--- home / log in "component"
+--- sign up "component"
+--- summary "component"
+--- add-task "component"
+--- board "component"
+--- contacts "component"
+---- contact-list "component"
+---- contact-details "component"
+----- contact new / edit dialog "component"
+--- help "component"
+--- privacy policy "component"
+--- legal notice "component"
+
+-- router 
+
+-- layout
+--- header "component"
+--- navbar "component"
+
+-- components
+--- user bubble "component"
+
+-- services
+--- contact "service"
+--- task "service"
+
+-- interfaces
+--- contacts
