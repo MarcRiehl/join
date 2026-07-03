@@ -17,6 +17,25 @@ html {
 }
 
 
+.layout {
+    display: flex;
+    height: 100dvh;
+
+    @include mobile {
+        flex-direction: column;
+    }
+}
+
+.wrapper-header {
+    height: 96px;
+    width: 100%;
+    background: white;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+        @include mobile {
+        order: 0; 
+    }
+}
+
 .wrapper-navbar {
     flex: 0 0 232px;
     background-color: $blue-color;
@@ -28,23 +47,6 @@ html {
     }
 }
 
-.layout {
-    display: flex;
-    height: 100dvh;
-
-    @include mobile {
-        flex-direction: column;
-    }
-}
-
-
-.wrapper-header {
-    height: 96px;
-    width: 100%;
-    background: white;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-}
-
 .main {
     flex: 1;
     min-width: 0;
@@ -52,7 +54,7 @@ html {
     flex-direction: column;
 
     @include mobile {
-       order: 1;
+        order: 1;
         flex: 1;
     }
 }

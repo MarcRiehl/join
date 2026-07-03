@@ -5,6 +5,9 @@ import { Summary } from './pages/summary/summary';
 import { Board } from './pages/board/board';
 import { AddTask } from './pages/add-task/add-task';
 import { Contacts } from './pages/contacts/contacts';
+import { PrivacyPolicy } from './pages/privacy-policy/privacy-policy';
+import { LegalNotice } from './pages/legal-notice/legal-notice';
+import { Help } from './pages/help/help';
 
 export const routes: Routes = [
     {
@@ -37,6 +40,21 @@ export const routes: Routes = [
                 path: 'contacts',
                 component: Contacts,
                 title: 'Contacts'
+            },
+            {
+                path: 'privacy-policy',
+                component: PrivacyPolicy,
+                title: 'Privacy Policy'
+            },
+            {
+                path: 'legal-notice',
+                component: LegalNotice,
+                title: 'Legal Notice'
+            },
+            {
+                path: 'help',
+                component: Help,
+                title: 'Help'
             },
             {
                 path: '',

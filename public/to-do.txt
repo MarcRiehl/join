@@ -13,9 +13,10 @@
 --- privacy policy "component"
 --- legal notice "component"
 
--- router 
+-- router // nicht mehr benötigt
 
 -- layout
+--- mainpage "component" = new
 --- header "component"
 --- navbar "component"
 
