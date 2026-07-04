@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
 
+import { environment } from '../../../environments/environment';
+
+// import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class SupabaseService {
-  supabaseUrl = 'https://awizaddljgzacbpunfhx.supabase.co';
-  supabaseKey = 'sb_publishable_fQtC-jov7Yp1ouBIZaWweg_Ev2AADXG';
-  supabase = createClient(this.supabaseUrl, this.supabaseKey);
+  supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
 }
 
 // Verbindung zur Datenbank herstellen

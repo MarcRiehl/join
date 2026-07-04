@@ -1,1 +1,11 @@
 <p>contacts works!</p>
+@for (contact of contacts(); track contact) {
+  <p>{{ contact.id }}</p>
+  <p>{{ contact.name }}</p>
+  <p>{{ contact.email }}</p>
+  <p>{{ contact.phone }}</p>
+}
+
+@for (contact of contacts(); track contact.id) {
+  <pre>{{ contact | json }}</pre>
+}
