@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
+import { ContactService } from '../../services/contacts/contact.service';
 
 @Component({
   selector: 'app-contacts',
@@ -6,4 +8,10 @@ import { Component } from '@angular/core';
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
-export class Contacts {}
+export class Contacts {
+  private contactService = inject(ContactService);
+
+  ngOnInit() {
+    this.contactService.getContacts();
+  }
+}

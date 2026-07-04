@@ -1,9 +1,13 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+
+import { SupabaseService } from '../supabase/supabase.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
+  private supabase = inject(SupabaseService);
+
   // ----------------------------
   // TASKS
   // ----------------------------

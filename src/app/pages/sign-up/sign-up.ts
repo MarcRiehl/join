@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -6,4 +8,6 @@ import { Component } from '@angular/core';
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss',
 })
-export class SignUp {}
+export class SignUp {
+  private authService = inject(AuthService);
+}
