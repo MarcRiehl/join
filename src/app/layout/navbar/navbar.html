@@ -1,1 +1,30 @@
-<p>navbar works!</p>
+<nav class="navbar" aria-label="Main navigation">
+  <img class="navbar-logo" src="assets/img/logo/logo-join-white.svg" alt="Join-logo" />
+
+  <div class="navbar-main">
+    @for (item of navItems; track item.route) {
+      <a
+        class="navbar-link"
+        [routerLink]="item.route"
+        routerLinkActive="navbar-link-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <span class="navbar-icon-wrapper" aria-hidden="true">
+          <img class="navbar-icon navbar-icon-normal" [src]="item.icon" alt="" />
+
+          <img class="navbar-icon navbar-icon-active" [src]="item.activeIcon" alt="" />
+        </span>
+
+        <span class="navbar-label">{{ item.label }}</span>
+      </a>
+    }
+  </div>
+
+  <div class="navbar-footer">
+    @for (link of footerLinks; track link.route) {
+      <a class="navbar-footer-link" [routerLink]="link.route">
+        {{ link.label }}
+      </a>
+    }
+  </div>
+</nav>
