@@ -10,7 +10,7 @@ import { ContactService } from '../../services/contacts/contact.service';
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
-export class Contacts {
+export class Contacts implements OnInit {
   private contactService = inject(ContactService);
 
   contacts = signal<ContactInterface[]>([]);
