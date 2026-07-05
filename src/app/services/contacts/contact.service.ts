@@ -10,14 +10,22 @@ export class ContactService {
   private supabaseService = inject(SupabaseService);
 
   async getContacts(): Promise<ContactInterface[]> {
-    const { data, error } = await this.supabaseService.supabase.from('user_join').select('*');
+    const { data, error } = await this.supabaseService.supabase
+      .from('user_join')
+      .select('*')
+      .order('user_lastname');
     console.log('Contacts:', data);
     console.log('Error:', error);
     if (error) {
-      console.log('Contacts could not be loaded');
-      return [];
+      throw error;
     }
-    return data;
+    return data.map((contact) => ({
+      id: contact.id,
+      firstname: contact.user_firstname,
+      lastname: contact.user_lastname,
+      email: contact.user_mail,
+      phone: contact.user_phone,
+    }));
   }
 }
 
