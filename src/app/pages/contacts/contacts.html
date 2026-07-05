@@ -1,6 +1,3 @@
 <p>contacts works!</p>
-@for (contact of contacts(); track contact) {}
-
-@for (contact of contacts(); track contact.id) {
-  <pre>{{ contact | json }}</pre>
-}
+<app-contact-list [contacts]="contacts()" (contactSelected)="selectContact($event)">
+</app-contact-list>

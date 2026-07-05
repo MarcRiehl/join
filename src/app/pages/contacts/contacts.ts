@@ -3,10 +3,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 
 import { Contact as ContactInterface } from '../../interfaces/contacts/contact';
 import { ContactService } from '../../services/contacts/contact.service';
+import { ContactList } from './contact-list/contact-list';
 
 @Component({
   selector: 'app-contacts',
-  imports: [JsonPipe],
+  imports: [JsonPipe, ContactList],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
@@ -14,6 +15,7 @@ export class Contacts implements OnInit {
   private contactService = inject(ContactService);
 
   contacts = signal<ContactInterface[]>([]);
+  selectedContact = signal<ContactInterface | null>(null);
 
   // 1. Daten vom Service holen.
   // 2. Im Signal speichern.
@@ -21,6 +23,11 @@ export class Contacts implements OnInit {
   async ngOnInit() {
     const contactData = await this.contactService.getContacts(); // Kontakte in einer Variablen speichern
     this.contacts.set(contactData); // Kontakte in das Signal speichern
+  }
+
+  // empfängt den Output von ContactList und speichert ihn in selectedContact
+  selectContact(contact: ContactInterface) {
+    this.selectedContact.set(contact);
   }
 }
 
