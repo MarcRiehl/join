@@ -1,0 +1,157 @@
+@use '../../../scss/abstract' as styles;
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.navbar {
+  width: 100%;
+  height: 100%;
+  background-color: styles.$blue-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 64px 0;
+  box-sizing: border-box;
+}
+
+.navbar-logo {
+  width: 100px;
+  height: 122px;
+  object-fit: contain;
+}
+
+.navbar-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.navbar-link {
+  width: 100%;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 53px;
+  box-sizing: border-box;
+  color: #cdcdcd;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 120%;
+  cursor: pointer;
+  transition:
+    color 100ms ease,
+    background-color 100ms ease;
+}
+
+.navbar-icon-wrapper {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.navbar-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.navbar-icon-active {
+  display: none;
+}
+
+.navbar-link-active {
+  background-color: styles.$dark-blue-color;
+  color: #ffffff;
+}
+
+.navbar-link-active .navbar-icon-normal,
+.navbar-link:hover .navbar-icon-normal,
+.navbar-link:focus-visible .navbar-icon-normal {
+  display: none;
+}
+
+.navbar-link-active .navbar-icon-active,
+.navbar-link:hover .navbar-icon-active,
+.navbar-link:focus-visible .navbar-icon-active {
+  display: block;
+}
+
+.navbar-link:hover,
+.navbar-link:focus-visible {
+  color: #ffffff;
+}
+
+.navbar-link:focus-visible,
+.navbar-footer-link:focus-visible {
+  outline: 2px solid #29abe2;
+  outline-offset: 2px;
+}
+
+.navbar-label {
+  white-space: nowrap;
+}
+
+.navbar-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.navbar-footer-link {
+  color: #a8a8a8;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 120%;
+  cursor: pointer;
+}
+
+@include styles.mobile {
+  .navbar {
+    height: 80px;
+    padding: 0 clamp(6px, 3vw, 12px);
+    justify-content: center;
+  }
+
+  .navbar-logo,
+  .navbar-footer {
+    display: none;
+  }
+
+  .navbar-main {
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: center;
+    gap: clamp(0px, 2vw, 8px);
+  }
+
+  .navbar-link {
+    width: min(86px, 100%);
+    height: 76px;
+    min-height: 0;
+    justify-self: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: 15px 0;
+    font-size: clamp(14px, 3.75vw, 16px);
+    border-radius: 8px;
+  }
+
+  .navbar-icon-wrapper {
+    width: clamp(22px, 5.6vw, 24px);
+    height: clamp(22px, 5.6vw, 24px);
+  }
+}
