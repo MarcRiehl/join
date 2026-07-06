@@ -25,7 +25,15 @@ export class ContactService {
       lastname: contact.user_lastname,
       email: contact.user_mail,
       phone: contact.user_phone,
+      initials: this.getInitials(contact.user_firstname, contact.user_lastname),
     }));
+  }
+
+  getInitials(firstName: string, lastName: string) {
+    const firstLetter = firstName[0].toUpperCase();
+    const secondLetter = lastName[0].toUpperCase();
+
+    return firstLetter + secondLetter;
   }
 }
 
