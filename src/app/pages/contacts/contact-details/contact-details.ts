@@ -17,5 +17,5 @@ export class ContactDetails {
     this.removeSelectedContact.emit();
   }
 
-  // button -> (click)="onRemoveSelectedcontact()"
+  // für den delete button in der Detail View -> (click)="onRemoveSelectedcontact()"
 }

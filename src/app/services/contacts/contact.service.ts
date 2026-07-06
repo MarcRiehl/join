@@ -59,18 +59,3 @@ export class ContactService {
     return this.bubbleColors[index];
   }
 }
-
-// Aufgaben des ContactService
-//  Kontakte laden
-// ├── Kontakt erstellen
-// ├── Kontakt bearbeiten
-// └── Kontakt löschen
-
-// allgemeine Syntax für die Kommunikation mit Supabase
-//  async functionName(): Promise<Rückgabetyp> {
-
-// ...
-
-// return etwas;
-
-// }
