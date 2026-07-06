@@ -1,5 +1,11 @@
 <p>contact-details works!</p>
 
+@if (contact()) {
+  <h2>{{ contact()?.firstname }} {{ contact()?.lastname }}</h2>
+  <p>{{ contact()?.email }}</p>
+  <p>{{ contact()?.phone }}</p>
+} @else {}
+
 <!-- Ablauf
 
 1. Contacts lädt alle Kontakte.

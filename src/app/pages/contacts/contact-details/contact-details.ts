@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+
+import { Contact as ContactInterface } from '../../../interfaces/contacts/contact';
 
 @Component({
   selector: 'app-contact-details',
@@ -6,4 +8,6 @@ import { Component } from '@angular/core';
   templateUrl: './contact-details.html',
   styleUrl: './contact-details.scss',
 })
-export class ContactDetails {}
+export class ContactDetails {
+  contact = input<ContactInterface | null>(null);
+}

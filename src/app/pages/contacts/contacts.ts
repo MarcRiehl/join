@@ -3,11 +3,12 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 
 import { Contact as ContactInterface } from '../../interfaces/contacts/contact';
 import { ContactService } from '../../services/contacts/contact.service';
+import { ContactDetails } from './contact-details/contact-details';
 import { ContactList } from './contact-list/contact-list';
 
 @Component({
   selector: 'app-contacts',
-  imports: [JsonPipe, ContactList],
+  imports: [JsonPipe, ContactList, ContactDetails],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })

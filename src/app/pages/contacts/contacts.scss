@@ -1,0 +1,5 @@
+@use '../../../scss/abstract/mixin' as *;
+
+.contacts__main {
+  @include flex-center($direction: row, $justify: flex-start, $align: flex-start);
+}

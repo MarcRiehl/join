@@ -1,3 +1,11 @@
 <p>contacts works!</p>
-<app-contact-list [contacts]="contacts()" (contactSelected)="selectContact($event)">
-</app-contact-list>
+<section class="contacts__main">
+  <app-contact-list
+    [contacts]="contacts()"
+    (contactSelected)="selectContact($event)"
+  ></app-contact-list>
+
+  @if (selectedContact()) {
+    <app-contact-details [contact]="selectedContact()"></app-contact-details>
+  }
+</section>
