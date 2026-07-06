@@ -8,6 +8,23 @@ import { SupabaseService } from '../supabase/supabase.service';
 })
 export class ContactService {
   private supabaseService = inject(SupabaseService);
+  private bubbleColors = [
+    '#FF7A00',
+    '#FF5EB3',
+    '#6E52FF',
+    '#9327FF',
+    '#00BEE8',
+    '#1FD7C1',
+    '#FF745E',
+    '#FFA35E',
+    '#FC71FF',
+    '#FFC702',
+    '#0038FF',
+    '#C3FF2B',
+    '#FFE62B',
+    '#FF4646',
+    '#FFBB2B',
+  ];
 
   async getContacts(): Promise<ContactInterface[]> {
     const { data, error } = await this.supabaseService.supabase
@@ -25,21 +42,20 @@ export class ContactService {
       lastname: contact.user_lastname,
       email: contact.user_mail,
       phone: contact.user_phone,
+      initials: this.getInitials(contact.user_firstname, contact.user_lastname),
+      colors: this.getBubbleColors(contact.id),
     }));
   }
+
+  getInitials(firstName: string, lastName: string) {
+    const firstLetter = firstName[0].toUpperCase();
+    const secondLetter = lastName[0].toUpperCase();
+
+    return firstLetter + secondLetter;
+  }
+
+  getBubbleColors(id: number) {
+    const index = id % this.bubbleColors.length;
+    return this.bubbleColors[index];
+  }
 }
-
-// Aufgaben des ContactService
-//  Kontakte laden
-// ├── Kontakt erstellen
-// ├── Kontakt bearbeiten
-// └── Kontakt löschen
-
-// allgemeine Syntax für die Kommunikation mit Supabase
-//  async functionName(): Promise<Rückgabetyp> {
-
-// ...
-
-// return etwas;
-
-// }

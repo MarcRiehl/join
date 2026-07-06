@@ -4,4 +4,6 @@ export interface Contact {
   lastname: string;
   email: string;
   phone: number;
+  initials: string;
+  colors: string;
 }
