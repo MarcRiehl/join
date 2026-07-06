@@ -1,20 +1,21 @@
 <section class="contact-details">
   <header class="contact-details__header">
-    <h1>Contact</h1>
+    <h1>Contact <span class="contact-details__separator">|</span></h1>
     <h2>Better with a team</h2>
   </header>
-  @if (contact()) {
-    <h2>{{ contact()?.firstname }} {{ contact()?.lastname }}</h2>
-    <p>{{ contact()?.email }}</p>
-    <p>{{ contact()?.phone }}</p>
-  } @else {}
+  <div>
+    @if (contact()) {
+      <h2>{{ contact()?.firstname }} {{ contact()?.lastname }}</h2>
+      <p>{{ contact()?.email }}</p>
+      <p>{{ contact()?.phone }}</p>
+    } @else {}
+  </div>
 </section>
 
 <!-- Ablauf
-
 1. Contacts lädt alle Kontakte.
 2. ContactList zeigt alle Kontakte an.
-3. Du klickst in ContactList auf einen Kontakt.
+3. Man klickt in ContactList auf einen Kontakt.
 4. ContactList sendet den geklickten Kontakt per output() nach oben.
 5. Contacts speichert diesen Kontakt als selectedContact.
 6. Contacts gibt selectedContact per input() an ContactDetail weiter. -->

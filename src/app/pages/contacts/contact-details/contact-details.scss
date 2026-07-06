@@ -1,0 +1,9 @@
+@use '../../../../scss/abstract/mixin' as *;
+
+.contact-details__header {
+  @include flex-center($direction: row, $justify: center, $align: center);
+}
+
+.contact-details__separator {
+  font-size: 22px;
+}
