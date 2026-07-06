@@ -31,16 +31,18 @@ export class Contacts implements OnInit {
     this.selectedContact.set(contact);
   }
 }
+//
+// * getInitials(contact)
+// * getBubbleColor(contact)
+// * Kontakte sortieren
+// * Kontakte gruppieren
+// * CRUD (Create, Read, Update, Delete)
 
 //
 // Hole Kontakte vom Service
-
 // ↓
-
 // Speichere sie in einer Variable
-
 // ↓
-
 // Zeige sie im HTML an
 
 // Ein Signal ist einfach ein Speicher für Daten. Angular merkt automatisch, wenn sich der Inhalt ändert.
