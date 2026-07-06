@@ -2,4 +2,7 @@
 
 .contacts__main {
   @include flex-center($direction: row, $justify: flex-start, $align: flex-start);
+  @include mobile-tablet {
+    justify-content: center;
+  }
 }

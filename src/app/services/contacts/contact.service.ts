@@ -1,5 +1,4 @@
-import { inject, Injectable } from '@angular/core';
-
+import { inject, Injectable, signal } from '@angular/core';
 import { Contact as ContactInterface } from '../../interfaces/contacts/contact';
 import { SupabaseService } from '../supabase/supabase.service';
 
@@ -8,24 +7,17 @@ import { SupabaseService } from '../supabase/supabase.service';
 })
 export class ContactService {
   private supabaseService = inject(SupabaseService);
+  contacts = signal<ContactInterface[]>([]);
 
-  async getContacts(): Promise<ContactInterface[]> {
+  async loadContacts(): Promise<void> {
     const { data, error } = await this.supabaseService.supabase
       .from('user_join')
       .select('*')
-      .order('user_lastname');
-    console.log('Contacts:', data);
-    console.log('Error:', error);
-    if (error) {
-      throw error;
+      .order('user_firstname', { ascending: true });
+
+    if (!error && data) {
+      this.contacts.set(data as ContactInterface[]);
     }
-    return data.map((contact) => ({
-      id: contact.id,
-      firstname: contact.user_firstname,
-      lastname: contact.user_lastname,
-      email: contact.user_mail,
-      phone: contact.user_phone,
-    }));
   }
 }
 
