@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { Contact as ContactInterface } from '../../../interfaces/contacts/contact';
 
@@ -10,4 +10,12 @@ import { Contact as ContactInterface } from '../../../interfaces/contacts/contac
 })
 export class ContactDetails {
   contact = input<ContactInterface | null>(null);
+
+  removeSelectedContact = output<void>();
+
+  onRemoveSelectedContact() {
+    this.removeSelectedContact.emit();
+  }
+
+  // button -> (click)="onRemoveSelectedcontact()"
 }

@@ -30,13 +30,11 @@ export class Contacts implements OnInit {
   selectContact(contact: ContactInterface) {
     this.selectedContact.set(contact);
   }
+
+  clearSelectedContact() {
+    this.selectedContact.set(null);
+  }
 }
-//
-// * getInitials(contact)
-// * getBubbleColor(contact)
-// * Kontakte sortieren
-// * Kontakte gruppieren
-// * CRUD (Create, Read, Update, Delete)
 
 //
 // Hole Kontakte vom Service
