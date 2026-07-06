@@ -8,7 +8,7 @@ import { ContactList } from './contact-list/contact-list';
 
 @Component({
   selector: 'app-contacts',
-  imports: [JsonPipe, ContactList, ContactDetails],
+  imports: [ContactList, ContactDetails],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
