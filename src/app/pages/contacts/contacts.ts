@@ -1,55 +1,31 @@
-import { JsonPipe } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-
-import { Contact as ContactInterface } from '../../interfaces/contacts/contact';
-import { ContactService } from '../../services/contacts/contact.service';
-import { ContactDetails } from './contact-details/contact-details';
+import { CommonModule } from '@angular/common';
 import { ContactList } from './contact-list/contact-list';
+import { ContactDetails } from './contact-details/contact-details';
+import { ContactService } from '../../services/contacts/contact.service';
+import { Contact } from '../../interfaces/contacts/contact';
 
 @Component({
   selector: 'app-contacts',
-  imports: [ContactList, ContactDetails],
+  standalone: true,
+  imports: [CommonModule, ContactList, ContactDetails],
   templateUrl: './contacts.html',
-  styleUrl: './contacts.scss',
+  styleUrl: './contacts.scss'
 })
 export class Contacts implements OnInit {
   private contactService = inject(ContactService);
+  contacts = this.contactService.contacts;
+  selectedContact = signal<Contact | null>(null);
 
-  contacts = signal<ContactInterface[]>([]);
-  selectedContact = signal<ContactInterface | null>(null);
-
-  // 1. Daten vom Service holen.
-  // 2. Im Signal speichern.
-
-  async ngOnInit() {
-    const contactData = await this.contactService.getContacts(); // Kontakte in einer Variablen speichern
-    this.contacts.set(contactData); // Kontakte in das Signal speichern
+  ngOnInit(): void {
+    this.contactService.loadContacts();
   }
 
-  // empfängt den Output von ContactList und speichert ihn in selectedContact
-  selectContact(contact: ContactInterface) {
+  selectContact(contact: Contact): void {
     this.selectedContact.set(contact);
   }
+
+  clearSelectedContact(): void {
+    this.selectedContact.set(null);
+  }
 }
-
-//
-// Hole Kontakte vom Service
-
-// ↓
-
-// Speichere sie in einer Variable
-
-// ↓
-
-// Zeige sie im HTML an
-
-// Ein Signal ist einfach ein Speicher für Daten. Angular merkt automatisch, wenn sich der Inhalt ändert.
-//  signal<...>() erstellt ein Signal, das einen bestimmten Typ von Daten speichert. In diesem Fall speichern wir ein Array von Kontakten (ContactInterface[]).
-//  “Welche Art von Daten wird hier gespeichert?”
-// signal<number> -- es werden Zahlen gespeichert
-// signal<string> -- es werden Zeichenketten gespeichert
-// signal<boolean> -- es werden Wahrheitswerte gespeichert
-// signal<ContactInterface[]> -- es werden Kontakte gespeichert
-
-// Die FUnktion braucht einen Startwert, daher []. Das ist ein leeres Array, weil wir noch keine Kontakte haben. Später werden wir die Kontakte vom Service laden und in dieses Signal speichern.
-//  signal(0) -- Startwert ist 0

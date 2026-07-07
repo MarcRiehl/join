@@ -1,7 +1,10 @@
 export interface Contact {
-  id: number;
+  id?: number;
+  created_at?: string;
   firstname: string;
   lastname: string;
   email: string;
-  phone: number;
+  phone?: string | number;
+  initials?: string;
+  colors?: string;
 }
