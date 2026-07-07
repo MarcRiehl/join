@@ -7,6 +7,7 @@
   <section class="contacts__details">
     <app-contact-details
       [contact]="selectedContact()"
+      (removeSelectedContact)="clearSelectedContact()"
     ></app-contact-details>
   </section>
 </section>

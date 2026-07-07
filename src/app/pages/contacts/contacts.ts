@@ -17,11 +17,15 @@ export class Contacts implements OnInit {
   contacts = this.contactService.contacts;
   selectedContact = signal<Contact | null>(null);
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.contactService.loadContacts();
   }
 
   selectContact(contact: Contact): void {
     this.selectedContact.set(contact);
+  }
+
+  clearSelectedContact(): void {
+    this.selectedContact.set(null);
   }
 }

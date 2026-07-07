@@ -16,15 +16,15 @@ export class ContactList {
 
   get groupedContacts(): { letter: string; contacts: ContactInterface[] }[] {
     const sorted = [...this.contacts()].sort((a, b) => {
-      const nameA = `${a.user_firstname || ''} ${a.user_lastname || ''}`.trim();
-      const nameB = `${b.user_firstname || ''} ${b.user_lastname || ''}`.trim();
+      const nameA = `${a.firstname || ''} ${a.lastname || ''}`.trim();
+      const nameB = `${b.firstname || ''} ${b.lastname || ''}`.trim();
       return nameA.localeCompare(nameB);
     });
 
     const groups: { [key: string]: ContactInterface[] } = {};
     for (const contact of sorted) {
-      if (!contact.user_firstname) continue;
-      const firstLetter = contact.user_firstname.charAt(0).toUpperCase();
+      if (!contact.firstname) continue;
+      const firstLetter = contact.firstname.charAt(0).toUpperCase();
       if (!groups[firstLetter]) groups[firstLetter] = [];
       groups[firstLetter].push(contact);
     }
