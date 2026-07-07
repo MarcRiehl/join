@@ -1,10 +1,34 @@
-<p>contact-list works!</p>
-
-@for (contact of contacts(); track contact.id) {
-  <div (click)="selectedContact(contact)">
-    <p>{{ contact.firstname }}</p>
-    <p>{{ contact.lastname }}</p>
-    <p>{{ contact.email }}</p>
-    <p>{{ contact.phone }}</p>
+<div class="contact-list-container">
+  <div class="add-contact-wrapper desktop-only">
+    <button class="btn-primary" type="button">
+      <span>Add new contact</span>
+      <img src="assets/img/components/contacts/person-add.svg" alt="">
+    </button>
   </div>
-}
+
+  <button class="btn-mobile-add" type="button">
+    <img src="assets/img/components/contacts/person-add.svg" alt="">
+  </button>
+
+  <div class="contacts-scroll-area">
+    @for (group of groupedContacts; track group.letter) {
+      <div class="contact-group">
+        <div class="group-header">{{ group.letter }}</div>
+        <div class="group-divider"></div>
+        <div class="group-items">
+          @for (contact of group.contacts; track contact.id) {
+            <div 
+              class="contact-item" 
+              [class.active]="activeContactId === contact.id"
+              (click)="onSelectContact(contact)">
+              <div class="contact-info">
+                <span class="contact-name">{{ contact.firstname }} {{ contact.lastname }}</span>
+                <span class="contact-email">{{ contact.email }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,33 +1,31 @@
-import { JsonPipe } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-
-import { Contact as ContactInterface } from '../../interfaces/contacts/contact';
-import { ContactService } from '../../services/contacts/contact.service';
-import { ContactDetails } from './contact-details/contact-details';
+import { CommonModule } from '@angular/common';
 import { ContactList } from './contact-list/contact-list';
+import { ContactDetails } from './contact-details/contact-details';
+import { ContactService } from '../../services/contacts/contact.service';
+import { Contact } from '../../interfaces/contacts/contact';
 
 @Component({
   selector: 'app-contacts',
-  imports: [ContactList, ContactDetails],
+  standalone: true,
+  imports: [CommonModule, ContactList, ContactDetails],
   templateUrl: './contacts.html',
-  styleUrl: './contacts.scss',
+  styleUrl: './contacts.scss'
 })
 export class Contacts implements OnInit {
   private contactService = inject(ContactService);
+  contacts = this.contactService.contacts;
+  selectedContact = signal<Contact | null>(null);
 
-  contacts = signal<ContactInterface[]>([]);
-  selectedContact = signal<ContactInterface | null>(null);
-
-  async ngOnInit() {
-    const contactData = await this.contactService.getContacts();
-    this.contacts.set(contactData);
+  ngOnInit(): void {
+    this.contactService.loadContacts();
   }
 
-  selectContact(contact: ContactInterface) {
+  selectContact(contact: Contact): void {
     this.selectedContact.set(contact);
   }
 
-  clearSelectedContact() {
+  clearSelectedContact(): void {
     this.selectedContact.set(null);
   }
 }

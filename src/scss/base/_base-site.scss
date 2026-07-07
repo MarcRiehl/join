@@ -61,4 +61,8 @@ html {
 .wrapper-content {
     flex: 1;
     min-height: 0;
+
+    @include mobile {
+        padding-top: 80px;
+    }
 }
