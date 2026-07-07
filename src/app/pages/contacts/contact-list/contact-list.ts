@@ -2,10 +2,11 @@ import { JsonPipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 
 import { Contact as ContactInterface } from '../../../interfaces/contacts/contact';
+import { NewUserDialog } from './new-user-dialog/new-user-dialog';
 
 @Component({
   selector: 'app-contact-list',
-  imports: [],
+  imports: [NewUserDialog],
   templateUrl: './contact-list.html',
   styleUrl: './contact-list.scss',
 })
@@ -18,6 +19,18 @@ export class ContactList {
   selectedContact(contact: ContactInterface) {
     this.contactSelected.emit(contact);
   }
+
+  modalOpen = false;
+
+  openNewUser() {
+    // this.contactSelected = newUser;
+    this.modalOpen = true;
+  }
+
+  closeModal() {
+    this.modalOpen = false;
+  }
+
 }
 
 //  emit() bedeutet: “Schicke diesen Kontakt an den Parent.”

@@ -1,0 +1,107 @@
+<dialog #dialog class="user-dialog" (close)="onDialogClose()" closedby="any">
+
+    <div class="dialog-content">
+        <div class="dialog-wrapper-inner">
+            <div class="dialog-left">
+                <div class="dialog-left-inner">
+                    <div class="dialog-logo">
+                        <img class="dialog-logo-img" src="/assets/img/logo/logo-join-white.svg" />
+                    </div>
+                    <h2 class="dialog-headline">Add Contact</h2>
+                    <div class="dialog-headline-stroke"></div>
+                </div>
+            </div>
+
+            <div class="dialog-right">
+
+                <div class="dialog-right-inner-right">
+                    <div class="dialog-user-close">
+                        <button class="close-btn" (click)="closeDialog()">
+                        </button>
+                    </div>
+                    <div class="right-user-form">
+                        <div class="dialog-user-empty-logo"><img class="dialog-logo-img"
+                                src="/assets/img/forms/empty-user.svg" />
+                        </div>
+                        <div class="dialog-form">
+
+                            <form [formGroup]="newUserForm" (ngSubmit)="onSubmit()">
+                                <div class="form-cell">
+                                    <div>
+                                        <input id="name" class="input-name" type="text" name="name"
+                                            formControlName="name" placeholder="Name" />
+                                    </div>
+                                    <div class="form-error-placeholder">
+                                        @if (name.touched && name.invalid) {
+
+                                        @if (name.hasError('fullName')) {
+                                        <span>Bitte Vor- und Nachnamen eingeben.</span>
+                                        }
+
+                                        @if (name.errors?.['required']) {
+
+                                        <p class="form-error">
+                                            Error
+                                        </p>
+                                        }
+                                        @if (name.errors?.['minlength']) {
+                                        <p class="form-error">
+                                            Min
+                                        </p>
+                                        }
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-cell">
+                                    <div>
+                                        <input id="mail" class="input-mail" type="text" name="mail"
+                                            formControlName="email" placeholder="Email" />
+                                    </div>
+                                    <div class="form-error-placeholder">
+                                        @if (email.touched && email.invalid) {
+                                        <p class="form-error">
+                                            Error
+                                        </p>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-cell">
+                                    <div class="form-cell-label">
+
+                                    </div>
+                                    <div>
+                                        <input id="phone" class="input-phone" name="phone" type="text"
+                                            formControlName="phone" placeholder="Message" />
+                                    </div>
+                                    <div class="form-error-placeholder">
+                                        @if (phone.touched && phone.invalid) {
+                                        <p class="form-error">
+                                            Error
+                                        </p>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-submit">
+                                    <button class="button__default" type="submit"
+                                        [disabled]="newUserForm.invalid">Create
+                                        contact</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="dialog-buttons">
+                        <div class="form-send-message">
+                            @if (formMessage) {
+                            <div class="form-message" [class.success]="messageType === 'success'"
+                                [class.error]="messageType === 'error'">
+                                Error
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</dialog>

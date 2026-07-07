@@ -1,1 +1,276 @@
 @use '../abstract/' as *;
+
+dialog {
+    background: $white;
+    margin: 0 auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    @include mobile-tablet {
+        max-width: none;
+        max-height: none;
+    }
+
+    @include small-mobile {
+        max-width: none;
+        max-height: none;
+    }
+
+    @include landscape {
+        max-width: none;
+        max-height: none;
+    }
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.1);
+    transition: all 250ms ease-in-out;
+    border: none;
+}
+
+dialog.opened::backdrop {
+    background: rgba(0, 0, 0, 0.1);
+    transition: all 250ms ease-in-out;
+    height: 100%;
+}
+
+html:has(dialog[open]) {
+    overflow: hidden;
+}
+
+body.dialog-open {
+    overflow: hidden;
+    width: 100%;
+}
+
+.user-dialog {
+    border: none;
+    border-radius: 30px;
+    display: grid;
+    width: 1212px;
+    height: 592px;
+
+
+    @include mobile-tablet {
+        height: 100dvh;
+        width: 95dvw;
+    }
+
+    @include desktop-md {
+        width: 95dvw;
+
+    }
+
+    @include landscape {
+        height: 100dvh;
+        width: 95dvw;
+    }
+}
+
+.dialog-wrapper-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+
+    @include mobile-tablet {
+        flex-wrap: wrap-reverse;
+        justify-content: center;
+        max-height: 80dvh;
+        align-items: flex-start;
+
+    }
+
+    @include small-mobile {
+        overflow-y: auto;
+        padding-right: 8px;
+        min-height: 0;
+        align-items: flex-start;
+    }
+
+    @include landscape {
+        overflow-y: auto;
+        min-height: 0;
+        align-items: flex-start;
+        padding: 20px 0 20px 0;
+        margin-top: 30px;
+        // margin-bottom: 0px;
+        // max-height: 230px;
+        max-height: calc(100dvh - 100px);
+        margin-right: 20px;
+    }
+}
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+
+
+.dialog-content {
+    // display: grid;
+    // grid-template-rows: auto 1fr;
+
+}
+
+.flex-dialog-close {
+    display: flex;
+    justify-content: flex-end;
+
+    @include mobile-tablet {
+        padding-bottom: 20px;
+    }
+
+    @include small-mobile {
+        padding-bottom: 10px;
+
+    }
+
+    @include landscape {
+        position: fixed;
+        top: 0;
+        right: 20px;
+    }
+}
+
+.close-btn {
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    background: url('/assets/img/components/general/close.svg') center no-repeat;
+    border: 0;
+}
+
+.close-btn:hover {
+    background: url('/assets/img/components/general/close-hover.svg') center no-repeat;
+}
+
+.dialog-left {
+    background-color: $blue-color;
+    height: 100%;
+    width: 453px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid $blue-color;
+
+    @include mobile-tablet {
+        padding-right: 0px;
+    }
+
+    @include desktop-md {
+        padding-right: 0px;
+    }
+
+}
+
+.dialog-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+    padding: 48px 48px;
+}
+
+.right-user-form{
+// display: flex;
+// justify-content: space-between;
+// align-items: center;
+display: grid;
+grid-template-columns: auto 1fr;
+width: 100%;
+align-items: center;
+
+}
+
+.dialog-logo {
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.dialog-logo-img {
+    height: 67px;
+    width: auto;
+    ;
+}
+
+.dialog-headline {
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    font-size: 61px;
+    color: $white;
+}
+
+.dialog-headline-stroke {
+    padding-top: 16px;
+    border-bottom: 3px solid $ligth-blue-color;
+    width: 90px;
+}
+
+.dialog-form {
+    display: flex;
+
+}
+
+.dialog-user-close {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.dialog-right-inner-right {
+width: 100%;
+}
+
+.dialog-user-empty-logo img {
+    width: 120px;
+    height: auto;
+}
+
+.form-cell {
+    padding-bottom: 32px;
+}
+
+.form-cell input {
+    width: 422px;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid $grey-form-border-color;
+    padding: 13px 21px;
+}
+
+.input-name {
+    width: 24px;
+    height: 24px;
+    background: url('/assets/img/forms/person.svg') 95% no-repeat;
+    object-fit: contain;
+    padding-right: 21px;
+}
+
+.input-mail {
+    width: 24px;
+    height: 24px;
+    background: url('/assets/img/forms/mail.svg') 95% no-repeat;
+    object-fit: contain;
+    padding-right: 21px;
+}
+
+.input-phone {
+    width: 24px;
+    height: 24px;
+    background: url('/assets/img/forms/call.svg') 95% no-repeat;
+    object-fit: contain;
+    padding-right: 21px;
+}

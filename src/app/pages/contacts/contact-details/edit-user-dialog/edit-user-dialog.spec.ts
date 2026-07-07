@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContactDialog } from './contact-dialog';
+import { EditUserDialog } from './edit-user-dialog';
 
-describe('ContactDialog', () => {
-  let component: ContactDialog;
-  let fixture: ComponentFixture<ContactDialog>;
+describe('EditUserDialog', () => {
+  let component: EditUserDialog;
+  let fixture: ComponentFixture<EditUserDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactDialog],
+      imports: [EditUserDialog],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ContactDialog);
+    fixture = TestBed.createComponent(EditUserDialog);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

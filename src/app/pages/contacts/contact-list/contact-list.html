@@ -1,4 +1,4 @@
-<p>contact-list works!</p>
+<button (click)="openNewUser()">Add New User</button>
 
 @for (contact of contacts(); track contact.id) {
   <div (click)="selectedContact(contact)">
@@ -8,3 +8,7 @@
     <p>{{ contact.phone }}</p>
   </div>
 }
+
+ @if(modalOpen){
+<app-new-user-dialog (close)="closeModal()"></app-new-user-dialog>
+ }
