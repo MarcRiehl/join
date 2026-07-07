@@ -8,6 +8,8 @@ import { SupabaseService } from '../supabase/supabase.service';
 export class ContactService {
   private supabaseService = inject(SupabaseService);
   contacts = signal<ContactInterface[]>([]);
+  selectedContact = signal<ContactInterface | null>(null);
+
   private bubbleColors = [
     '#FF7A00',
     '#FF5EB3',

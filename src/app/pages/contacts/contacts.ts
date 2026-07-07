@@ -15,17 +15,29 @@ import { Contact } from '../../interfaces/contacts/contact';
 export class Contacts implements OnInit {
   private contactService = inject(ContactService);
   contacts = this.contactService.contacts;
-  selectedContact = signal<Contact | null>(null);
+  // selectedContact = signal<Contact | null>(null);
+  selectedContact = this.contactService.selectedContact;
 
   ngOnInit(): void {
     this.contactService.loadContacts();
   }
 
-  selectContact(contact: Contact): void {
-    this.selectedContact.set(contact);
-  }
+  // selectContact(contact: Contact): void {
+  //   this.selectedContact.set(contact);
+  // }
 
-  clearSelectedContact(): void {
-    this.selectedContact.set(null);
-  }
+  selectContact(contact: Contact): void {
+  this.contactService.selectedContact.set(contact);
 }
+
+  // clearSelectedContact(): void {
+  //   this.selectedContact.set(null);
+  // }
+  
+  clearSelectedContact(): void {
+  this.contactService.selectedContact.set(null);
+}
+
+}
+
+

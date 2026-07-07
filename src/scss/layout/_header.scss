@@ -40,11 +40,19 @@
     object-fit: contain;
 }
 
-.dummy-bubble {
+.header-user-avatar {
     height: 56px;
     width: 56px;
     border: 2px solid $blue-color;
     border-radius: 50px;
+    color: $header-avatar;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     anchor-name: --user-menu-anchor;
 
     @include mobile {

@@ -44,18 +44,12 @@ export class ContactList {
     this.contactSelected.emit(contact);
   }
 
-  modalOpen = false;
 
-  dialogService = inject(DialogService);
+  readonly dialogService = inject(DialogService);
+  readonly DialogType = DialogType;
 
-  openDialog() {
+  openDialog(): void {
     this.dialogService.open(DialogType.AddContact);
-  }
-  
-  closeModal() {
-
-      this.modalOpen = false;
-
   }
 
 }

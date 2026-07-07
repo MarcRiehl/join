@@ -30,6 +30,6 @@
   </div>
 </div>
 
-@if(modalOpen){
-    <app-new-user-dialog (close)="closeModal()"></app-new-user-dialog>
+@if (dialogService.current().type === DialogType.AddContact) {
+    <app-new-user-dialog />
 }

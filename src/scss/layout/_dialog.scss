@@ -1,40 +1,73 @@
 @use '../abstract/' as *;
 
-.dialog-overlay {
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+
+// .user-dialog {
+
+//     position: fixed;
+//     top: 50%;
+//     left: 50%;
+//     border: none;
+//     border-radius: 30px;
+//     display: grid;
+//     width: 1212px;
+//     height: 592px;
+//     opacity: 1;
+//     background: $white;
+//     transform: translate(-50%, -50%);
+//     animation: dialogIn .3s ease-in;
+//     opacity: 0;
+
+
+//     @include mobile-tablet {
+//         height: 100dvh;
+//         width: 95dvw;
+//     }
+
+//     @include desktop-md {
+//         width: 95dvw;
+
+//     }
+
+//     @include landscape {
+//         height: 100dvh;
+//         width: 95dvw;
+//     }
+// }
+
+.user-dialog {
     position: fixed;
-    inset: 0;
+    top: 50%;
+    left: 50%;
     display: grid;
-    place-items: center;
-    z-index: 1000;
+    width: 1212px;
+    height: 592px;
+    background: $white;
+    border: none;
+    border-radius: 30px;
+    transform: translate(-50%, -50%);
+    animation: dialogIn .3s ease;
+
 }
 
-.backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, .2);
-    z-index: 1;
-}
+.user-dialog.closing {
 
-.dialog-wrapper {
-    position: relative;
-    z-index: 9999;
-    animation: dialogIn .3s forwards;
-        border-radius: 30px;
-}
+    animation: dialogOut .3s ease forwards;
 
-.dialog-wrapper.closing {
-    animation: dialogOut .3s forwards;
 }
 
 @keyframes dialogIn {
 
     from {
-        transform: translateX(100vw);
+        transform: translate(calc(-50% + 100vw), -50%);
         opacity: 0;
     }
 
     to {
-        transform: translateX(0);
+        transform: translate(-50%, -50%);
         opacity: 1;
     }
 
@@ -43,41 +76,15 @@
 @keyframes dialogOut {
 
     from {
-        transform: translateX(0);
+        transform: translate(-50%, -50%);
         opacity: 1;
     }
 
     to {
-        transform: translateX(100vw);
+        transform: translate(calc(-50% + 100vw), -50%);
         opacity: 0;
     }
 
-}
-
-.user-dialog {
-    border: none;
-    border-radius: 30px;
-    display: grid;
-    width: 1212px;
-    height: 592px;
-    opacity: 1;
-    background: $white;
-
-
-    @include mobile-tablet {
-        height: 100dvh;
-        width: 95dvw;
-    }
-
-    @include desktop-md {
-        width: 95dvw;
-
-    }
-
-    @include landscape {
-        height: 100dvh;
-        width: 95dvw;
-    }
 }
 
 .dialog-wrapper-inner {
@@ -169,8 +176,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-      border-top-left-radius: 30px;
-      border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
 
     @include mobile-tablet {
         padding-right: 0px;

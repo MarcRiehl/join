@@ -22,23 +22,17 @@ export class DialogService {
     type: null
   });
 
-  readonly closing = signal(false);
-
-  open(type: DialogType, data?: unknown) {
-    this.current.set({ type, data });
-    this.closing.set(false);
+  open(type: DialogType, data?: unknown): void {
+    this.current.set({
+      type,
+      data
+    });
   }
 
-  requestClose() {
-    this.closing.set(true);
-  }
-
-  finishClose() {
+  clear(): void {
     this.current.set({
       type: null
     });
-
-    this.closing.set(false);
   }
 
 }
