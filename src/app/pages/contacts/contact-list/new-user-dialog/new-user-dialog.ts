@@ -5,8 +5,12 @@ import {
   ViewChild,
   inject
 } from '@angular/core';
-import { AbstractControl, ValidationErrors, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { from, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { AbstractControl, ValidationErrors, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators, AsyncValidatorFn } from '@angular/forms';
 import { DialogService } from '../../../../services/dialog/dialog.service';
+import { ContactService } from '../../../../services/contacts/contact.service';
+
 
 @Component({
   selector: 'app-new-user-dialog',
@@ -18,6 +22,7 @@ import { DialogService } from '../../../../services/dialog/dialog.service';
 export class NewUserDialog implements AfterViewInit {
 
   private readonly dialogService = inject(DialogService);
+  private readonly contactService = inject(ContactService);
 
   @ViewChild('dialog')
   dialog!: ElementRef<HTMLDialogElement>;
@@ -31,7 +36,7 @@ export class NewUserDialog implements AfterViewInit {
   closeDialog(): void {
     this.startCloseAnimation();
   }
-//protected
+  //protected
   private startCloseAnimation(): void {
 
     if (this.isClosing) {
@@ -82,7 +87,8 @@ export class NewUserDialog implements AfterViewInit {
 
   newUserForm = new FormGroup({
     name: new FormControl('', {
-      validators: [Validators.required, Validators.minLength(4), fullNameValidator()],
+      validators: [Validators.required, fullNameValidator()],
+      asyncValidators: [this.nameValidator()],
       updateOn: 'blur'
     }),
     email: new FormControl('', {
@@ -109,16 +115,63 @@ export class NewUserDialog implements AfterViewInit {
 
   formMessage = '';
   messageType: 'success' | 'error' | '' = '';
-  
-  async onSubmit() {}
+
+  nameValidator(): AsyncValidatorFn {
+    return (control: AbstractControl) => {
+      const value = (control.value ?? '').trim();
+
+      if (!value || control.errors) {
+        return of(null);
+      }
+
+      return from(this.contactService.contactExists(value)).pipe(
+        map(exists => (exists ? { nameExists: true } : null)),
+        catchError(() => of(null))
+      );
+    };
+  }
+
+  async onSubmit(): Promise<void> {
+
+    if (this.newUserForm.invalid) {
+      this.newUserForm.markAllAsTouched();
+      return;
+    }
+
+    const parts = this.name.value!.trim().split(/\s+/);
+
+    const firstname = parts[0];
+    const lastname = parts.slice(1).join(' ');
+
+    const success = await this.contactService.addContact({
+      firstname,
+      lastname,
+      email: this.email.value!,
+      phone: this.phone.value!
+    });
+
+    if (success) {
+      this.newUserForm.reset();
+      this.closeDialog();
+    }
+  }
+
 }
 
 export function fullNameValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const value = (control.value ?? '').trim();
-    
+    if (!value) {
+      return null;
+    }
     const parts = value.split(/\s+/);
-
-    return parts.length >= 2 ? null : { fullName: true };
+    if (parts.length < 2) {
+      return { fullName: true };
+    }
+    const [firstName, lastName] = parts;
+    if (firstName.length < 3 || lastName.length < 3) {
+      return { nameTooShort: true };
+    }
+    return null;
   };
 }

@@ -64,4 +64,49 @@ export class ContactService {
     const index = id % this.bubbleColors.length;
     return this.bubbleColors[index];
   }
+
+  async contactExists(fullName: string): Promise<boolean> {
+  const parts = fullName.trim().split(/\s+/);
+
+  if (parts.length < 2) {
+    return false;
+  }
+
+  const firstName = parts[0];
+  const lastName = parts.slice(1).join(' ');
+
+  const { data, error } = await this.supabaseService.supabase
+    .from('user_join')
+    .select('id')
+    .eq('user_firstname', firstName)
+    .eq('user_lastname', lastName)
+    .maybeSingle();
+
+  if (error) {
+    console.error(error);
+    return false;
+  }
+
+  return !!data;
+}
+
+async addContact(contact: ContactInterface): Promise<boolean> {
+  const { error } = await this.supabaseService.supabase
+    .from('user_join')
+    .insert({
+      user_firstname: contact.firstname,
+      user_lastname: contact.lastname,
+      user_mail: contact.email,
+      user_phone: contact.phone
+    });
+
+  if (error) {
+    console.error(error);
+    return false;
+  }
+
+  await this.loadContacts();
+  return true;
+}
+
 }

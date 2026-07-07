@@ -4,40 +4,6 @@ dialog::backdrop {
     background: rgba(0, 0, 0, 0.1);
 }
 
-
-// .user-dialog {
-
-//     position: fixed;
-//     top: 50%;
-//     left: 50%;
-//     border: none;
-//     border-radius: 30px;
-//     display: grid;
-//     width: 1212px;
-//     height: 592px;
-//     opacity: 1;
-//     background: $white;
-//     transform: translate(-50%, -50%);
-//     animation: dialogIn .3s ease-in;
-//     opacity: 0;
-
-
-//     @include mobile-tablet {
-//         height: 100dvh;
-//         width: 95dvw;
-//     }
-
-//     @include desktop-md {
-//         width: 95dvw;
-
-//     }
-
-//     @include landscape {
-//         height: 100dvh;
-//         width: 95dvw;
-//     }
-// }
-
 .user-dialog {
     position: fixed;
     top: 50%;
@@ -259,7 +225,7 @@ dialog::backdrop {
 }
 
 .form-cell {
-    padding-bottom: 32px;
+    padding-bottom: 12px;
 }
 
 .form-cell input {
@@ -292,4 +258,50 @@ dialog::backdrop {
     background: url('/assets/img/forms/call.svg') 95% no-repeat;
     object-fit: contain;
     padding-right: 21px;
+}
+
+.form-buttons{
+    display: flex;
+    justify-content: flex-start;
+    gap :20px;
+    padding-top: 20px;
+}
+
+.form-error-placeholder {
+    height: 20px;
+    display: flex;
+}
+
+.form-error {
+    color: $red-form-color;
+     font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 140%;
+    font-weight: 400;
+    padding-top: 5px;
+
+    @include mobile {
+        font-size: 16px;
+    }
+
+    &__policy {
+        color: $red-form-color;
+        font-family: Karla;
+        font-size: 14px;
+    }
+}
+
+.form-message {
+  margin-top: 26px;
+  font-weight: 600;
+  font-size: 24px;
+  font-family: 'Karla';
+
+  &.success {
+    // color: $secondary-color
+  }
+
+  &.error {
+    color: #e74c3c;
+  }
 }
