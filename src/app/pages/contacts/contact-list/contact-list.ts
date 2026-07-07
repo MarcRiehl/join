@@ -6,7 +6,7 @@ import { NewUserDialog } from './new-user-dialog/new-user-dialog';
 
 @Component({
   selector: 'app-contact-list',
-  imports: [NewUserDialog],
+  imports: [],
   templateUrl: './contact-list.html',
   styleUrl: './contact-list.scss',
 })
