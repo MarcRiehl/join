@@ -1,4 +1,4 @@
-<dialog #dialog class="user-dialog" (close)="onDialogClose()" closedby="any">
+<div class="user-dialog" (close)="host.close()">
 
     <div class="dialog-content">
         <div class="dialog-wrapper-inner">
@@ -13,10 +13,9 @@
             </div>
 
             <div class="dialog-right">
-
                 <div class="dialog-right-inner-right">
                     <div class="dialog-user-close">
-                        <button class="close-btn" (click)="closeDialog()">
+                        <button class="close-btn" (click)="host.close()">
                         </button>
                     </div>
                     <div class="right-user-form">
@@ -104,4 +103,4 @@
             </div>
         </div>
     </div>
-</dialog>
+</div>

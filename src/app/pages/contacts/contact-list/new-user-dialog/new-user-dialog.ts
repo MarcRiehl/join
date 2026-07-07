@@ -1,14 +1,11 @@
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild
+  Component, inject
 } from '@angular/core';
 
 import { AbstractControl, ValidationErrors, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { Contact as ContactInterface } from '../../../../interfaces/contacts/contact';
+import { DialogService } from '../../../../services/dialog/dialog.service';
+import { DialogHost } from '../../../../layout/dialog-host/dialog-host';
 
 @Component({
   selector: 'app-new-user-dialog',
@@ -18,38 +15,12 @@ import { Contact as ContactInterface } from '../../../../interfaces/contacts/con
 })
 
 export class NewUserDialog {
-  
+
   // @Input({ required: true })
 
   // newUser!: ContactInterface;
 
-  @Output()
-  close = new EventEmitter<void>();
-
-  private dialogElement?: HTMLDialogElement;
-
-  @ViewChild('dialog')
-  set dialogRef(dialog: ElementRef<HTMLDialogElement> | undefined) {
-
-    if (!dialog) return;
-
-    this.dialogElement = dialog.nativeElement;
-
-    if (!this.dialogElement.open) {
-      this.dialogElement.showModal();
-    }
-  }
-
-  closeDialog(): void {
-    this.dialogElement?.close();
-    this.close.emit();
-  }
-
-  onDialogClose(): void {
-    this.close.emit();
-  }
-
-    newUserForm = new FormGroup({
+  newUserForm = new FormGroup({
     name: new FormControl('', {
       validators: [Validators.required, Validators.minLength(4), fullNameValidator()],
       updateOn: 'blur'
@@ -78,14 +49,17 @@ export class NewUserDialog {
 
   formMessage = '';
   messageType: 'success' | 'error' | '' = '';
+
+  async onSubmit() { }
+
   
-  async onSubmit() {}
+    host = inject(DialogHost);
 }
 
 export function fullNameValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const value = (control.value ?? '').trim();
-    
+
     const parts = value.split(/\s+/);
 
     return parts.length >= 2 ? null : { fullName: true };

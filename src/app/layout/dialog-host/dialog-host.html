@@ -1,0 +1,30 @@
+@if(dialog.current().type !== null){
+
+<div class="dialog-overlay">
+
+    <div class="backdrop" (click)="close()">
+    </div>
+
+    <div class="dialog-wrapper" [class.closing]="closing()" (animationend)="animationFinished()">
+
+        @switch(dialog.current().type){
+
+        @case(DialogType.AddContact){
+
+        <app-new-user-dialog />
+
+        }
+
+        @case(DialogType.EditContact){
+
+        <app-edit-user-dialog />
+
+        }
+
+        }
+
+    </div>
+
+</div>
+
+}

@@ -1,48 +1,57 @@
 @use '../abstract/' as *;
 
-dialog {
-    background: $white;
-    margin: 0 auto;
+.dialog-overlay {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    inset: 0;
+    display: grid;
+    place-items: center;
+    z-index: 1000;
+}
 
-    @include mobile-tablet {
-        max-width: none;
-        max-height: none;
+.backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .2);
+    z-index: 1;
+}
+
+.dialog-wrapper {
+    position: relative;
+    z-index: 9999;
+    animation: dialogIn .3s forwards;
+        border-radius: 30px;
+}
+
+.dialog-wrapper.closing {
+    animation: dialogOut .3s forwards;
+}
+
+@keyframes dialogIn {
+
+    from {
+        transform: translateX(100vw);
+        opacity: 0;
     }
 
-    @include small-mobile {
-        max-width: none;
-        max-height: none;
+    to {
+        transform: translateX(0);
+        opacity: 1;
     }
 
-    @include landscape {
-        max-width: none;
-        max-height: none;
+}
+
+@keyframes dialogOut {
+
+    from {
+        transform: translateX(0);
+        opacity: 1;
     }
-}
 
-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.1);
-    transition: all 250ms ease-in-out;
-    border: none;
-}
+    to {
+        transform: translateX(100vw);
+        opacity: 0;
+    }
 
-dialog.opened::backdrop {
-    background: rgba(0, 0, 0, 0.1);
-    transition: all 250ms ease-in-out;
-    height: 100%;
-}
-
-html:has(dialog[open]) {
-    overflow: hidden;
-}
-
-body.dialog-open {
-    overflow: hidden;
-    width: 100%;
 }
 
 .user-dialog {
@@ -51,6 +60,8 @@ body.dialog-open {
     display: grid;
     width: 1212px;
     height: 592px;
+    opacity: 1;
+    background: $white;
 
 
     @include mobile-tablet {
@@ -97,8 +108,6 @@ body.dialog-open {
         align-items: flex-start;
         padding: 20px 0 20px 0;
         margin-top: 30px;
-        // margin-bottom: 0px;
-        // max-height: 230px;
         max-height: calc(100dvh - 100px);
         margin-right: 20px;
     }
@@ -112,14 +121,6 @@ body.dialog-open {
     justify-content: center;
     align-items: center;
     z-index: 999;
-}
-
-
-
-.dialog-content {
-    // display: grid;
-    // grid-template-rows: auto 1fr;
-
 }
 
 .flex-dialog-close {
@@ -142,6 +143,12 @@ body.dialog-open {
     }
 }
 
+.dialog-user-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
 .close-btn {
     width: 48px;
     height: 48px;
@@ -162,7 +169,8 @@ body.dialog-open {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 4px solid $blue-color;
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
 
     @include mobile-tablet {
         padding-right: 0px;
@@ -175,24 +183,27 @@ body.dialog-open {
 }
 
 .dialog-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 100%;
-    padding: 48px 48px;
+    // flex: 1;
+    display: flex;
 }
 
-.right-user-form{
-// display: flex;
-// justify-content: space-between;
-// align-items: center;
-display: grid;
-grid-template-columns: auto 1fr;
-width: 100%;
-align-items: center;
 
+.dialog-right-inner-right {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    width: 100%;
+    height: 100%;
+    padding: 32px;
 }
+
+.right-user-form {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 48px;
+    align-items: center;
+    height: 100%;
+}
+
 
 .dialog-logo {
     padding-bottom: 20px;
@@ -220,7 +231,7 @@ align-items: center;
 }
 
 .dialog-form {
-    display: flex;
+    justify-self: end;
 
 }
 
@@ -230,8 +241,9 @@ align-items: center;
     align-items: flex-start;
 }
 
-.dialog-right-inner-right {
-width: 100%;
+.dialog-user-empty-logo {
+    display: flex;
+    align-items: center;
 }
 
 .dialog-user-empty-logo img {
