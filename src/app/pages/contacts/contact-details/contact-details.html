@@ -1,15 +1,62 @@
 <section class="contact-details">
   <header class="contact-details__header">
-    <h1>Contact <span class="contact-details__separator">|</span></h1>
-    <h2>Better with a team</h2>
-  </header>
-  <div>
-    @if (contact()) {
-      <h2>{{ contact()?.firstname }} {{ contact()?.lastname }}</h2>
-      <p>{{ contact()?.email }}</p>
-      <p>{{ contact()?.phone }}</p>
-    } @else {}
-  </div>
+    <div class="contact-details__headline">
+      <h1 class="contact-details__title">Contacts</h1>
+      <span class="contact-details__separator"></span>
+      <p class="contact-details__subtitle">Better with a team</p>
+    </div>
 
-  <button type="button" (click)="editContact()">Test User</button>
+    <button
+      class="contact-details__back"
+      type="button"
+      aria-label="Back to contact list"
+      (click)="onRemoveSelectedContact()"
+    >
+      ←
+    </button>
+  </header>
+
+  @if (contact(); as selectedContact) {
+    <section class="contact-details__profile">
+      <div class="contact-details__avatar" [style.background-color]="selectedContact.colors">
+        {{ selectedContact.initials }}
+      </div>
+
+      <div class="contact-details__identity">
+        <h2 class="contact-details__name">
+          {{ selectedContact.firstname }} {{ selectedContact.lastname }}
+        </h2>
+
+        <div class="contact-details__actions">
+          <button class="contact-details__action" type="button" (click)="editContact()">Edit</button>
+
+          <button class="contact-details__action" type="button" (click)="onRemoveSelectedContact()">
+            Delete
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-details__info">
+      <h3 class="contact-details__info-title">Contact Information</h3>
+
+      <div class="contact-details__info-group">
+        <p class="contact-details__label">Email</p>
+        <p class="contact-details__value contact-details__value--email">
+          {{ selectedContact.email }}
+        </p>
+      </div>
+
+      <div class="contact-details__info-group">
+        <p class="contact-details__label">Phone</p>
+        <p class="contact-details__value">
+          {{ selectedContact.phone }}
+        </p>
+      </div>
+    </section>
+  } @else {
+    <section class="contact-details__empty">
+      <p class="contact-details__empty-text">Select a contact to see the details.</p>
+    </section>
+  }
 </section>

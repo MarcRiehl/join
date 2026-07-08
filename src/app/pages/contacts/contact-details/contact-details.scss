@@ -1,14 +1,216 @@
-@use '../../../../scss/abstract/mixin' as *;
+@use '../../../../scss/abstract' as *;
+
+:host {
+  display: block;
+  min-width: 0;
+}
 
 .contact-details {
-  @include flex-center($direction: row, $justify: center, $align: center);
-    @include mobile-tablet {
-    display: none;
+  width: 100%;
+  max-width: 650px;
+  padding-top: 124px;
+  padding-left: 72px;
+  color: $blue-color;
+}
 
-    
+.contact-details__header {
+  margin-bottom: 32px;
+}
+
+.contact-details__headline {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  min-height: 73px;
+}
+
+.contact-details__title {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 120%;
+  color: #000000;
 }
 
 .contact-details__separator {
-  font-size: 22px;
+  width: 0;
+  height: 59px;
+  border-left: 3px solid $ligth-blue-color;
+  flex-shrink: 0;
 }
+
+.contact-details__subtitle {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 120%;
+  color: $blue-color;
+  white-space: nowrap;
+}
+
+.contact-details__back {
+  display: none;
+}
+
+.contact-details__profile {
+  display: flex;
+  align-items: center;
+  gap: 54px;
+  max-width: 650px;
+  min-height: 120px;
+  margin-bottom: 32px;
+  min-width: 0;
+}
+
+.contact-details__avatar {
+  width: 120px;
+  height: 120px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  color: #ffffff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
+  @include flex-center;
+  flex-shrink: 0;
+  font-size: 47px;
+  font-weight: 400;
+  line-height: 120%;
+  text-transform: uppercase;
+}
+
+.contact-details__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.contact-details__name {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 47px;
+  font-weight: 500;
+  line-height: 120%;
+  color: #000000;
+  word-break: break-word;
+}
+
+.contact-details__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.contact-details__action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: $blue-color;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 120%;
+  cursor: pointer;
+}
+
+.contact-details__action::before {
+  content: '';
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  flex-shrink: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+}
+
+.contact-details__action:first-child::before {
+  background-image: url('/assets/img/components/general/edit.svg');
+}
+
+.contact-details__action:last-child::before {
+  background-image: url('/assets/img/components/general/delete.svg');
+}
+
+.contact-details__action:hover {
+  color: $ligth-blue-color;
+}
+
+.contact-details__action:first-child:hover::before {
+  background-image: url('/assets/img/components/general/edit-hover.svg');
+}
+
+.contact-details__action:last-child:hover::before {
+  background-image: url('/assets/img/components/general/delete-hover.svg');
+}
+
+.contact-details__action:focus-visible {
+  outline: 2px solid $ligth-blue-color;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.contact-details__info {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 569px;
+  min-width: 0;
+}
+
+.contact-details__info-title {
+  margin: 0 0 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 120%;
+  color: #000000;
+}
+
+.contact-details__info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.contact-details__label {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 120%;
+  color: #000000;
+}
+
+.contact-details__value {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 120%;
+  color: #000000;
+  overflow-wrap: anywhere;
+}
+
+.contact-details__value--email {
+  color: $blue-font-color;
+}
+
+.contact-details__empty {
+  margin-top: 32px;
+}
+
+.contact-details__empty-text {
+  max-width: 360px;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 140%;
+  color: $blue-color;
 }
