@@ -20,7 +20,7 @@ html {
     display: flex;
     height: 100dvh;
 
-    @include mobile {
+    @include mobile-tablet {
         flex-direction: column;
     }
 }
@@ -30,7 +30,7 @@ html {
     background: white;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
     z-index: 10;
-    @include mobile {
+    @include mobile-tablet {
         order: 0; 
     }
 }
@@ -39,7 +39,7 @@ html {
     flex: 0 0 232px;
     background-color: $blue-color;
 
-    @include mobile {
+    @include mobile-tablet {
         order: 3;
         flex: 0 0 80px;
         width: 100%;
@@ -52,7 +52,7 @@ html {
     display: flex;
     flex-direction: column;
 
-    @include mobile {
+    @include mobile-tablet {
         order: 1;
         flex: 1;
     }

@@ -117,7 +117,7 @@
   cursor: pointer;
 }
 
-@include styles.mobile {
+@include styles.mobile-tablet {
   .navbar {
     height: 80px;
     padding: 0 clamp(6px, 3vw, 12px);
