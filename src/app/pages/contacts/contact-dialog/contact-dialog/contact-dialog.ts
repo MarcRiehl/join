@@ -15,8 +15,6 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { DialogService } from '../../../../services/dialog/dialog.service';
 import { ContactService } from '../../../../services/contacts/contact.service';
 import { fullNameValidator, splitFullName } from '../../../../utils/name.util/name.util';
-import { Contact as ContactInterface } from '../../../../interfaces/contacts/contact';
-
 
 @Component({
   selector: 'app-contact-dialog',
