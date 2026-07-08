@@ -51,7 +51,7 @@ export class ContactService {
     return [];
   }
 
-  
+
   async getContacts(): Promise<ContactInterface[]> {
     return this.loadContacts();
   }
@@ -129,6 +129,18 @@ export class ContactService {
 
     await this.loadContacts();
     return true;
+  }
+
+  deleteSelectedContact(): void {
+    const contact = this.selectedContact();
+
+    if (!contact) return;
+
+    this.contacts.update(contacts =>
+      contacts.filter(c => c.id !== contact.id)
+    );
+
+    this.selectedContact.set(null);
   }
 
 }

@@ -29,16 +29,20 @@ export class Contacts implements OnInit {
   // }
 
   selectContact(contact: Contact): void {
-  this.contactService.selectedContact.set(contact);
-}
+    this.contactService.selectedContact.set(contact);
+  }
 
   // clearSelectedContact(): void {
   //   this.selectedContact.set(null);
   // }
-  
+
+  //   clearSelectedContact(): void {
+  //   this.contactService.selectedContact.set(null);
+  // }
+
   clearSelectedContact(): void {
-  this.contactService.selectedContact.set(null);
-}
+    this.contactService.deleteSelectedContact();
+  }
 
   readonly dialogService = inject(DialogService);
   readonly DialogType = DialogType;

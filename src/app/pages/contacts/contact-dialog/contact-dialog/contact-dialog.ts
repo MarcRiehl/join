@@ -161,50 +161,46 @@ export class ContactDialog implements AfterViewInit, OnInit {
     };
   }
 
-async onSubmit(): Promise<void> {
+  async onSubmit(): Promise<void> {
 
-  if (this.newUserForm.invalid) {
-    this.newUserForm.markAllAsTouched();
-    return;
+    if (this.newUserForm.invalid) {
+      this.newUserForm.markAllAsTouched();
+      return;
+    }
+
+    const { firstname, lastname } = splitFullName(this.name.value!);
+
+    let success = false;
+
+    if (this.isEditMode()) {
+
+      success = await this.contactService.updateContact({
+        id: this.selectedContact()!.id,
+        firstname,
+        lastname,
+        email: this.email.value!,
+        phone: this.phone.value!
+      });
+
+    } else {
+
+      success = await this.contactService.addContact({
+        firstname,
+        lastname,
+        email: this.email.value!,
+        phone: this.phone.value!
+      });
+
+    }
+
+    if (success) {
+      this.newUserForm.reset();
+      this.closeDialog();
+    }
   }
-
-  const { firstname, lastname } = splitFullName(this.name.value!);
-
-  let success = false;
-
-  if (this.isEditMode()) {
-
-    success = await this.contactService.updateContact({
-      id: this.selectedContact()!.id,
-      firstname,
-      lastname,
-      email: this.email.value!,
-      phone: this.phone.value!
-    });
-
-  } else {
-
-    success = await this.contactService.addContact({
-      firstname,
-      lastname,
-      email: this.email.value!,
-      phone: this.phone.value!
-    });
-
-  }
-
-  if (success) {
-    this.newUserForm.reset();
-    this.closeDialog();
-  }
-}
-
-  contact = input<ContactInterface | null>(null);
-
-  removeSelectedContact = output<void>();
 
   onRemoveSelectedContact() {
-    this.removeSelectedContact.emit();
+    this.contactService.deleteSelectedContact();
     this.closeDialog();
   }
 
