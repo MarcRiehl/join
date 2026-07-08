@@ -140,7 +140,8 @@ export class ContactService {
     this.channels = this.supabaseService.supabase
       .channel('custom-all-channel')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'user_join' }, (payload) => {
-        console.log('Change received!', this.loadContacts(), payload);
+        console.log('Change received!', payload);
+        this.loadContacts();
       })
       .subscribe();
   }
