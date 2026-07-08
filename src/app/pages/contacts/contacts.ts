@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 
 import { Contact } from '../../interfaces/contacts/contact';
 import { ContactDialog } from '../../pages/contacts/contact-dialog/contact-dialog/contact-dialog';
@@ -24,6 +24,10 @@ export class Contacts implements OnInit {
   ngOnInit(): void {
     this.contactService.loadContacts();
     this.contactService.subscribeToContactChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.contactService.unsubscribeFromContactChanges();
   }
 
   // selectContact(contact: Contact): void {

@@ -146,11 +146,10 @@ export class ContactService {
       .subscribe();
   }
 
-  ngOnDestroy(): void {
+  unsubscribeFromContactChanges() {
     if (this.channels) {
       this.supabaseService.supabase.removeChannel(this.channels);
+      this.channels = undefined;
     }
   }
-
-  // mit onDestroy wird der Channel wird unsubscribed wird
 }
