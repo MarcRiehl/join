@@ -1,6 +1,8 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contact as ContactInterface } from '../../../interfaces/contacts/contact';
+import { DialogService, DialogType } from '../../../services/dialog/dialog.service';
+import { ContactService } from '../../../services/contacts/contact.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -41,4 +43,15 @@ export class ContactList {
     }
     this.contactSelected.emit(contact);
   }
+
+
+  readonly dialogService = inject(DialogService);
+  readonly DialogType = DialogType;
+  readonly contactService = inject(ContactService);
+
+  openDialog(): void {
+    this.contactService.selectedContact.set(null);
+    this.dialogService.open(DialogType.Contact);
+  }
+
 }

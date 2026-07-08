@@ -1,6 +1,6 @@
 <div class="contact-list-container">
   <div class="add-contact-wrapper desktop-only">
-    <button class="btn-primary" type="button">
+    <button class="btn-primary" type="button" (click)="openDialog()">
       <span>Add new contact</span>
       <img src="assets/img/components/contacts/person-add.svg" alt="">
     </button>
@@ -12,23 +12,21 @@
 
   <div class="contacts-scroll-area">
     @for (group of groupedContacts; track group.letter) {
-      <div class="contact-group">
-        <div class="group-header">{{ group.letter }}</div>
-        <div class="group-divider"></div>
-        <div class="group-items">
-          @for (contact of group.contacts; track contact.id) {
-            <div 
-              class="contact-item" 
-              [class.active]="activeContactId === contact.id"
-              (click)="onSelectContact(contact)">
-              <div class="contact-info">
-                <span class="contact-name">{{ contact.firstname }} {{ contact.lastname }}</span>
-                <span class="contact-email">{{ contact.email }}</span>
-              </div>
-            </div>
-          }
+    <div class="contact-group">
+      <div class="group-header">{{ group.letter }}</div>
+      <div class="group-divider"></div>
+      <div class="group-items">
+        @for (contact of group.contacts; track contact.id) {
+        <div class="contact-item" [class.active]="activeContactId === contact.id" (click)="onSelectContact(contact)">
+          <div class="contact-info">
+            <span class="contact-name">{{ contact.firstname }} {{ contact.lastname }}</span>
+            <span class="contact-email">{{ contact.email }}</span>
+          </div>
         </div>
+        }
       </div>
+    </div>
     }
   </div>
 </div>
+

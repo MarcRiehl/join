@@ -1,11 +1,14 @@
 <div class="header-content">
     <div class="header-headline hide-mobil">Kanban Project Management Tool</div>
-      <div class="mobil-header-logo show-mobil"></div> 
+    <div class="mobil-header-logo show-mobil"></div>
     <div class="header-right">
         <div class="help hide-mobil"><a class="img-help" routerLink="/help"></a></div>
         <div class="top-menu-right ">
             <button class="user-menu-button" (click)="toggleMenu($event)">
-                <div class="dummy-bubble">
+                <div class="header-user-avatar">
+                    @if (selectedContact(); as contact) {
+                    {{ contact.initials }}
+                    }
                 </div>
             </button>
             @if(menuOpen) {

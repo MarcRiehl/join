@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Contact as ContactInterface } from '../../interfaces/contacts/contact';
 import { SupabaseService } from '../supabase/supabase.service';
+import { splitFullName } from '../../utils/name.util/name.util';
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +9,8 @@ import { SupabaseService } from '../supabase/supabase.service';
 export class ContactService {
   private supabaseService = inject(SupabaseService);
   contacts = signal<ContactInterface[]>([]);
+  selectedContact = signal<ContactInterface | null>(null);
+
   private bubbleColors = [
     '#FF7A00',
     '#FF5EB3',
@@ -48,6 +51,7 @@ export class ContactService {
     return [];
   }
 
+  
   async getContacts(): Promise<ContactInterface[]> {
     return this.loadContacts();
   }
@@ -62,4 +66,69 @@ export class ContactService {
     const index = id % this.bubbleColors.length;
     return this.bubbleColors[index];
   }
+
+  async contactExists(fullName: string, excludeId?: number): Promise<boolean> {
+
+    const { firstname, lastname } = splitFullName(fullName);
+
+    let query = this.supabaseService.supabase
+      .from('user_join')
+      .select('id')
+      .eq('user_firstname', firstname)
+      .eq('user_lastname', lastname);
+
+    if (excludeId !== undefined) {
+      query = query.not('id', 'eq', excludeId);
+    }
+
+    const { data, error } = await query.maybeSingle();
+
+    if (error) {
+      console.error(error);
+      return false;
+    }
+
+    return !!data;
+  }
+
+  async addContact(contact: ContactInterface): Promise<boolean> {
+    const { error } = await this.supabaseService.supabase
+      .from('user_join')
+      .insert({
+        user_firstname: contact.firstname,
+        user_lastname: contact.lastname,
+        user_mail: contact.email,
+        user_phone: contact.phone
+      });
+
+    if (error) {
+      console.error(error);
+      return false;
+    }
+
+    await this.loadContacts();
+    return true;
+  }
+
+  async updateContact(contact: ContactInterface): Promise<boolean> {
+
+    const { error } = await this.supabaseService.supabase
+      .from('user_join')
+      .update({
+        user_firstname: contact.firstname,
+        user_lastname: contact.lastname,
+        user_mail: contact.email,
+        user_phone: contact.phone
+      })
+      .eq('id', contact.id);
+
+    if (error) {
+      console.error(error);
+      return false;
+    }
+
+    await this.loadContacts();
+    return true;
+  }
+
 }

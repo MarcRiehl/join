@@ -1,5 +1,7 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ContactService } from '../../services/contacts/contact.service';
+
 
 @Component({
   selector: 'app-header',
@@ -8,7 +10,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.scss',
 })
 export class Header {
-    menuOpen = false;
+
+  private contactService = inject(ContactService);
+
+  selectedContact = this.contactService.selectedContact;
+
+  menuOpen = false;
 
   toggleMenu(event: MouseEvent) {
     event.stopPropagation();
@@ -24,3 +31,4 @@ export class Header {
     this.closeMenu();
   }
 }
+
