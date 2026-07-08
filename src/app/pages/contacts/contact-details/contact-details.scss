@@ -3,6 +3,10 @@
 :host {
   display: block;
   min-width: 0;
+
+  @include mobile-tablet {
+    display: none;
+  }
 }
 
 .contact-details {
@@ -11,6 +15,10 @@
   padding-top: 124px;
   padding-left: 72px;
   color: $blue-color;
+
+  @include mobile-tablet {
+    display: none;
+  }
 }
 
 .contact-details__header {
