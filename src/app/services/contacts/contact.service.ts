@@ -1,7 +1,9 @@
 import { inject, Injectable, signal } from '@angular/core';
+import { RealtimeChannel } from '@supabase/supabase-js';
+
 import { Contact as ContactInterface } from '../../interfaces/contacts/contact';
-import { SupabaseService } from '../supabase/supabase.service';
 import { splitFullName } from '../../utils/name.util/name.util';
+import { SupabaseService } from '../supabase/supabase.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +12,7 @@ export class ContactService {
   private supabaseService = inject(SupabaseService);
   contacts = signal<ContactInterface[]>([]);
   selectedContact = signal<ContactInterface | null>(null);
+  channels: RealtimeChannel | undefined;
 
   private bubbleColors = [
     '#FF7A00',
@@ -51,7 +54,6 @@ export class ContactService {
     return [];
   }
 
-
   async getContacts(): Promise<ContactInterface[]> {
     return this.loadContacts();
   }
@@ -68,7 +70,6 @@ export class ContactService {
   }
 
   async contactExists(fullName: string, excludeId?: number): Promise<boolean> {
-
     const { firstname, lastname } = splitFullName(fullName);
 
     let query = this.supabaseService.supabase
@@ -92,14 +93,12 @@ export class ContactService {
   }
 
   async addContact(contact: ContactInterface): Promise<boolean> {
-    const { error } = await this.supabaseService.supabase
-      .from('user_join')
-      .insert({
-        user_firstname: contact.firstname,
-        user_lastname: contact.lastname,
-        user_mail: contact.email,
-        user_phone: contact.phone
-      });
+    const { error } = await this.supabaseService.supabase.from('user_join').insert({
+      user_firstname: contact.firstname,
+      user_lastname: contact.lastname,
+      user_mail: contact.email,
+      user_phone: contact.phone,
+    });
 
     if (error) {
       console.error(error);
@@ -111,14 +110,13 @@ export class ContactService {
   }
 
   async updateContact(contact: ContactInterface): Promise<boolean> {
-
     const { error } = await this.supabaseService.supabase
       .from('user_join')
       .update({
         user_firstname: contact.firstname,
         user_lastname: contact.lastname,
         user_mail: contact.email,
-        user_phone: contact.phone
+        user_phone: contact.phone,
       })
       .eq('id', contact.id);
 
@@ -133,14 +131,25 @@ export class ContactService {
 
   deleteSelectedContact(): void {
     const contact = this.selectedContact();
-
     if (!contact) return;
-
-    this.contacts.update(contacts =>
-      contacts.filter(c => c.id !== contact.id)
-    );
-
+    this.contacts.update((contacts) => contacts.filter((c) => c.id !== contact.id));
     this.selectedContact.set(null);
   }
 
+  subscribeToContactChanges() {
+    this.channels = this.supabaseService.supabase
+      .channel('custom-all-channel')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'user_join' }, (payload) => {
+        console.log('Change received!', this.loadContacts(), payload);
+      })
+      .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    if (this.channels) {
+      this.supabaseService.supabase.removeChannel(this.channels);
+    }
+  }
+
+  // mit onDestroy wird der Channel wird unsubscribed wird
 }
