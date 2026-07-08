@@ -49,6 +49,16 @@ export class ContactService {
         colors: this.getBubbleColors(contact.id || 0),
       }));
       this.contacts.set(mappedContacts);
+      const selectedContact = this.selectedContact();
+      if (selectedContact) {
+        const updatedSelectedContact = mappedContacts.find(
+          (contact) => contact.id === selectedContact.id,
+        );
+
+        if (updatedSelectedContact) {
+          this.selectedContact.set(updatedSelectedContact);
+        }
+      }
       return mappedContacts;
     }
     return [];
