@@ -5,7 +5,9 @@ import {
   OnInit,
   ViewChild,
   inject,
-  computed
+  computed,
+  input,
+  output
 } from '@angular/core';
 import { from, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -13,6 +15,7 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { DialogService } from '../../../../services/dialog/dialog.service';
 import { ContactService } from '../../../../services/contacts/contact.service';
 import { fullNameValidator, splitFullName } from '../../../../utils/name.util/name.util';
+import { Contact as ContactInterface } from '../../../../interfaces/contacts/contact';
 
 
 @Component({
@@ -194,8 +197,16 @@ async onSubmit(): Promise<void> {
     this.newUserForm.reset();
     this.closeDialog();
   }
-
 }
+
+  contact = input<ContactInterface | null>(null);
+
+  removeSelectedContact = output<void>();
+
+  onRemoveSelectedContact() {
+    this.removeSelectedContact.emit();
+    this.closeDialog();
+  }
 
 }
 

@@ -171,7 +171,7 @@ dialog::backdrop {
 
 .right-user-form {
     display: grid;
-    grid-template-columns: 180px 1fr;
+    grid-template-columns: 160px 1fr;
     gap: 48px;
     align-items: center;
     height: 100%;
@@ -214,12 +214,12 @@ dialog::backdrop {
     align-items: flex-start;
 }
 
-.dialog-user-empty-logo {
+.dialog-user-logo {
     display: flex;
     align-items: center;
 }
 
-.dialog-user-empty-logo img {
+.dialog-user-logo img {
     width: 120px;
     height: auto;
 }
