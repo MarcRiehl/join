@@ -51,6 +51,7 @@ export class ContactService {
     return [];
   }
 
+  
   async getContacts(): Promise<ContactInterface[]> {
     return this.loadContacts();
   }
@@ -110,6 +111,7 @@ export class ContactService {
   }
 
   async updateContact(contact: ContactInterface): Promise<boolean> {
+
     const { error } = await this.supabaseService.supabase
       .from('user_join')
       .update({

@@ -1,14 +1,13 @@
 import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contact as ContactInterface } from '../../../interfaces/contacts/contact';
-import { ContactDialog } from '../contact-dialog/contact-dialog/contact-dialog';
 import { DialogService, DialogType } from '../../../services/dialog/dialog.service';
 import { ContactService } from '../../../services/contacts/contact.service';
 
 @Component({
   selector: 'app-contact-list',
   standalone: true,
-  imports: [CommonModule, ContactDialog],
+  imports: [CommonModule],
   templateUrl: './contact-list.html',
   styleUrl: './contact-list.scss',
 })

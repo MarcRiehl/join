@@ -11,9 +11,9 @@
                         @if (isEditMode()) {
                         Edit contact
                         } @else {
-                         Add Contact
+                        Add Contact
                         }
-                    
+
                     </h2>
                     <div class="dialog-headline-stroke"></div>
                 </div>
@@ -90,7 +90,12 @@
                                         Cancel
                                     </button>
                                     <button class="btn-primary btn-primary--create" type="submit"
-                                        [disabled]="newUserForm.invalid">Create contact
+                                        [disabled]="newUserForm.invalid">
+                                        @if (isEditMode()) {
+                                        Save
+                                        } @else {
+                                        Create contact
+                                        }
                                     </button>
                                 </div>
                             </form>
