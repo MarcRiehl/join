@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Contact as ContactInterface } from '../../interfaces/contacts/contact';
 import { SupabaseService } from '../supabase/supabase.service';
+import { splitFullName } from '../../utils/name.util/name.util';
 
 @Injectable({
   providedIn: 'root',
@@ -65,48 +66,67 @@ export class ContactService {
     return this.bubbleColors[index];
   }
 
-  async contactExists(fullName: string): Promise<boolean> {
-  const parts = fullName.trim().split(/\s+/);
+  async contactExists(fullName: string, excludeId?: number): Promise<boolean> {
 
-  if (parts.length < 2) {
-    return false;
+    const { firstname, lastname } = splitFullName(fullName);
+
+    let query = this.supabaseService.supabase
+      .from('user_join')
+      .select('id')
+      .eq('user_firstname', firstname)
+      .eq('user_lastname', lastname);
+
+    if (excludeId !== undefined) {
+      query = query.not('id', 'eq', excludeId);
+    }
+
+    const { data, error } = await query.maybeSingle();
+
+    if (error) {
+      console.error(error);
+      return false;
+    }
+
+    return !!data;
   }
 
-  const firstName = parts[0];
-  const lastName = parts.slice(1).join(' ');
+  async addContact(contact: ContactInterface): Promise<boolean> {
+    const { error } = await this.supabaseService.supabase
+      .from('user_join')
+      .insert({
+        user_firstname: contact.firstname,
+        user_lastname: contact.lastname,
+        user_mail: contact.email,
+        user_phone: contact.phone
+      });
 
-  const { data, error } = await this.supabaseService.supabase
-    .from('user_join')
-    .select('id')
-    .eq('user_firstname', firstName)
-    .eq('user_lastname', lastName)
-    .maybeSingle();
+    if (error) {
+      console.error(error);
+      return false;
+    }
 
-  if (error) {
-    console.error(error);
-    return false;
+    await this.loadContacts();
+    return true;
   }
 
-  return !!data;
-}
+  async updateContact(contact: ContactInterface): Promise<boolean> {
+    const { error } = await this.supabaseService.supabase
+      .from('user_join')
+      .update({
+        user_firstname: contact.firstname,
+        user_lastname: contact.lastname,
+        user_mail: contact.email,
+        user_phone: contact.phone
+      })
+      .eq('id', contact.id);
 
-async addContact(contact: ContactInterface): Promise<boolean> {
-  const { error } = await this.supabaseService.supabase
-    .from('user_join')
-    .insert({
-      user_firstname: contact.firstname,
-      user_lastname: contact.lastname,
-      user_mail: contact.email,
-      user_phone: contact.phone
-    });
+    if (error) {
+      console.error(error);
+      return false;
+    }
 
-  if (error) {
-    console.error(error);
-    return false;
+    await this.loadContacts();
+    return true;
   }
-
-  await this.loadContacts();
-  return true;
-}
 
 }

@@ -2,28 +2,34 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnInit,
   ViewChild,
-  inject
+  inject,
+  computed
 } from '@angular/core';
 import { from, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AbstractControl, ValidationErrors, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators, AsyncValidatorFn } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators, AsyncValidatorFn } from '@angular/forms';
 import { DialogService } from '../../../../services/dialog/dialog.service';
 import { ContactService } from '../../../../services/contacts/contact.service';
 import { fullNameValidator, splitFullName } from '../../../../utils/name.util/name.util';
 
 
 @Component({
-  selector: 'app-new-user-dialog',
+  selector: 'app-contact-dialog',
   imports: [ReactiveFormsModule],
-  templateUrl: './new-user-dialog.html',
-  styleUrl: './new-user-dialog.scss'
+  templateUrl: './contact-dialog.html',
+  styleUrl: './contact-dialog.scss',
 })
 
-export class NewUserDialog implements AfterViewInit {
+export class ContactDialog implements AfterViewInit, OnInit {
 
   private readonly dialogService = inject(DialogService);
   private readonly contactService = inject(ContactService);
+
+  selectedContact = this.contactService.selectedContact;
+
+  isEditMode = computed(() => this.selectedContact() !== null);
 
   @ViewChild('dialog')
   dialog!: ElementRef<HTMLDialogElement>;
@@ -32,6 +38,21 @@ export class NewUserDialog implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dialog.nativeElement.showModal();
+  }
+
+  ngOnInit(): void {
+    const contact = this.selectedContact();
+
+    if (!contact) {
+      return;
+    }
+
+    this.newUserForm.patchValue({
+      name: `${contact.firstname} ${contact.lastname}`,
+      email: contact.email,
+      phone: contact.phone?.toString() ?? ''
+    });
+
   }
 
   closeDialog(): void {
@@ -125,33 +146,56 @@ export class NewUserDialog implements AfterViewInit {
         return of(null);
       }
 
-      return from(this.contactService.contactExists(value)).pipe(
+      return from(
+        this.contactService.contactExists(
+          value,
+          this.selectedContact()?.id
+        )
+      ).pipe(
         map(exists => (exists ? { nameExists: true } : null)),
         catchError(() => of(null))
       );
     };
   }
 
-  async onSubmit(): Promise<void> {
+async onSubmit(): Promise<void> {
 
-    if (this.newUserForm.invalid) {
-      this.newUserForm.markAllAsTouched();
-      return;
-    }
+  if (this.newUserForm.invalid) {
+    this.newUserForm.markAllAsTouched();
+    return;
+  }
 
-    const { firstname, lastname } = splitFullName(this.name.value!);
+  const { firstname, lastname } = splitFullName(this.name.value!);
 
-    const success = await this.contactService.addContact({
+  let success = false;
+
+  if (this.isEditMode()) {
+
+    success = await this.contactService.updateContact({
+      id: this.selectedContact()!.id,
       firstname,
       lastname,
       email: this.email.value!,
       phone: this.phone.value!
     });
 
-    if (success) {
-      this.newUserForm.reset();
-      this.closeDialog();
-    }
+  } else {
+
+    success = await this.contactService.addContact({
+      firstname,
+      lastname,
+      email: this.email.value!,
+      phone: this.phone.value!
+    });
+
+  }
+
+  if (success) {
+    this.newUserForm.reset();
+    this.closeDialog();
   }
 
 }
+
+}
+

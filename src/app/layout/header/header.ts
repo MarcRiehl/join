@@ -13,7 +13,7 @@ export class Header {
 
   private contactService = inject(ContactService);
 
-selectedContact = this.contactService.selectedContact;
+  selectedContact = this.contactService.selectedContact;
 
   menuOpen = false;
 

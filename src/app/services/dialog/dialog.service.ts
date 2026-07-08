@@ -1,9 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 
 export enum DialogType {
-  AddContact = 'add-contact',
-  EditContact = 'edit-contact',
-  DeleteContact = 'delete-contact',
+  Contact = 'contact',
   AddTask = 'add-task',
   EditTask = 'edit-task'
 }

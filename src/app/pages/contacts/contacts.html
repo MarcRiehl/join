@@ -11,3 +11,7 @@
     ></app-contact-details>
   </section>
 </section>
+
+@if (dialogService.current().type === DialogType.Contact) {
+  <app-contact-dialog />
+}

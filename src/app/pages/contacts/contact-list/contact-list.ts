@@ -1,13 +1,14 @@
 import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contact as ContactInterface } from '../../../interfaces/contacts/contact';
-import { NewUserDialog } from './new-user-dialog/new-user-dialog';
+import { ContactDialog } from '../contact-dialog/contact-dialog/contact-dialog';
 import { DialogService, DialogType } from '../../../services/dialog/dialog.service';
+import { ContactService } from '../../../services/contacts/contact.service';
 
 @Component({
   selector: 'app-contact-list',
   standalone: true,
-  imports: [CommonModule, NewUserDialog],
+  imports: [CommonModule, ContactDialog],
   templateUrl: './contact-list.html',
   styleUrl: './contact-list.scss',
 })
@@ -47,9 +48,11 @@ export class ContactList {
 
   readonly dialogService = inject(DialogService);
   readonly DialogType = DialogType;
+  readonly contactService = inject(ContactService);
 
   openDialog(): void {
-    this.dialogService.open(DialogType.AddContact);
+    this.contactService.selectedContact.set(null);
+    this.dialogService.open(DialogType.Contact);
   }
 
 }
