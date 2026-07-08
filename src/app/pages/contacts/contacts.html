@@ -2,6 +2,7 @@
   <app-contact-list
     [contacts]="contacts()"
     (contactSelected)="selectContact($event)"
+    (removeSelectedContact)="clearSelectedContact()"
   ></app-contact-list>
 
   <section class="contacts__details">

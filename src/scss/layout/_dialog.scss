@@ -17,11 +17,32 @@ dialog::backdrop {
     transform: translate(-50%, -50%);
     animation: dialogIn .3s ease;
 
+    @include mobile-tablet {
+        animation: dialogInMobile 250ms ease-out forwards;
+    }
+
+    @include mobile {
+        width: 100dvw;
+        height: calc(100dvh - 160px);
+        margin: 0 8px;
+    }
+
+    @include small-mobile {
+        width: 100dvw;
+        height: calc(100dvh - 80px);
+        margin: 0 8px;
+    }
+
 }
 
 .user-dialog.closing {
 
     animation: dialogOut .3s ease forwards;
+
+    @include mobile-tablet {
+        animation: dialogOutMobile 250ms ease-out forwards;
+    }
+
 
 }
 
@@ -53,6 +74,30 @@ dialog::backdrop {
 
 }
 
+@keyframes dialogInMobile {
+    from {
+        transform: translate(-50%, calc(-50% + 100vh));
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+@keyframes dialogOutMobile {
+    from {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+
+    to {
+        transform: translate(-50%, calc(-50% + 100vh));
+        opacity: 0;
+    }
+}
+
 .dialog-wrapper-inner {
     display: flex;
     justify-content: space-between;
@@ -61,18 +106,13 @@ dialog::backdrop {
 
 
     @include mobile-tablet {
-        flex-wrap: wrap-reverse;
-        justify-content: center;
-        max-height: 80dvh;
-        align-items: flex-start;
+        flex-direction: column;
+
 
     }
 
     @include small-mobile {
-        overflow-y: auto;
-        padding-right: 8px;
-        min-height: 0;
-        align-items: flex-start;
+        flex-direction: column;
     }
 
     @include landscape {
@@ -120,17 +160,27 @@ dialog::backdrop {
     position: absolute;
     top: 20px;
     right: 20px;
+     z-index: 1001;
 }
 
-.close-btn {
+.dialog-close-btn {
     width: 48px;
     height: 48px;
     cursor: pointer;
     background: url('/assets/img/components/general/close.svg') center no-repeat;
     border: 0;
+
+    @include mobile-tablet {
+        width: 32px;
+        height: 32px;
+        background: url('/assets/img/components/general/dialog-close-mobil.svg') center no-repeat;
+            position: relative;
+    z-index: 9999;
+    pointer-events: auto;
+    }
 }
 
-.close-btn:hover {
+.dialog-close-btn:hover {
     background: url('/assets/img/components/general/close-hover.svg') center no-repeat;
 }
 
@@ -146,7 +196,18 @@ dialog::backdrop {
     border-bottom-left-radius: 30px;
 
     @include mobile-tablet {
-        padding-right: 0px;
+        padding: 16px;
+        width: 100%;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        align-items: flex-start;
+        height: 351px;
+        position: relative;
+
+    }
+
+    @include small-mobile {
+        height: 240px;
     }
 
     @include desktop-md {
@@ -158,6 +219,8 @@ dialog::backdrop {
 .dialog-right {
     // flex: 1;
     display: flex;
+
+
 }
 
 
@@ -167,14 +230,26 @@ dialog::backdrop {
     width: 100%;
     height: 100%;
     padding: 32px;
+
+    @include mobile-tablet {
+        padding: 32px 8px 32px 8px;
+    }
+
+
 }
 
 .right-user-form {
     display: grid;
-    grid-template-columns: 180px 1fr;
+    grid-template-columns: 160px 1fr;
     gap: 48px;
     align-items: center;
     height: 100%;
+
+    @include mobile-tablet {
+        display: flex;
+        flex-direction: column;
+    }
+
 }
 
 
@@ -182,6 +257,10 @@ dialog::backdrop {
     padding-bottom: 20px;
     display: flex;
     justify-content: flex-start;
+
+    @include mobile-tablet {
+        display: none;
+    }
 }
 
 .dialog-logo-img {
@@ -195,6 +274,29 @@ dialog::backdrop {
     font-weight: bold;
     font-size: 61px;
     color: $white;
+
+    @include mobile-tablet {
+        font-size: 47px;
+    }
+
+    @include small-mobile {
+        font-size: 36px;
+    }
+}
+
+.dialog-subline {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    color: $white;
+    font-size: 27px;
+
+    @include mobile-tablet {
+        font-size: 20px;
+    }
+
+    @include small-mobile {
+        font-size: 16px;
+    }
 }
 
 .dialog-headline-stroke {
@@ -206,6 +308,11 @@ dialog::backdrop {
 .dialog-form {
     justify-self: end;
 
+    @include mobile-tablet {
+        display: flex;
+        justify-content: center;
+    }
+
 }
 
 .dialog-user-close {
@@ -214,18 +321,44 @@ dialog::backdrop {
     align-items: flex-start;
 }
 
-.dialog-user-empty-logo {
+
+.dialog-user-logo {
     display: flex;
     align-items: center;
+
+    @include mobile-tablet {
+        position: absolute;
+        top: 350px;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+            pointer-events: none;
+    }
+
+    @include small-mobile {
+        position: absolute;
+        top: 240px;
+        left: 50%;
+
+    }
 }
 
-.dialog-user-empty-logo img {
+.dialog-user-logo img {
     width: 120px;
     height: auto;
+
+    @include small-mobile {
+        width: 100px;
+
+    }
 }
 
 .form-cell {
     padding-bottom: 12px;
+
+    @include small-mobile {
+        padding-bottom: 8px;
+    }
 }
 
 .form-cell input {
@@ -234,6 +367,11 @@ dialog::backdrop {
     border-radius: 10px;
     border: 1px solid $grey-form-border-color;
     padding: 13px 21px;
+
+    @include mobile-tablet {
+        width: 100%;
+        height: 41px;
+    }
 }
 
 .input-name {
@@ -260,11 +398,17 @@ dialog::backdrop {
     padding-right: 21px;
 }
 
-.form-buttons{
+.form-buttons {
     display: flex;
     justify-content: flex-start;
-    gap :20px;
+    gap: 20px;
     padding-top: 20px;
+
+    @include mobile {
+        padding-top: 0px;
+        justify-content: center;
+
+    }
 }
 
 .form-error-placeholder {
@@ -274,7 +418,7 @@ dialog::backdrop {
 
 .form-error {
     color: $red-form-color;
-     font-family: 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 16px;
     line-height: 140%;
     font-weight: 400;
@@ -284,24 +428,28 @@ dialog::backdrop {
         font-size: 16px;
     }
 
+    @include small-mobile {
+        font-size: 14px;
+    }
+
     &__policy {
         color: $red-form-color;
-        font-family: Karla;
+        font-family: 'Inter', sans-serif;
         font-size: 14px;
     }
 }
 
 .form-message {
-  margin-top: 26px;
-  font-weight: 600;
-  font-size: 24px;
-  font-family: 'Karla';
+    margin-top: 26px;
+    font-weight: 600;
+    font-size: 24px;
+    font-family: 'Karla';
 
-  &.success {
-    // color: $secondary-color
-  }
+    &.success {
+        // color: $secondary-color
+    }
 
-  &.error {
-    color: #e74c3c;
-  }
+    &.error {
+        color: #e74c3c;
+    }
 }

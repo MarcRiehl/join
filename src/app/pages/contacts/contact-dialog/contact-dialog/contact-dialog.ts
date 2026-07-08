@@ -5,7 +5,9 @@ import {
   OnInit,
   ViewChild,
   inject,
-  computed
+  computed,
+  input,
+  output
 } from '@angular/core';
 import { from, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -13,7 +15,6 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { DialogService } from '../../../../services/dialog/dialog.service';
 import { ContactService } from '../../../../services/contacts/contact.service';
 import { fullNameValidator, splitFullName } from '../../../../utils/name.util/name.util';
-
 
 @Component({
   selector: 'app-contact-dialog',
@@ -58,6 +59,7 @@ export class ContactDialog implements AfterViewInit, OnInit {
   closeDialog(): void {
     this.startCloseAnimation();
   }
+  
   //protected
   private startCloseAnimation(): void {
 
@@ -91,21 +93,24 @@ export class ContactDialog implements AfterViewInit, OnInit {
 
   }
 
-  animationFinished(event: AnimationEvent): void {
-
-    if (
-      event.target !== this.dialog.nativeElement ||
-      event.animationName !== 'dialogOut'
-    ) {
-      return;
-    }
-
-    const dialog = this.dialog.nativeElement;
-    dialog.classList.remove('closing');
-    dialog.close();
-    this.isClosing = false;
-    this.dialogService.clear();
+animationFinished(event: AnimationEvent): void {
+  if (event.target !== this.dialog.nativeElement) {
+    return;
   }
+
+  if (
+    event.animationName !== 'dialogOut' &&
+    event.animationName !== 'dialogOutMobile'
+  ) {
+    return;
+  }
+
+  const dialog = this.dialog.nativeElement;
+  dialog.classList.remove('closing');
+  dialog.close();
+  this.isClosing = false;
+  this.dialogService.clear();
+}
 
   newUserForm = new FormGroup({
     name: new FormControl('', {
@@ -158,44 +163,48 @@ export class ContactDialog implements AfterViewInit, OnInit {
     };
   }
 
-async onSubmit(): Promise<void> {
+  async onSubmit(): Promise<void> {
 
-  if (this.newUserForm.invalid) {
-    this.newUserForm.markAllAsTouched();
-    return;
+    if (this.newUserForm.invalid) {
+      this.newUserForm.markAllAsTouched();
+      return;
+    }
+
+    const { firstname, lastname } = splitFullName(this.name.value!);
+
+    let success = false;
+
+    if (this.isEditMode()) {
+
+      success = await this.contactService.updateContact({
+        id: this.selectedContact()!.id,
+        firstname,
+        lastname,
+        email: this.email.value!,
+        phone: this.phone.value!
+      });
+
+    } else {
+
+      success = await this.contactService.addContact({
+        firstname,
+        lastname,
+        email: this.email.value!,
+        phone: this.phone.value!
+      });
+
+    }
+
+    if (success) {
+      this.newUserForm.reset();
+      this.closeDialog();
+    }
   }
 
-  const { firstname, lastname } = splitFullName(this.name.value!);
-
-  let success = false;
-
-  if (this.isEditMode()) {
-
-    success = await this.contactService.updateContact({
-      id: this.selectedContact()!.id,
-      firstname,
-      lastname,
-      email: this.email.value!,
-      phone: this.phone.value!
-    });
-
-  } else {
-
-    success = await this.contactService.addContact({
-      firstname,
-      lastname,
-      email: this.email.value!,
-      phone: this.phone.value!
-    });
-
-  }
-
-  if (success) {
-    this.newUserForm.reset();
+  onRemoveSelectedContact() {
+    this.contactService.deleteSelectedContact();
     this.closeDialog();
   }
-
-}
 
 }
 

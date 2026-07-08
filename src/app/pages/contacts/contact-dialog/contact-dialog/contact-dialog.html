@@ -1,5 +1,5 @@
 <dialog #dialog class="user-dialog" closedby="any" (cancel)="onCancel($event)"
-    (animationend)="animationFinished($event)">
+    (animationend)="animationFinished($event)" >
     <div class="dialog-content">
         <div class="dialog-wrapper-inner">
             <div class="dialog-left">
@@ -15,18 +15,28 @@
                         }
 
                     </h2>
+                    <h3 class="dialog-subline">Tasks are better with a team!</h3>
                     <div class="dialog-headline-stroke"></div>
                 </div>
             </div>
             <div class="dialog-right">
                 <div class="dialog-user-close">
-                    <button type="button" class="close-btn" (click)="closeDialog()">
+                    <button type="button" class="dialog-close-btn" (click)="closeDialog()">
                     </button>
                 </div>
                 <div class="dialog-right-inner-right">
                     <div class="right-user-form">
-                        <div class="dialog-user-empty-logo">
+                        <div class="dialog-user-logo">
+                            @if (isEditMode()) {
+                            @if (selectedContact(); as contact) {
+                                   <div class="contact-details__avatar" [style.background-color]="contact.colors">
+                            {{ contact.initials }}
+                            </div>
+                            }
+                            } @else {
                             <img src="/assets/img/forms/empty-user.svg" alt="User">
+                            }
+
                         </div>
                         <div class="dialog-form">
                             <form [formGroup]="newUserForm" (ngSubmit)="onSubmit()">
@@ -85,11 +95,19 @@
                                 </div>
 
                                 <div class="form-buttons">
+                                    @if (isEditMode()) {
                                     <button class="btn-primary btn-primary--border" type="button"
+                                        (click)="onRemoveSelectedContact()">
+                                        Delete
+                                    </button>
+                                    } @else {
+                                    <button class="btn-primary btn-primary--border btn-primary--hide" type="button"
                                         (click)="closeDialog()">
                                         Cancel
                                     </button>
-                                    <button class="btn-primary btn-primary--create" type="submit"
+                                    }
+
+                                    <button class="btn-primary btn-primary--create btn-primary--mobil" type="submit"
                                         [disabled]="newUserForm.invalid">
                                         @if (isEditMode()) {
                                         Save
