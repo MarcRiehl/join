@@ -16,7 +16,6 @@ html {
     margin: 0 auto;
 }
 
-
 .layout {
     display: flex;
     height: 100dvh;
@@ -30,7 +29,8 @@ html {
     width: 100%;
     background: white;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-        @include mobile {
+    z-index: 10;
+    @include mobile {
         order: 0; 
     }
 }
