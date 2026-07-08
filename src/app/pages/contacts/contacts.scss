@@ -6,3 +6,16 @@
     justify-content: center;
   }
 }
+
+@include mobile-tablet {
+  .contacts__main--detail-open {
+    app-contact-list {
+      display: none;
+    }
+
+    .contacts__details {
+      display: block;
+      width: 100%;
+    }
+  }
+}
