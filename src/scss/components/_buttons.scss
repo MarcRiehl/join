@@ -16,6 +16,8 @@
   font-weight: 700;
   font-size: 21px;
 
+
+
   &:hover {
     background-color: #29abe2;
   }
@@ -25,7 +27,8 @@
   }
 
   &--create {
-            gap: 10px;
+    gap: 10px;
+
     &::after {
       content: "";
       width: 24px;
@@ -33,7 +36,10 @@
 
       background: url("/assets/img/components/general/check.svg") center / contain no-repeat;
     }
+
   }
+
+
 
   &--border {
     &::after {
@@ -49,6 +55,25 @@
 
   }
 }
+
+.btn-primary.btn-primary--hide {
+  @include mobile {
+    display: none;
+  }
+}
+
+
+.btn-primary.btn-primary--mobil {
+  @include small-mobile {
+    font-size: 18px;
+    width: 100% !important;
+  }
+
+  @include mobile-tablet {
+    width: 100% !important;
+  }
+}
+
 
 .btn-primary.btn-primary--border {
   background-color: $white;
@@ -69,8 +94,9 @@
 }
 
 .btn-primary.btn-primary--create {
-  gap:8px;
-  &:hover{
-  background-color: $light-blue-button;
+  gap: 8px;
+
+  &:hover {
+    background-color: $light-blue-button;
   }
 }

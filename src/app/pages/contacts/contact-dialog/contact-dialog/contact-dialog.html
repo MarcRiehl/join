@@ -1,5 +1,5 @@
 <dialog #dialog class="user-dialog" closedby="any" (cancel)="onCancel($event)"
-    (animationend)="animationFinished($event)">
+    (animationend)="animationFinished($event)" >
     <div class="dialog-content">
         <div class="dialog-wrapper-inner">
             <div class="dialog-left">
@@ -21,7 +21,7 @@
             </div>
             <div class="dialog-right">
                 <div class="dialog-user-close">
-                    <button type="button" class="close-btn" (click)="closeDialog()">
+                    <button type="button" class="dialog-close-btn" (click)="closeDialog()">
                     </button>
                 </div>
                 <div class="dialog-right-inner-right">
@@ -101,13 +101,13 @@
                                         Delete
                                     </button>
                                     } @else {
-                                    <button class="btn-primary btn-primary--border hide-mobil" type="button"
+                                    <button class="btn-primary btn-primary--border btn-primary--hide" type="button"
                                         (click)="closeDialog()">
                                         Cancel
                                     </button>
                                     }
 
-                                    <button class="btn-primary btn-primary--create" type="submit"
+                                    <button class="btn-primary btn-primary--create btn-primary--mobil" type="submit"
                                         [disabled]="newUserForm.invalid">
                                         @if (isEditMode()) {
                                         Save
