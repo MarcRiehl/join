@@ -16,25 +16,34 @@ export class ContactDetails {
 
   removeSelectedContact = output<void>();
 
-  onRemoveSelectedContact() {
+  readonly dialogService = inject(DialogService);
+  readonly contactService = inject(ContactService);
+  readonly DialogType = DialogType;
+
+  isContactOptionsOpen = false;
+
+  toggleContactOptions(): void {
+    this.isContactOptionsOpen = !this.isContactOptionsOpen;
+  }
+
+  closeContactOptions(): void {
+    this.isContactOptionsOpen = false;
+  }
+
+  onRemoveSelectedContact(): void {
+    this.closeContactOptions();
     this.removeSelectedContact.emit();
   }
 
-  // für den delete button in der Detail View -> (click)="onRemoveSelectedcontact()"
+  editContact(): void {
+    const contact = this.contact();
 
+    if (!contact) {
+      return;
+    }
 
-readonly dialogService = inject(DialogService);
-readonly contactService = inject(ContactService);
-readonly DialogType = DialogType;
-
-editContact(): void {
-
-  const contact = this.contact();
-
-  this.contactService.selectedContact.set(contact!);
-
-  this.dialogService.open(DialogType.Contact);
-
-}
-
+    this.closeContactOptions();
+    this.contactService.selectedContact.set(contact);
+    this.dialogService.open(DialogType.Contact);
+  }
 }

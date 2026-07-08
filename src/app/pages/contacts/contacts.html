@@ -1,4 +1,4 @@
-<section class="contacts__main">
+<section class="contacts__main" [class.contacts__main--detail-open]="selectedContact()">
   <app-contact-list
     [contacts]="contacts()"
     (contactSelected)="selectContact($event)"

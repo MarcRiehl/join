@@ -28,7 +28,9 @@
         </h2>
 
         <div class="contact-details__actions">
-          <button class="contact-details__action" type="button" (click)="editContact()">Edit</button>
+          <button class="contact-details__action" type="button" (click)="editContact()">
+            Edit
+          </button>
 
           <button class="contact-details__action" type="button" (click)="onRemoveSelectedContact()">
             Delete
@@ -54,6 +56,45 @@
         </p>
       </div>
     </section>
+    <div class="contact-details__mobile-options">
+      @if (!isContactOptionsOpen) {
+        <button
+          class="contact-details__mobile-options-button"
+          type="button"
+          aria-label="Open contact options"
+          (click)="toggleContactOptions()"
+        >
+          <img src="assets/img/components/contacts/edit-more.svg" alt="" />
+        </button>
+      } @else {
+        <button
+          class="contact-details__mobile-options-backdrop"
+          type="button"
+          aria-label="Close contact options"
+          (click)="closeContactOptions()"
+        ></button>
+
+        <div class="contact-details__mobile-options-menu">
+          <button
+            class="contact-details__mobile-options-action contact-details__mobile-options-action--edit"
+            type="button"
+            (click)="editContact(); closeContactOptions()"
+          >
+            <img src="assets/img/components/general/edit.svg" alt="" />
+            <span>Edit</span>
+          </button>
+
+          <button
+            class="contact-details__mobile-options-action contact-details__mobile-options-action--delete"
+            type="button"
+            (click)="onRemoveSelectedContact()"
+          >
+            <img src="assets/img/components/general/delete.svg" alt="" />
+            <span>Delete</span>
+          </button>
+        </div>
+      }
+    </div>
   } @else {
     <section class="contact-details__empty">
       <p class="contact-details__empty-text">Select a contact to see the details.</p>
