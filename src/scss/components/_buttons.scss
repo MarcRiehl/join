@@ -64,6 +64,8 @@
 
 
 .btn-primary.btn-primary--mobil {
+  width: 100% !important;
+
   @include small-mobile {
     font-size: 18px;
     width: 100% !important;
@@ -95,8 +97,12 @@
 
 .btn-primary.btn-primary--create {
   gap: 8px;
+    @include desktop-s{
+  letter-spacing: -7%;
+  }
 
   &:hover {
     background-color: $light-blue-button;
   }
+
 }
