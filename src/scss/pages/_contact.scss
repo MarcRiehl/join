@@ -23,7 +23,7 @@
     width: 95%;
   }
 
-  @media (max-width: 343px) {
+  @include small-mobile {
     width: 90%;
   }
 }
@@ -37,6 +37,9 @@
       padding: 0 6px 0px 6px;
   }
     @include desktop-s{
+      padding: 0 6px 0px 6px;
+  }
+      @include mobile{
       padding: 0 6px 0px 6px;
   }
 }
