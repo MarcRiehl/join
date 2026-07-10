@@ -117,8 +117,12 @@ dialog::backdrop {
 
 
     @include mobile-tablet {
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        justify-content: stretch;
     }
+
+
 
     @include small-mobile {
         display: grid;
@@ -252,11 +256,13 @@ dialog::backdrop {
     height: 100%;
     padding: 32px;
 
-    @include mobile-tablet {
+    @include mobile {
         padding: 32px 8px 32px 8px;
     }
 
-
+    @include tablet {
+        padding: 50px 8px 32px 8px;
+    }
 }
 
 .right-user-form {
@@ -278,7 +284,6 @@ dialog::backdrop {
         display: flex;
         flex-direction: column;
     }
-
 }
 
 
@@ -341,8 +346,9 @@ dialog::backdrop {
     @include mobile-tablet {
         justify-self: unset;
     }
-    @include small-mobile{
-            padding-top: 10px;
+
+    @include small-mobile {
+        padding-top: 10px;
     }
 
 }

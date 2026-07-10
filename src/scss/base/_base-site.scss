@@ -44,6 +44,14 @@ html {
         flex: 0 0 80px;
         width: 100%;
     }
+        @include desktop-s {
+        flex: 0 0 140px;
+        width: 100%;
+    }
+            @include desktop-md {
+        flex: 0 0 180px;
+        width: 100%;
+    }
 }
 
 .main {

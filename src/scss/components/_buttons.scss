@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   gap: 16px;
-  background-color: #2a3647;
+  background-color: $blue-color;
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -16,11 +16,11 @@
   font-size: 21px;
 
   &:hover {
-    background-color: #29abe2;
+    background-color: $ligth-blue-color;
   }
 
   &:active {
-    background-color: #091931;
+    background-color: $dark-blue-color;
   }
 
   &--list {
