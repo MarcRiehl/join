@@ -1,5 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 
+import { Task } from '../../interfaces/task/task';
 import { SupabaseService } from '../supabase/supabase.service';
 
 @Injectable({
@@ -8,10 +9,34 @@ import { SupabaseService } from '../supabase/supabase.service';
 export class TaskService {
   private supabase = inject(SupabaseService);
 
+  tasks = signal<Task[]>([]);
+
+  async loadTasks(): Promise<Task[]> {
+    const { data, error } = await this.supabase.supabase.from('task').select('*');
+    if (!error && data) {
+      const mappedTasks: Task[] = data.map((task: any) => ({
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        dueDate: task.due_date,
+        priority: task.priority,
+        category: task.category,
+        status: task.status,
+        assignedContactIds: task.assigned_contact_ids,
+        subtasks: task.subtasks,
+        createdAt: task.created_at,
+      }));
+
+      this.tasks.set(mappedTasks);
+      return mappedTasks;
+    }
+    return [];
+  }
+
   // ----------------------------
   // TASKS
   // ----------------------------
-  // Alle Tasks laden
+  // Alle Tasks laden (check)
   // Einen Task nach ID laden
   // Neuen Task erstellen
   // Task bearbeiten
