@@ -38,6 +38,11 @@
       background: url("/assets/img/components/general/check.svg") center / contain no-repeat;
     }
 
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
   }
 
   &--border {
