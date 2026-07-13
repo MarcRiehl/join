@@ -58,11 +58,11 @@ export class ContactDialog implements AfterViewInit, OnInit {
     });
 
   }
-  
+
   closeDialog(): void {
     this.startCloseAnimation();
   }
-  
+
   //protected
   private startCloseAnimation(): void {
 
@@ -96,24 +96,24 @@ export class ContactDialog implements AfterViewInit, OnInit {
 
   }
 
-animationFinished(event: AnimationEvent): void {
-  if (event.target !== this.dialog.nativeElement) {
-    return;
-  }
+  animationFinished(event: AnimationEvent): void {
+    if (event.target !== this.dialog.nativeElement) {
+      return;
+    }
 
-  if (
-    event.animationName !== 'dialogOut' &&
-    event.animationName !== 'dialogOutMobile'
-  ) {
-    return;
-  }
+    if (
+      event.animationName !== 'dialogOut' &&
+      event.animationName !== 'dialogOutMobile'
+    ) {
+      return;
+    }
 
-  const dialog = this.dialog.nativeElement;
-  dialog.classList.remove('closing');
-  dialog.close();
-  this.isClosing = false;
-  this.dialogService.clear();
-}
+    const dialog = this.dialog.nativeElement;
+    dialog.classList.remove('closing');
+    dialog.close();
+    this.isClosing = false;
+    this.dialogService.clear();
+  }
 
   newUserForm = new FormGroup({
     name: new FormControl('', {
@@ -202,7 +202,12 @@ animationFinished(event: AnimationEvent): void {
     if (success) {
       this.newUserForm.reset();
       this.closeDialog();
-      this.toastService.success('Contact successfully created.');
+
+      if (this.isEditMode()) {
+        return;
+      } else {
+        this.toastService.success('Contact successfully created.');
+      }
     }
   }
 
