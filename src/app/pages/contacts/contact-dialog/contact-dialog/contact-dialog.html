@@ -1,5 +1,5 @@
 <dialog #dialog class="user-dialog" closedby="any" (cancel)="onCancel($event)"
-    (animationend)="animationFinished($event)" >
+    (animationend)="animationFinished($event)">
     <div class="dialog-content">
         <div class="dialog-wrapper-inner">
             <div class="dialog-left">
@@ -29,8 +29,8 @@
                         <div class="dialog-user-logo">
                             @if (isEditMode()) {
                             @if (selectedContact(); as contact) {
-                                   <div class="contact-details__avatar" [style.background-color]="contact.colors">
-                            {{ contact.initials }}
+                            <div class="contact-details__avatar" [style.background-color]="contact.colors">
+                                {{ contact.initials }}
                             </div>
                             }
                             } @else {
@@ -64,6 +64,11 @@
                                             Contact already exists.
                                         </p>
                                         }
+                                        @else if (name.hasError('pattern')){
+                                        <p class="form-error">
+                                            The name must not contain numbers.
+                                        </p>
+                                        }
                                         }
                                     </div>
                                 </div>
@@ -73,10 +78,17 @@
                                             formControlName="email" placeholder="Email" />
                                     </div>
                                     <div class="form-error-placeholder">
-                                        @if (email.touched && email.invalid) {
+                                        @if (email.touched) {
+                                        @if ( email.hasError('required')) {
                                         <p class="form-error">
                                             Your email is required.
                                         </p>
+                                        }
+                                        @else if ( email.hasError('email')) {
+                                        <p class="form-error">
+                                            Wrong email address.
+                                        </p>
+                                        }
                                         }
                                     </div>
                                 </div>
@@ -86,10 +98,18 @@
                                             formControlName="phone" placeholder="Phone" />
                                     </div>
                                     <div class="form-error-placeholder">
-                                        @if (phone.touched && phone.invalid) {
+                                        @if (phone.touched) {
+                                        @if (phone.hasError('required')) {
                                         <p class="form-error">
                                             Your phone number is required.
                                         </p>
+                                        }
+                                        @else if (phone.hasError('pattern')){
+                                        <p class="form-error">
+                                            The phone number can only contain numbers.
+                                        </p>
+                                        }
+
                                         }
                                     </div>
                                 </div>

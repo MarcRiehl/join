@@ -13,8 +13,10 @@
   font-weight: 400;
   line-height: 120%;
   text-transform: uppercase;
-}
 
-.test{
-  
+  @media (max-width: 1258px) and (min-width: 881px) {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+  }
 }

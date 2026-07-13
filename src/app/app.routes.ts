@@ -55,12 +55,13 @@ export const routes: Routes = [
                 path: 'help',
                 component: Help,
                 title: 'Help'
-            },
-            {
-                path: '',
-                redirectTo: 'board',
-                pathMatch: 'full'
             }
+            // ,
+            // {
+            //     path: '',
+            //     redirectTo: 'contacts',
+            //     pathMatch: 'full'
+            // }
         ]
     },
     {
