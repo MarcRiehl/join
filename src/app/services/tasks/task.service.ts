@@ -53,6 +53,17 @@ export class TaskService {
       await this.loadTasks();
     }
   }
+  //  Methode aufrufen:
+  // im Formular -> onSubmit() -> this.taskService.createTask(task);
+  // in der task-Komponente:
+  //  async onSubmit(): Promise<void> {
+  //      const task = {
+  //    Formulardaten zusammensetzen
+  //      };
+  //    await this.taskService.createTask(task);
+  //    }
+  // Auf button setzen:
+  // <button type="button" (click)="createTask()">Create Task</button>
 
   updateTask() {
     // ändert eine bestehende Task mit id
@@ -63,7 +74,7 @@ export class TaskService {
   // ----------------------------
   // Alle Tasks laden (check)
   // Einen Task nach ID laden
-  // Neuen Task erstellen
+  // Neuen Task erstellen (check)
   // Task bearbeiten
   // Task löschen
   // Taskstatus ändern
