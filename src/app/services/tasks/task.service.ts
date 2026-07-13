@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, OnInit, signal } from '@angular/core';
 
 import { Task } from '../../interfaces/task/task';
 import { SupabaseService } from '../supabase/supabase.service';
@@ -12,7 +12,10 @@ export class TaskService {
   tasks = signal<Task[]>([]);
 
   async loadTasks(): Promise<Task[]> {
-    const { data, error } = await this.supabase.supabase.from('task').select('*');
+    const { data, error } = await this.supabase.supabase.from('tasks').select('*');
+    console.log('Raw data:', data);
+    console.log('Supabase error:', error);
+
     if (!error && data) {
       const mappedTasks: Task[] = data.map((task: any) => ({
         id: task.id,
