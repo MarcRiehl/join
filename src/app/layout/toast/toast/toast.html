@@ -1,0 +1,10 @@
+@if (toastService.visible()) {
+    <div
+        class="success-toast"
+        animate.enter="toast-enter"
+        animate.leave="toast-leave">
+
+        {{ toastService.message() }}
+
+    </div>
+}

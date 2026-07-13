@@ -15,6 +15,8 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { DialogService } from '../../../../services/dialog/dialog.service';
 import { ContactService } from '../../../../services/contacts/contact.service';
 import { fullNameValidator, splitFullName } from '../../../../utils/name.util/name.util';
+import { ToastService } from '../../../../services/toast/toast-service';
+
 
 @Component({
   selector: 'app-contact-dialog',
@@ -27,6 +29,7 @@ export class ContactDialog implements AfterViewInit, OnInit {
 
   private readonly dialogService = inject(DialogService);
   private readonly contactService = inject(ContactService);
+  private toastService = inject(ToastService);
 
   selectedContact = this.contactService.selectedContact;
 
@@ -55,7 +58,7 @@ export class ContactDialog implements AfterViewInit, OnInit {
     });
 
   }
-
+  
   closeDialog(): void {
     this.startCloseAnimation();
   }
@@ -163,6 +166,7 @@ animationFinished(event: AnimationEvent): void {
     };
   }
 
+
   async onSubmit(): Promise<void> {
 
     if (this.newUserForm.invalid) {
@@ -198,6 +202,7 @@ animationFinished(event: AnimationEvent): void {
     if (success) {
       this.newUserForm.reset();
       this.closeDialog();
+      this.toastService.success('Contact successfully created.');
     }
   }
 
