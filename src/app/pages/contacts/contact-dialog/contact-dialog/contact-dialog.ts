@@ -114,7 +114,7 @@ animationFinished(event: AnimationEvent): void {
 
   newUserForm = new FormGroup({
     name: new FormControl('', {
-      validators: [Validators.required, fullNameValidator()],
+      validators: [Validators.required, Validators.pattern(/^[A-Za-zÄÖÜäöüß\s'-]+$/), fullNameValidator()],
       asyncValidators: [this.nameValidator()],
       updateOn: 'blur'
     }),
@@ -123,7 +123,7 @@ animationFinished(event: AnimationEvent): void {
       updateOn: 'blur'
     }),
     phone: new FormControl('', {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.pattern(/^[0-9+\s()-]+$/)],
       updateOn: 'blur'
     })
   });

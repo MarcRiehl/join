@@ -413,8 +413,13 @@ dialog::backdrop {
     width: 422px;
     height: 50px;
     border-radius: 10px;
-    border: 1px solid $grey-form-border-color;
+    border: 1px solid $grey-form-color;
     padding: 13px 21px;
+
+    &:focus {
+        border-color: $grey-form-blue;
+        outline: none;
+    }
 
     @include mobile-tablet {
         width: 100%;
@@ -428,6 +433,15 @@ dialog::backdrop {
     @include small-mobile {
         height: 36px;
     }
+}
+
+.form-cell input::placeholder {
+    color: $grey-form-color;
+}
+
+input.ng-invalid.ng-dirty,
+input.ng-invalid.ng-touched {
+    border-color: $red-form-color;
 }
 
 .input-name {

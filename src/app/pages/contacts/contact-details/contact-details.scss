@@ -292,7 +292,7 @@
   display: none;
 }
 
-@include mobile {
+@include mobile-tablet {
   :host {
     display: none;
   }
@@ -303,7 +303,229 @@
     min-width: 0;
   }
 
-  :host-context(.contacts__main--detail-open) .contact-details {
+
+
+  :host-context(.contacts__main--detail-open) .contact-details__header {
+    position: relative;
+    margin-bottom: 48px;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__headline {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 213px;
+    max-width: 100%;
+    min-height: 104px;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__title {
+    width: 211px;
+    min-height: 56px;
+    margin: 0;
+    color: #000000;
+    font-size: 47px;
+    font-weight: 700;
+    line-height: 120%;
+    letter-spacing: 0;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__subtitle {
+    width: 175px;
+    min-height: 24px;
+    margin: 0;
+    color: $blue-color;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 120%;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__separator {
+    order: 3;
+    width: 90px;
+    height: 0;
+    border-left: 0;
+    border-bottom: 3px solid $ligth-blue-color;
+    flex-shrink: 0;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__back {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: $blue-color;
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 326px;
+    max-width: 100%;
+    min-height: 80px;
+    margin-bottom: 21px;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__avatar {
+    width: 80px;
+    height: 80px;
+    gap: 10px;
+    border: 3px solid #ffffff;
+    border-radius: 70px;
+    color: #ffffff;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.4);
+    @include flex-center;
+    flex-shrink: 0;
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 120%;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__identity {
+    width: 226px;
+    max-width: calc(100% - 100px);
+    min-width: 0;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__name {
+    width: 226px;
+    max-width: 100%;
+    margin: 0;
+    color: #000000;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 120%;
+    letter-spacing: 0;
+    word-break: normal;
+    overflow-wrap: normal;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__actions {
+    display: none;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__info {
+    gap: 21px;
+    width: 330px;
+    max-width: 100%;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__info-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 120%;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__info-group {
+    gap: 8px;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__mobile-options {
+    display: block;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button {
+    position: fixed;
+    right: 16px;
+    bottom: 112px;
+    z-index: 1000;
+    width: 56px;
+    height: 56px;
+    border: 1px solid $blue-color;
+    border-radius: 50%;
+    background-color: $blue-color;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button img {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button:hover {
+    background-color: $ligth-blue-color;
+    border-color: $ligth-blue-color;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    border: none;
+    background: transparent;
+    padding: 0;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-menu {
+    position: fixed;
+    top: auto;
+    right: 0;
+    bottom: calc(80px + 16px);
+    z-index: 1001;
+    width: 116px;
+    height: 100px;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 20px 20px 0 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 4px 0 #00000040;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-action {
+    width: 100%;
+    height: 30px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: $blue-color;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 120%;
+    cursor: pointer;
+  }
+
+  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-action img {
+    width: 24px;
+    height: 24px;
+    display: block;
+    flex-shrink: 0;
+  }
+}
+
+@include mobile {
+    :host-context(.contacts__main--detail-open) .contact-details {
     display: block;
     width: 100%;
     max-width: none;
@@ -313,466 +535,21 @@
     padding: 48px 16px 104px;
     background-color: #f6f7f8;
   }
-
-  :host-context(.contacts__main--detail-open) .contact-details__header {
-    position: relative;
-    margin-bottom: 48px;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__headline {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    width: 213px;
-    max-width: 100%;
-    min-height: 104px;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__title {
-    width: 211px;
-    min-height: 56px;
-    margin: 0;
-    color: #000000;
-    font-size: 47px;
-    font-weight: 700;
-    line-height: 120%;
-    letter-spacing: 0;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__subtitle {
-    width: 175px;
-    min-height: 24px;
-    margin: 0;
-    color: $blue-color;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 120%;
-    letter-spacing: 0;
-    white-space: nowrap;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__separator {
-    order: 3;
-    width: 90px;
-    height: 0;
-    border-left: 0;
-    border-bottom: 3px solid $ligth-blue-color;
-    flex-shrink: 0;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__back {
-    position: absolute;
-    top: 8px;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border: none;
-    background: transparent;
-    color: $blue-color;
-    font-size: 32px;
-    line-height: 1;
-    cursor: pointer;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__profile {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    width: 326px;
-    max-width: 100%;
-    min-height: 80px;
-    margin-bottom: 21px;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__avatar {
-    width: 80px;
-    height: 80px;
-    gap: 10px;
-    border: 3px solid #ffffff;
-    border-radius: 70px;
-    color: #ffffff;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.4);
-    @include flex-center;
-    flex-shrink: 0;
-    font-size: 27px;
-    font-weight: 400;
-    line-height: 120%;
-    letter-spacing: 0;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__identity {
-    width: 226px;
-    max-width: calc(100% - 100px);
-    min-width: 0;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__name {
-    width: 226px;
-    max-width: 100%;
-    margin: 0;
-    color: #000000;
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 120%;
-    letter-spacing: 0;
-    word-break: normal;
-    overflow-wrap: normal;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__actions {
-    display: none;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__info {
-    gap: 21px;
-    width: 330px;
-    max-width: 100%;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__info-title {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 120%;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__info-group {
-    gap: 8px;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options {
-    display: block;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button {
-    position: fixed;
-    right: 16px;
-    bottom: 112px;
-    z-index: 1000;
-    width: 56px;
-    height: 56px;
-    border: 1px solid $blue-color;
-    border-radius: 50%;
-    background-color: $blue-color;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    padding: 10px;
-    cursor: pointer;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button img {
-    width: 24px;
-    height: 24px;
-    display: block;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button:hover {
-    background-color: $ligth-blue-color;
-    border-color: $ligth-blue-color;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    border: none;
-    background: transparent;
-    padding: 0;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-menu {
-    position: fixed;
-    top: auto;
-    right: 0;
-    bottom: calc(80px + 16px);
-    z-index: 1001;
-    width: 116px;
-    height: 100px;
-    box-sizing: border-box;
-    padding: 10px;
-    border-radius: 20px 20px 0 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 4px 0 #00000040;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-action {
-    width: 100%;
-    height: 30px;
-    border: none;
-    background: transparent;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: $blue-color;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 120%;
-    cursor: pointer;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-action img {
-    width: 24px;
-    height: 24px;
-    display: block;
-    flex-shrink: 0;
-  }
 }
 
 @include tablet {
-  :host {
-    display: none;
-  }
-
-  :host-context(.contacts__main--detail-open) {
-    display: block;
-    width: 100%;
-    min-width: 0;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details {
+    :host-context(.contacts__main--detail-open) .contact-details {
     display: block;
     width: 100%;
     max-width: none;
     min-height: calc(100dvh - 80px);
     box-sizing: border-box;
     margin: 0;
-
     background-color: #f6f7f8;
   }
-
-  :host-context(.contacts__main--detail-open) .contact-details__header {
-    position: relative;
-    margin-bottom: 48px;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__headline {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    width: 213px;
-    max-width: 100%;
-    min-height: 104px;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__title {
-    width: 211px;
-    min-height: 56px;
-    margin: 0;
-    color: #000000;
-    font-size: 47px;
-    font-weight: 700;
-    line-height: 120%;
-    letter-spacing: 0;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__subtitle {
-    width: 175px;
-    min-height: 24px;
-    margin: 0;
-    color: $blue-color;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 120%;
-    letter-spacing: 0;
-    white-space: nowrap;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__separator {
-    order: 3;
-    width: 90px;
-    height: 0;
-    border-left: 0;
-    border-bottom: 3px solid $ligth-blue-color;
-    flex-shrink: 0;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__back {
-    position: absolute;
-    top: 8px;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border: none;
-    background: transparent;
-    color: $blue-color;
-    font-size: 32px;
-    line-height: 1;
-    cursor: pointer;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__profile {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    width: 326px;
-    max-width: 100%;
-    min-height: 80px;
-    margin-bottom: 21px;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__avatar {
-    width: 80px;
-    height: 80px;
-    gap: 10px;
-    border: 3px solid #ffffff;
-    border-radius: 70px;
-    color: #ffffff;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.4);
-    @include flex-center;
-    flex-shrink: 0;
-    font-size: 27px;
-    font-weight: 400;
-    line-height: 120%;
-    letter-spacing: 0;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__identity {
-    width: 226px;
-    max-width: calc(100% - 100px);
-    min-width: 0;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__name {
-    width: 226px;
-    max-width: 100%;
-    margin: 0;
-    color: #000000;
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 120%;
-    letter-spacing: 0;
-    word-break: normal;
-    overflow-wrap: normal;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__actions {
-    display: none;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__info {
-    gap: 21px;
-    width: 330px;
-    max-width: 100%;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__info-title {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 120%;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__info-group {
-    gap: 8px;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options {
-    display: block;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button {
-    position: fixed;
-    right: 16px;
-    bottom: 112px;
-    z-index: 1000;
-    width: 56px;
-    height: 56px;
-    border: 1px solid $blue-color;
-    border-radius: 50%;
-    background-color: $blue-color;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    padding: 10px;
-    cursor: pointer;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button img {
-    width: 24px;
-    height: 24px;
-    display: block;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button:hover {
-    background-color: $ligth-blue-color;
-    border-color: $ligth-blue-color;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    border: none;
-    background: transparent;
-    padding: 0;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-menu {
-    position: fixed;
-    top: auto;
-    right: 0;
-    bottom: calc(80px + 16px);
-    z-index: 1001;
-    width: 116px;
-    height: 100px;
-    box-sizing: border-box;
-    padding: 10px;
-    border-radius: 20px 20px 0 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 4px 0 #00000040;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-action {
-    width: 100%;
-    height: 30px;
-    border: none;
-    background: transparent;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: $blue-color;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 120%;
-    cursor: pointer;
-  }
-
-  :host-context(.contacts__main--detail-open) .contact-details__mobile-options-action img {
-    width: 24px;
-    height: 24px;
-    display: block;
-    flex-shrink: 0;
-  }
 }
+
+
 
 @include mobile-tablet {
   :host-context(.contacts__main--detail-open) .contact-details {
