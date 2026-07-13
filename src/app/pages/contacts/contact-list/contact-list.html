@@ -17,7 +17,7 @@
       <div class="group-divider"></div>
       <div class="group-items">
         @for (contact of group.contacts; track contact.id) {
-        <div class="contact-item" [class.active]="activeContactId === contact.id" (click)="onSelectContact(contact)">
+        <div class="contact-item" [class.active]="selectedContact()?.id === contact.id" (click)="onSelectContact(contact)">
           <div class="contact-avatar" [style.background-color]="contact.colors">
             {{ contact.initials }}
           </div>
