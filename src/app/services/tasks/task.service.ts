@@ -36,6 +36,28 @@ export class TaskService {
     return [];
   }
 
+  async createTask(task: Omit<Task, 'id' | 'createdAt'>): Promise<void> {
+    const { data, error } = await this.supabase.supabase.from('tasks').insert([
+      {
+        title: task.title,
+        description: task.description,
+        due_date: task.dueDate,
+        priority: task.priority,
+        category: task.category,
+        status: task.status,
+        assigned_contact_ids: task.assignedContactIds,
+        subtasks: task.subtasks,
+      },
+    ]);
+    if (!error) {
+      await this.loadTasks();
+    }
+  }
+
+  updateTask() {
+    // ändert eine bestehende Task mit id
+  }
+
   // ----------------------------
   // TASKS
   // ----------------------------
