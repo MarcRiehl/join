@@ -103,19 +103,30 @@ export class ContactService {
   }
 
   async addContact(contact: ContactInterface): Promise<boolean> {
-    const { error } = await this.supabaseService.supabase.from('user_join').insert({
-      user_firstname: contact.firstname,
-      user_lastname: contact.lastname,
-      user_mail: contact.email,
-      user_phone: contact.phone,
-    });
+    const { data, error } = await this.supabaseService.supabase
+      .from('user_join')
+      .insert({
+        user_firstname: contact.firstname,
+        user_lastname: contact.lastname,
+        user_mail: contact.email,
+        user_phone: contact.phone,
+      })
+      .select()
+      .single();
 
     if (error) {
       console.error(error);
       return false;
     }
 
-    await this.loadContacts();
+    const contacts = await this.loadContacts();
+
+    const newContact = contacts.find(c => c.id === data.id);
+
+    if (newContact) {
+      this.selectedContact.set(newContact);
+    }
+
     return true;
   }
 
