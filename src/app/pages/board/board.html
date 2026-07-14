@@ -1,1 +1,9 @@
 <p>board works!</p>
+    <button class="btn-primary btn-primary--list" type="button" (click)="openDialog()">
+      <span>Add task</span>
+      <img src="assets/img/components/contacts/person-add.svg" alt="">
+    </button>
+
+    @if (dialogService.current().type === DialogType.AddTask) {
+  <app-task-dialog></app-task-dialog>
+}
