@@ -1,5 +1,63 @@
-<p>add-task works!</p>
-@for (task of taskService.tasks(); track task.id) {
-  <p>{{ task.title }}</p>
-  <p>{{ task.id }}</p>
-}
+<section class="add-tasks">
+  <header class="add-tasks__header">
+    <h1 class="add-tasks__title">Add Task</h1>
+  </header>
+
+  <form [formGroup]="addTaskForm" class="add-tasks__form">
+    <div class="add-tasks__column-left">
+      <label class="form-label" for="title">Title</label>
+      <input type="text" formControlName="title" placeholder="Enter a title" />
+      <label class="form-label" for="description">Description</label>
+      <input type="text" formControlName="description" placeholder="Enter a Description" />
+      <label class="form-label" for="dueDate">Due Date</label>
+      <input type="date" formControlName="dueDate" [min]="minDate" />
+    </div>
+
+    <div class="add-tasks__column-right">
+      <!-- priority buttons میان اینجا -->
+      <div class="proirity-wrapper">
+        <label class="form-label" for="priority">Priority</label>
+        <button
+          type="button"
+          [class.active-urgent]="isPrioritySelected('urgent')"
+          (click)="setPriority('urgent')"
+        >
+          Urgent
+        </button>
+
+        <button
+          type="button"
+          [class.active-medium]="isPrioritySelected('medium')"
+          (click)="setPriority('medium')"
+        >
+          Medium
+        </button>
+
+        <button
+          type="button"
+          [class.active-low]="isPrioritySelected('low')"
+          (click)="setPriority('low')"
+        >
+          Low
+        </button>
+      </div>
+
+      <div class="assign-wrapper">
+        <app-assigned-to></app-assigned-to>
+      </div>
+
+      <div class="category-wrapper">
+        <div class="category-dropdown__header" (click)="toggleCategoryDropdown()">
+          {{ addTaskForm.get('category')?.value || 'Select a task category' }}
+        </div>
+        @if (isCategoryDropdownOpen) {
+          <div class="category-dropdown__list">
+            <div (click)="setCategory('Technical Task')">Technical Task</div>
+            <div (click)="setCategory('User Story')">User Story</div>
+          </div>
+        }
+      </div>
+      <!-- app-subtasks (کامپوننت Dev4) میاد اینجا -->
+    </div>
+  </form>
+</section>
