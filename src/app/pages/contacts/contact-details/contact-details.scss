@@ -162,12 +162,14 @@
   @media (max-width: 950px) and (min-width: 881px) {
     font-size: 28px;
   }
-      @include desktop-s{
-    word-break: break-all;
+
+  @include mobile-desktop {
+    word-break: break-word;
   }
 
-      @include small-mobile{
-    word-break:normal;
+  @include small-mobile {
+    word-break: break-word;
+    font-size: 28px;
   }
 }
 
@@ -337,6 +339,11 @@
     font-weight: 700;
     line-height: 120%;
     letter-spacing: 0;
+    
+    @include small-mobile{
+      font-size: 36px;
+      min-height: 36px;;
+    }
   }
 
   :host-context(.contacts__main--detail-open) .contact-details__subtitle {
@@ -422,14 +429,15 @@
     letter-spacing: 0;
     word-break: normal;
     overflow-wrap: normal;
-    
-    @include mobile-desktop{
-    word-break: break-all;
-  }
 
-      @include small-mobile{
-    word-break: break-all;
-  }
+    @include mobile-desktop {
+      word-break: break-word;
+    }
+
+    @include small-mobile {
+      word-break: break-word;
+
+    }
 
   }
 
@@ -542,7 +550,7 @@
 }
 
 @include mobile {
-    :host-context(.contacts__main--detail-open) .contact-details {
+  :host-context(.contacts__main--detail-open) .contact-details {
     display: block;
     width: 100%;
     max-width: none;
@@ -555,7 +563,7 @@
 }
 
 @include tablet {
-    :host-context(.contacts__main--detail-open) .contact-details {
+  :host-context(.contacts__main--detail-open) .contact-details {
     display: block;
     width: 100%;
     max-width: none;
@@ -572,10 +580,8 @@
   :host-context(.contacts__main--detail-open) .contact-details {
     --mobile-detail-shell-width: 375px;
     --mobile-detail-content-width: 343px;
-    --mobile-detail-right-space: max(
-      16px,
-      calc((100vw - var(--mobile-detail-shell-width)) / 2 + 16px)
-    );
+    --mobile-detail-right-space: max(16px,
+        calc((100vw - var(--mobile-detail-shell-width)) / 2 + 16px));
   }
 
   :host-context(.contacts__main--detail-open) .contact-details__header,
@@ -611,7 +617,7 @@
 
   :host-context(.contacts__main--detail-open) .contact-details__name {
     width: 200px;
-    font-size: 30px;
+    font-size: 28px;
   }
 
   :host-context(.contacts__main--detail-open) .contact-details__profile {
