@@ -1,5 +1,5 @@
 export type TaskPriority = 'urgent' | 'medium' | 'low';
 
-export type TaskCategory = 'technical-task' | 'user-story';
+export type TaskCategory = 'technicalTask' | 'userStory';
 
-export type TaskStatus = 'to-do' | 'in-progress' | 'await-feedback' | 'done';
+export type TaskStatus = 'todo' | 'inProgress' | 'awaitFeedback' | 'done';

@@ -2,6 +2,7 @@ import { inject, Injectable, OnInit, signal } from '@angular/core';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
 import { Task } from '../../interfaces/task/task';
+import { TaskPriority, TaskStatus } from '../../interfaces/task/task.types';
 import { SupabaseService } from '../supabase/supabase.service';
 
 @Injectable({
@@ -115,4 +116,33 @@ export class TaskService {
       this.taskChannel = undefined;
     }
   }
+
+  // hier wird lediglich der Status gespeichert
+  async updateTaskStatus(taskId: number, status: TaskStatus): Promise<void> {
+    const { error } = await this.supabase.supabase
+      .from('tasks')
+      .update({
+        status: status,
+      })
+      .eq('id', taskId);
+    if (error) {
+      throw error;
+    }
+    await this.loadTasks();
+  }
+
+  // Ziel: jede Bordspalte direkt mit einem Status verbinden:
+  // const columns = [
+  // { title: 'To do', status: 'todo' },
+  // { title: 'In progress', status: 'inProgress' },
+  // { title: 'Await feedback', status: 'awaitFeedback' },
+  // { title: 'Done', status: 'done' },
+  // ];
+
+  //  Board-Logik:
+  // * Tasks nach Status in die vier Spalten einsortieren
+  // * jeder Spalte einen festen TaskStatus zuordnen
+  // * beim Drop den Zielstatus erkennen
+  // * updateTaskStatus(task.id, targetStatus) aufrufen
+  // * danach die Anzeige aktualisieren
 }
