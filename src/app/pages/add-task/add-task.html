@@ -1,1 +1,5 @@
 <p>add-task works!</p>
+@for (task of taskService.tasks(); track task.id) {
+  <p>{{ task.title }}</p>
+  <p>{{ task.id }}</p>
+}
