@@ -131,13 +131,11 @@ export class TaskService {
     await this.loadTasks();
   }
 
-  // Ziel: jede Bordspalte direkt mit einem Status verbinden:
-  // const columns = [
-  // { title: 'To do', status: 'todo' },
-  // { title: 'In progress', status: 'inProgress' },
-  // { title: 'Await feedback', status: 'awaitFeedback' },
-  // { title: 'Done', status: 'done' },
-  // ];
+  getTasksByStatus(status: TaskStatus): Task[] {
+    return this.tasks().filter((task) => {
+      return task.status === status;
+    });
+  }
 
   //  Board-Logik:
   // * Tasks nach Status in die vier Spalten einsortieren
