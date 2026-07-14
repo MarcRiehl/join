@@ -66,7 +66,10 @@ export class TaskService {
   // <button type="button" (click)="createTask()">Create Task</button>
 
   updateTask() {
-    // ändert eine bestehende Task mit id
+    // 1. Einen vorhandenen Task entgegennehmen.
+    // 2. Den Datensatz in Supabase suchen (id).
+    // 3. Alle geänderten Werte in der Datenbank aktualisieren.
+    // 4. Danach loadTasks() aufrufen, damit alle Komponenten die neuen Daten erhalten.
   }
 
   // ----------------------------
