@@ -51,13 +51,19 @@
   }
 }
 
+@mixin mobile-desktop {
+  @media (min-width: 361px) and (max-width: 1920px) {
+    @content;
+  }
+}
+
 @mixin mobile-tablet-hover {
   @media (hover: none) and (max-width: 1024px) {
     @content;
   }
 }
 
-@mixin big-screen {
+@mixin widesscreen {
   @media (min-width: 2400px) {
     @content;
   }

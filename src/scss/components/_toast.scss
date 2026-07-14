@@ -1,0 +1,94 @@
+@use '../abstract/' as *;
+
+.success-toast {
+    position: fixed;
+    left: 60%;
+    bottom: 140px;
+    transform: translateX(-60%);
+    padding: 20px 28px;
+    border-radius: 20px;
+    background: $blue-color;
+    font-family: "Inter", sans-serif;
+    color: $white;
+    font-size: 20px;
+    line-height: 120%;
+    font-weight: 400;
+    z-index: 5000;
+    text-align: center;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+
+    @include mobile-tablet {
+    position: fixed;
+    left: 50%;
+    bottom: 180px;
+    transform: translateX(-50%);
+    width: 80dvw;
+    max-width: calc(100vw - 32px);
+    }
+
+}
+
+.toast-enter {
+    animation: toastInDesktop .35s ease forwards;
+
+    @include mobile-tablet {
+        animation: toastInMobile .35s ease forwards;
+    }
+}
+
+.toast-leave {
+    animation: toastOutDesktop .35s ease forwards;
+
+    @include mobile-tablet {
+        animation: toastOutMobile .35s ease forwards;
+    }
+}
+
+@keyframes toastInDesktop {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(-50%);
+        opacity: 1;
+    }
+}
+
+@keyframes toastOutDesktop {
+    from {
+        transform: translateX(-50%);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+}
+
+
+ @keyframes toastInMobile {
+        from {
+            bottom: -120px;
+            opacity: 0;
+        }
+
+        to {
+            bottom: 140px; // Zielposition
+            opacity: 1;
+        }
+    }
+
+    @keyframes toastOutMobile {
+        from {
+            bottom: 140px;
+            opacity: 1;
+        }
+
+        to {
+            bottom: -120px;
+            opacity: 0;
+        }
+    }

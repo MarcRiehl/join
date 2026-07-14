@@ -8,10 +8,12 @@
 --- contacts "component"
 ---- contact-list "component"
 ---- contact-details "component"
------ contact-dialog new / edit dialog "component"
+----- contact-dialog "component"
 --- help "component"
 --- privacy policy "component"
 --- legal notice "component"
+
+
 
 -- router // nicht mehr benötigt
 

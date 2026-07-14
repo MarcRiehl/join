@@ -14,7 +14,13 @@ import { ContactService } from '../../../services/contacts/contact.service';
 export class ContactList {
   contacts = input<ContactInterface[]>([]);
   contactSelected = output<ContactInterface>();
-  activeContactId: number | null = null;
+  // activeContactId: number | null = null;
+
+  readonly contactService = inject(ContactService);
+  readonly dialogService = inject(DialogService);
+  selectedContact = this.contactService.selectedContact;
+  readonly DialogType = DialogType;
+
 
   get groupedContacts(): { letter: string; contacts: ContactInterface[] }[] {
     const sorted = [...this.contacts()].sort((a, b) => {
@@ -38,16 +44,9 @@ export class ContactList {
   }
 
   onSelectContact(contact: ContactInterface): void {
-    if (contact.id !== undefined) {
-      this.activeContactId = contact.id;
-    }
+    this.contactService.selectedContact.set(contact);
     this.contactSelected.emit(contact);
   }
-
-
-  readonly dialogService = inject(DialogService);
-  readonly DialogType = DialogType;
-  readonly contactService = inject(ContactService);
 
   openDialog(): void {
     this.contactService.selectedContact.set(null);

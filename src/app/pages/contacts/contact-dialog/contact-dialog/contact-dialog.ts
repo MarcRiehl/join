@@ -15,6 +15,8 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { DialogService } from '../../../../services/dialog/dialog.service';
 import { ContactService } from '../../../../services/contacts/contact.service';
 import { fullNameValidator, splitFullName } from '../../../../utils/name.util/name.util';
+import { ToastService } from '../../../../services/toast/toast-service';
+
 
 @Component({
   selector: 'app-contact-dialog',
@@ -27,6 +29,7 @@ export class ContactDialog implements AfterViewInit, OnInit {
 
   private readonly dialogService = inject(DialogService);
   private readonly contactService = inject(ContactService);
+  private toastService = inject(ToastService);
 
   selectedContact = this.contactService.selectedContact;
 
@@ -59,7 +62,7 @@ export class ContactDialog implements AfterViewInit, OnInit {
   closeDialog(): void {
     this.startCloseAnimation();
   }
-  
+
   //protected
   private startCloseAnimation(): void {
 
@@ -93,28 +96,28 @@ export class ContactDialog implements AfterViewInit, OnInit {
 
   }
 
-animationFinished(event: AnimationEvent): void {
-  if (event.target !== this.dialog.nativeElement) {
-    return;
-  }
+  animationFinished(event: AnimationEvent): void {
+    if (event.target !== this.dialog.nativeElement) {
+      return;
+    }
 
-  if (
-    event.animationName !== 'dialogOut' &&
-    event.animationName !== 'dialogOutMobile'
-  ) {
-    return;
-  }
+    if (
+      event.animationName !== 'dialogOut' &&
+      event.animationName !== 'dialogOutMobile'
+    ) {
+      return;
+    }
 
-  const dialog = this.dialog.nativeElement;
-  dialog.classList.remove('closing');
-  dialog.close();
-  this.isClosing = false;
-  this.dialogService.clear();
-}
+    const dialog = this.dialog.nativeElement;
+    dialog.classList.remove('closing');
+    dialog.close();
+    this.isClosing = false;
+    this.dialogService.clear();
+  }
 
   newUserForm = new FormGroup({
     name: new FormControl('', {
-      validators: [Validators.required, fullNameValidator()],
+      validators: [Validators.required, Validators.pattern(/^[A-Za-zÄÖÜäöüß\s'-]+$/), fullNameValidator()],
       asyncValidators: [this.nameValidator()],
       updateOn: 'blur'
     }),
@@ -123,7 +126,7 @@ animationFinished(event: AnimationEvent): void {
       updateOn: 'blur'
     }),
     phone: new FormControl('', {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.pattern(/^[0-9+\s()-]+$/)],
       updateOn: 'blur'
     })
   });
@@ -163,6 +166,7 @@ animationFinished(event: AnimationEvent): void {
     };
   }
 
+
   async onSubmit(): Promise<void> {
 
     if (this.newUserForm.invalid) {
@@ -198,6 +202,12 @@ animationFinished(event: AnimationEvent): void {
     if (success) {
       this.newUserForm.reset();
       this.closeDialog();
+
+      if (this.isEditMode()) {
+        return;
+      } else {
+        this.toastService.success('Contact successfully created.');
+      }
     }
   }
 
