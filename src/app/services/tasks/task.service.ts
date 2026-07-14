@@ -86,6 +86,14 @@ export class TaskService {
     await this.loadTasks();
   }
 
+  async deleteTask(taskId: number): Promise<void> {
+    const { error } = await this.supabase.supabase.from('tasks').delete().eq('id', taskId);
+    if (error) {
+      throw error;
+    }
+    await this.loadTasks();
+  }
+
   // ----------------------------
   // TASKS
   // ----------------------------
@@ -93,7 +101,7 @@ export class TaskService {
   // Einen Task nach ID laden
   // Neuen Task erstellen (check)
   // Task bearbeiten (check)
-  // Task löschen
+  // Task löschen (check)
   // Taskstatus ändern
   // (To Do -> Done)
   // Kategorie ändern
