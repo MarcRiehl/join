@@ -5,9 +5,7 @@ import {
   OnInit,
   ViewChild,
   inject,
-  computed,
-  input,
-  output
+  computed
 } from '@angular/core';
 import { from, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';

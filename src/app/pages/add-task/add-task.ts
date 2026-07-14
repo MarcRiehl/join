@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TaskService } from '../../services/tasks/task.service';
 import { noPastDateValidator, getTodayDateString } from '../../utils/date.util/date.util';
+import { AssignedTo } from "./assigned-to/assigned-to";
 
 @Component({
   selector: 'app-add-task',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AssignedTo],
   templateUrl: './add-task.html',
   styleUrl: './add-task.scss',
 })
