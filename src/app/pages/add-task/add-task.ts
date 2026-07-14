@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { TaskService } from '../../services/tasks/task.service';
 
@@ -8,6 +8,10 @@ import { TaskService } from '../../services/tasks/task.service';
   templateUrl: './add-task.html',
   styleUrl: './add-task.scss',
 })
-export class AddTask {
-  private taskService = inject(TaskService);
+export class AddTask implements OnInit {
+  public taskService = inject(TaskService);
+
+  ngOnInit(): void {
+    this.taskService.loadTasks();
+  }
 }

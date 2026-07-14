@@ -9,7 +9,3 @@ import { environment } from '../../../environments/environment';
 export class SupabaseService {
   supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
 }
-
-// Verbindung zur Datenbank herstellen
-// * URL und API-Key verwalten
-// * den Client zur Verfügung stellen
