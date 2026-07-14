@@ -1,0 +1,14 @@
+<div class="assigned-to">
+  <div class="assigned-to__header" (click)="toggleDropdown()">Select contacts to assign</div>
+
+  @if (isDropdownOpen) {
+    <div class="assigned-to__list">
+      @for (contact of contacts(); track contact.id) {
+        <div class="dropdown-item" (click)="toggleContact(contact)">
+          <input type="checkbox" [checked]="isSelected(contact)" />
+          {{ contact.firstname }} {{ contact.lastname }}
+        </div>
+      }
+    </div>
+  }
+</div>
