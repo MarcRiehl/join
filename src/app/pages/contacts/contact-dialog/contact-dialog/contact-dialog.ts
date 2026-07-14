@@ -5,9 +5,7 @@ import {
   OnInit,
   ViewChild,
   inject,
-  computed,
-  input,
-  output
+  computed
 } from '@angular/core';
 import { from, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -175,6 +173,7 @@ export class ContactDialog implements AfterViewInit, OnInit {
     }
 
     const { firstname, lastname } = splitFullName(this.name.value!);
+    const editMode = this.isEditMode();
 
     let success = false;
 
@@ -203,9 +202,7 @@ export class ContactDialog implements AfterViewInit, OnInit {
       this.newUserForm.reset();
       this.closeDialog();
 
-      if (this.isEditMode()) {
-        return;
-      } else {
+      if (!editMode) {
         this.toastService.success('Contact successfully created.');
       }
     }
