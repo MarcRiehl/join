@@ -1,4 +1,5 @@
 import { inject, Injectable, OnInit, signal } from '@angular/core';
+import { RealtimeChannel } from '@supabase/supabase-js';
 
 import { Task } from '../../interfaces/task/task';
 import { SupabaseService } from '../supabase/supabase.service';
@@ -8,7 +9,7 @@ import { SupabaseService } from '../supabase/supabase.service';
 })
 export class TaskService {
   private supabase = inject(SupabaseService);
-
+  private taskChannel: RealtimeChannel | undefined;
   tasks = signal<Task[]>([]);
 
   async loadTasks(): Promise<Task[]> {
@@ -65,28 +66,53 @@ export class TaskService {
   // Auf button setzen:
   // <button type="button" (click)="createTask()">Create Task</button>
 
-  updateTask() {
-    // 1. Einen vorhandenen Task entgegennehmen.
-    // 2. Den Datensatz in Supabase suchen (id).
-    // 3. Alle geänderten Werte in der Datenbank aktualisieren.
-    // 4. Danach loadTasks() aufrufen, damit alle Komponenten die neuen Daten erhalten.
+  async updateTask(task: Task): Promise<void> {
+    const { error } = await this.supabase.supabase
+      .from('tasks')
+      .update({
+        title: task.title,
+        description: task.description,
+        due_date: task.dueDate,
+        priority: task.priority,
+        category: task.category,
+        status: task.status,
+        assigned_contact_ids: task.assignedContactIds,
+        subtasks: task.subtasks,
+      })
+      .eq('id', task.id);
+
+    if (error) {
+      throw error;
+    }
+    await this.loadTasks();
   }
 
-  // ----------------------------
-  // TASKS
-  // ----------------------------
-  // Alle Tasks laden (check)
-  // Einen Task nach ID laden
-  // Neuen Task erstellen (check)
-  // Task bearbeiten
-  // Task löschen
-  // Taskstatus ändern
-  // (To Do -> Done)
-  // Kategorie ändern
-  // Priorität ändern
-  // Zugewiesene Kontakte ändern
-  // Subtasks aktualisieren
-  // Tasks filtern
-  // Tasks suchen
-  // Tasks sortieren
+  async deleteTask(taskId: number): Promise<void> {
+    const { error } = await this.supabase.supabase.from('tasks').delete().eq('id', taskId);
+    if (error) {
+      throw error;
+    }
+    await this.loadTasks();
+  }
+
+  subscribeToTaskChanges() {
+    this.taskChannel = this.supabase.supabase
+      .channel('task-changes')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'tasks' },
+
+        async () => {
+          await this.loadTasks();
+        },
+      )
+      .subscribe();
+  }
+
+  async unsubscribeFromTaskChanges(): Promise<void> {
+    if (this.taskChannel) {
+      await this.supabase.supabase.removeChannel(this.taskChannel);
+      this.taskChannel = undefined;
+    }
+  }
 }
