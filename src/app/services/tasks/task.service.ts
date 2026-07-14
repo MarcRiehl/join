@@ -65,11 +65,25 @@ export class TaskService {
   // Auf button setzen:
   // <button type="button" (click)="createTask()">Create Task</button>
 
-  updateTask() {
-    // 1. Einen vorhandenen Task entgegennehmen.
-    // 2. Den Datensatz in Supabase suchen (id).
-    // 3. Alle geänderten Werte in der Datenbank aktualisieren.
-    // 4. Danach loadTasks() aufrufen, damit alle Komponenten die neuen Daten erhalten.
+  async updateTask(task: Task): Promise<void> {
+    const { error } = await this.supabase.supabase
+      .from('tasks')
+      .update({
+        title: task.title,
+        description: task.description,
+        due_date: task.dueDate,
+        priority: task.priority,
+        category: task.category,
+        status: task.status,
+        assigned_contact_ids: task.assignedContactIds,
+        subtasks: task.subtasks,
+      })
+      .eq('id', task.id);
+
+    if (error) {
+      throw error;
+    }
+    await this.loadTasks();
   }
 
   // ----------------------------
@@ -78,7 +92,7 @@ export class TaskService {
   // Alle Tasks laden (check)
   // Einen Task nach ID laden
   // Neuen Task erstellen (check)
-  // Task bearbeiten
+  // Task bearbeiten (check)
   // Task löschen
   // Taskstatus ändern
   // (To Do -> Done)
