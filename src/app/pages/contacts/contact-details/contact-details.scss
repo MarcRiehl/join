@@ -171,6 +171,9 @@
     word-break: break-word;
     font-size: 28px;
   }
+     @include desktop-hd{
+       word-break: break-word;
+    }
 }
 
 .contact-details__actions {
@@ -437,6 +440,9 @@
     @include small-mobile {
       word-break: break-word;
 
+    }
+    @include desktop-hd{
+       word-break: break-word;
     }
 
   }
