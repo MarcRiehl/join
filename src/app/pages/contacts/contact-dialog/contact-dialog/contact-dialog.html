@@ -84,7 +84,8 @@
                                             Your email is required.
                                         </p>
                                         }
-                                        @else if ( email.hasError('email')) {
+                                        @else if ( !newUserForm.controls.email.hasError('required') &&
+                                        newUserForm.controls.email.hasError('invalidEmail')) {
                                         <p class="form-error">
                                             Wrong email address.
                                         </p>

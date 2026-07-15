@@ -8,6 +8,7 @@ import { ContactService } from '../../../../services/contacts/contact.service';
 import { DialogService } from '../../../../services/dialog/dialog.service';
 import { ToastService } from '../../../../services/toast/toast-service';
 import { fullNameValidator, splitFullName } from '../../../../utils/name.util/name.util';
+import { emailValidator } from '../../../../utils/email.util/email.util';
 
 @Component({
   selector: 'app-contact-dialog',
@@ -108,7 +109,7 @@ export class ContactDialog implements AfterViewInit, OnInit {
       updateOn: 'blur',
     }),
     email: new FormControl('', {
-      validators: [Validators.required, Validators.email],
+      validators: [Validators.required, emailValidator()],
       updateOn: 'blur',
     }),
     phone: new FormControl('', {
