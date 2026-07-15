@@ -1,14 +1,37 @@
 <div class="assigned-to">
-  <div class="assigned-to__header" (click)="toggleDropdown()">Select contacts to assign</div>
+  <div class="assigned-to__field" (click)="openDropdown()">
+    <input
+      type="text"
+      class="assigned-to__search"
+      placeholder="Select contacts to assign"
+      [value]="searchTerm()"
+      (input)="onSearchInput($event)"
+      (focus)="openDropdown()"
+    />
+    <span class="assigned-to__arrow" [class.assigned-to__arrow--open]="isDropdownOpen" (click)="toggleDropdown(); $event.stopPropagation()">▾</span>
+  </div>
 
   @if (isDropdownOpen) {
     <div class="assigned-to__list">
-      @for (contact of contacts(); track contact.id) {
-        <div class="dropdown-item" (click)="toggleContact(contact)">
+      @for (contact of filteredContacts(); track contact.id) {
+        <div
+          class="assigned-to__item"
+          [class.assigned-to__item--selected]="isSelected(contact)"
+          (click)="toggleContact(contact)"
+        >
+          <app-user-bubble [initials]="contact.initials ?? ''" [color]="contact.colors ?? ''" />
+          <span class="assigned-to__item-name">{{ contact.firstname }} {{ contact.lastname }}</span>
           <input type="checkbox" [checked]="isSelected(contact)" />
-          {{ contact.firstname }} {{ contact.lastname }}
         </div>
       }
     </div>
   }
+  <div class="assigned-to__bubbles">
+    @for (contact of visibleBubbles(); track contact.id) {
+      <app-user-bubble [initials]="contact.initials ?? ''" [color]="contact.colors ?? ''" />
+    }
+    @if (remainingCount() > 0) {
+      <div class="assigned-to__bubble-more">+{{ remainingCount() }}</div>
+    }
+  </div>
 </div>
