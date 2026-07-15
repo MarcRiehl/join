@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { TaskCategory, TaskPriority } from '../../interfaces/task/task.types';
 import { TaskService } from '../../services/tasks/task.service';
-import { noPastDateValidator, getTodayDateString } from '../../utils/date.util/date.util';
-import { AssignedTo } from "./assigned-to/assigned-to";
+import { getTodayDateString, noPastDateValidator } from '../../utils/date.util/date.util';
+import { AssignedTo } from './assigned-to/assigned-to';
 
 @Component({
   selector: 'app-add-task',
@@ -20,6 +22,7 @@ export class AddTask {
     dueDate: new FormControl('', [Validators.required, noPastDateValidator()]),
     priority: new FormControl('medium', Validators.required),
     category: new FormControl('', Validators.required),
+    assignedContactIds: new FormControl<number[]>([]),
   });
 
   // Method to set the priority value in the form
@@ -39,5 +42,9 @@ export class AddTask {
   setCategory(value: string): void {
     this.addTaskForm.get('category')?.setValue(value);
     this.isCategoryDropdownOpen = false;
+  }
+
+  setAssignedContactIds(ids: number[]): void {
+    this.addTaskForm.get('assignedContactIds')?.setValue(ids);
   }
 }

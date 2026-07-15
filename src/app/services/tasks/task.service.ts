@@ -55,17 +55,6 @@ export class TaskService {
       await this.loadTasks();
     }
   }
-  //  Methode aufrufen:
-  // im Formular -> onSubmit() -> this.taskService.createTask(task);
-  // in der task-Komponente:
-  //  async onSubmit(): Promise<void> {
-  //      const task = {
-  //    Formulardaten zusammensetzen
-  //      };
-  //    await this.taskService.createTask(task);
-  //    }
-  // Auf button setzen:
-  // <button type="button" (click)="createTask()">Create Task</button>
 
   async updateTask(task: Task): Promise<void> {
     const { error } = await this.supabase.supabase
@@ -136,11 +125,4 @@ export class TaskService {
       return task.status === status;
     });
   }
-
-  //  Board-Logik:
-  // * Tasks nach Status in die vier Spalten einsortieren
-  // * jeder Spalte einen festen TaskStatus zuordnen
-  // * beim Drop den Zielstatus erkennen
-  // * updateTaskStatus(task.id, targetStatus) aufrufen
-  // * danach die Anzeige aktualisieren
 }
