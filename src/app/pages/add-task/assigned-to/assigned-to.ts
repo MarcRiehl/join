@@ -1,26 +1,60 @@
-import { Component, inject, output, signal } from '@angular/core';
-
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  signal,
+  output,
+  computed,
+  OnInit,
+} from '@angular/core';
 import { Contact } from '../../../interfaces/contacts/contact';
 import { ContactService } from '../../../services/contacts/contact.service';
+import { UserBubble } from '../../../components/user-bubble/user-bubble';
 
 @Component({
   selector: 'app-assigned-to',
-  imports: [],
+  imports: [UserBubble],
   templateUrl: './assigned-to.html',
   styleUrl: './assigned-to.scss',
 })
-export class AssignedTo {
+export class AssignedTo implements OnInit {
   private contactService = inject(ContactService);
+  private elementRef = inject(ElementRef);
+
   contacts = this.contactService.contacts;
 
-  assignedContactIdsChange = output<number[]>();
+  // Loads the contact list when the component is created
+  ngOnInit(): void {
+    this.contactService.loadContacts();
+  }
+
   selectedContacts = signal<Contact[]>([]);
   isDropdownOpen = false;
-  // Method to toggle the state of the dropdown (open or closed)
+  selectedContactsChange = output<Contact[]>();
+  searchTerm = signal<string>('');
+
+  filteredContacts = computed(() => {
+    return this.contacts().filter((contact) =>
+      contact.firstname.toLowerCase().includes(this.searchTerm().toLowerCase()),
+    );
+  });
+
+  onSearchInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchTerm.set(input.value);
+  }
+
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
-  // Method to check if a contact is selected. It checks if the contact's ID exists in the selectedContacts signal.
+
+  // Opens the dropdown when the search input is focused/clicked
+  openDropdown(): void {
+    this.isDropdownOpen = true;
+  }
+
+  // Method to check if a contact is selected. It returns true if the contact is present in the selectedContacts signal; otherwise, it returns false.
   isSelected(contact: Contact): boolean {
     return this.selectedContacts().some((c) => c.id === contact.id);
   }
@@ -31,9 +65,20 @@ export class AssignedTo {
     } else {
       this.selectedContacts.update((contacts) => [...contacts, contact]);
     }
-    const selectedIds = this.selectedContacts()
-      .map((contact) => contact.id)
-      .filter((id): id is number => id !== undefined);
-    this.assignedContactIdsChange.emit(selectedIds);
+    this.selectedContactsChange.emit(this.selectedContacts());
   }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.isDropdownOpen = false;
+    }
+  }
+
+  visibleBubbles = computed(() => this.selectedContacts().slice(0, 3));
+
+  remainingCount = computed(() => {
+    const total = this.selectedContacts().length;
+    return total > 3 ? total - 3 : 0;
+  });
 }

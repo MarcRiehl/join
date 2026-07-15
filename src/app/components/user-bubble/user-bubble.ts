@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-user-bubble',
@@ -6,4 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './user-bubble.html',
   styleUrl: './user-bubble.scss',
 })
-export class UserBubble {}
+export class UserBubble {
+  initials = input<string>('');
+  color = input<string>('');
+}
