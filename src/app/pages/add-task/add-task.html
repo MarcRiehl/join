@@ -3,18 +3,26 @@
     <h1 class="add-tasks__title">Add Task</h1>
   </header>
 
-  <form [formGroup]="addTaskForm" class="add-tasks__form">
+  <form [formGroup]="addTaskForm" class="add-tasks__form" (ngSubmit)="onSubmit()">
     <div class="add-tasks__column-left">
       <label class="form-label" for="title">Title</label>
       <input type="text" formControlName="title" placeholder="Enter a title" />
       <label class="form-label" for="description">Description</label>
       <input type="text" formControlName="description" placeholder="Enter a Description" />
       <label class="form-label" for="dueDate">Due Date</label>
-      <input type="date" formControlName="dueDate" [min]="minDate" />
+      <input
+        type="date"
+        formControlName="dueDate"
+        [class.input-error]="dueDateControl?.invalid && dueDateControl?.touched"
+      />
+      <div class="error-space">
+        @if (dueDateControl?.invalid && dueDateControl?.touched) {
+          <span class="error-message">This field is required</span>
+        }
+      </div>
     </div>
 
     <div class="add-tasks__column-right">
-      <!-- priority buttons میان اینجا -->
       <div class="proirity-wrapper">
         <label class="form-label" for="priority">Priority</label>
         <button
@@ -43,21 +51,40 @@
       </div>
 
       <div class="assign-wrapper">
-        <app-assigned-to></app-assigned-to>
+        <label class="form-label">Assigned to</label>
+        <app-assigned-to
+          (selectedContactsChange)="onAssignedContactsChange($event)"
+        ></app-assigned-to>
       </div>
 
+      <label class="form-label">Category</label>
       <div class="category-wrapper">
-        <div class="category-dropdown__header" (click)="toggleCategoryDropdown()">
-          {{ addTaskForm.get('category')?.value || 'Select a task category' }}
+        <div class="category-field" (click)="toggleCategoryDropdown()">
+          <input
+            type="text"
+            class="category-dropdown__input"
+            [value]="getCategoryLabel()"
+            placeholder="Select task category"
+            readonly
+          />
+          <span class="category-dropdown__arrow" [class.category-dropdown__arrow--open]="isCategoryDropdownOpen">▾</span>
         </div>
         @if (isCategoryDropdownOpen) {
           <div class="category-dropdown__list">
-            <div (click)="setCategory('Technical Task')">Technical Task</div>
-            <div (click)="setCategory('User Story')">User Story</div>
+            @for (cat of categories; track cat.value) {
+              <div (click)="setCategory(cat.value)">{{ cat.label }}</div>
+            }
           </div>
         }
       </div>
-      <!-- app-subtasks (کامپوننت Dev4) میاد اینجا -->
+    </div>
+
+    <div class="form-footer">
+      <span class="required-legend">*This field is required</span>
+      <div class="form-buttons">
+        <button type="button" class="btn-clear" (click)="onClear()">Clear ✕</button>
+        <button type="submit" class="btn-create" [disabled]="isSaving || addTaskForm.invalid">Create Task ✓</button>
+      </div>
     </div>
   </form>
 </section>
