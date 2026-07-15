@@ -1,0 +1,30 @@
+<div class="task-card">
+  <div class="task-card__category" [ngClass]="categoryClass">
+    {{ categoryDisplayName }}
+  </div>
+
+  <div class="task-card__content">
+    <h3 class="task-card__title">{{ task.title }}</h3>
+    <p class="task-card__description">{{ task.description }}</p>
+  </div>
+
+  @if (totalSubtasks > 0) {
+    <div class="task-card__progress">
+      <!-- <div class="progress-bar">
+        <div class="progress-bar__fill" [style.width.%]="progressPercentage"></div>
+      </div>
+      <span class="progress-text">{{ completedSubtasks }}/{{ totalSubtasks }} Subtasks</span> -->
+    </div>
+  }
+
+  <div class="task-card__footer">
+    <div class="task-card__assignees">
+      @for (id of task.assignedContactIds; track id) {
+        <div class="assignee-badge">
+          {{ id }}
+        </div>
+      }
+    </div>
+    <img [src]="priorityIcon" alt="Priority" class="task-card__priority">
+  </div>
+</div>
