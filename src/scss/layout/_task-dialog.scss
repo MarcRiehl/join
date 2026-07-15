@@ -1,0 +1,60 @@
+@use '../abstract/' as *;
+
+.dialog-top {
+    display: flex;
+    justify-content: space-between;
+}
+.dialog-footer{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.dialog-task-stroke {
+    height: 100%;
+    border-left: 1px solid $grey-task-stroke;
+    position: relative;
+    z-index: 1;
+}
+
+.form-cell-label label {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 120%;
+    color: $blue-color;
+
+    span {
+        color: $red-form-color;
+        
+    }
+
+    @include mobile {
+        font-size: 20px;
+    }
+}
+
+.form-cell textarea {
+    width: 422px;
+    border-radius: 10px;
+    border: 1px solid $grey-form-color;
+    padding: 13px 40px 13px 21px;
+
+    &:focus {
+        border-color: $grey-form-blue;
+        outline: none;
+    }
+
+    @include mobile-tablet {
+        width: 100%;
+
+    }
+
+    @include desktop-s {
+        width: 100%;
+    }
+
+    @include small-mobile {
+       
+
+    }
+}

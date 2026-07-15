@@ -17,6 +17,12 @@ dialog::backdrop {
     transform: translate(-50%, -50%);
     animation: dialogIn .3s ease;
 
+    &--task {
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+        height: calc(100% - 160px);
+
+    }
+
     @include mobile-tablet {
         animation: dialogInMobile 250ms ease-out forwards;
     }
@@ -107,6 +113,10 @@ dialog::backdrop {
 
 .dialog-content {
     width: 100%;
+
+    &--task {
+        padding: 64px 74px;
+    }
 }
 
 .dialog-wrapper-inner {
@@ -121,8 +131,6 @@ dialog::backdrop {
         grid-template-rows: auto 1fr;
         justify-content: stretch;
     }
-
-
 
     @include small-mobile {
         display: grid;
@@ -176,6 +184,11 @@ dialog::backdrop {
     top: 20px;
     right: 20px;
     z-index: 1001;
+
+    &--task {
+        top: 64px;
+        right: 60px;
+    }
 }
 
 .dialog-close-btn {
@@ -210,6 +223,12 @@ dialog::backdrop {
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
 
+    &--task {
+        background-color: $white;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
     @include mobile-tablet {
         padding: 16px;
         width: 100%;
@@ -234,6 +253,10 @@ dialog::backdrop {
 .dialog-right {
 
     display: flex;
+
+    &--task {
+        display: block;
+    }
 
 
     @include mobile-tablet {
@@ -309,6 +332,10 @@ dialog::backdrop {
     font-size: 61px;
     color: $white;
 
+    &--task {
+        color: $black;
+    }
+
     @include mobile-tablet {
         font-size: 47px;
     }
@@ -342,6 +369,12 @@ dialog::backdrop {
 .dialog-form {
     justify-self: end;
     width: 100%;
+
+    &--task {
+        display: flex;
+        justify-self: unset;
+        justify-content: space-between;
+    }
 
     @include mobile-tablet {
         justify-self: unset;
@@ -414,7 +447,7 @@ dialog::backdrop {
     height: 50px;
     border-radius: 10px;
     border: 1px solid $grey-form-color;
-          padding: 13px 40px 13px 21px;
+    padding: 13px 40px 13px 21px;
 
     &:focus {
         border-color: $grey-form-blue;
@@ -433,7 +466,7 @@ dialog::backdrop {
 
     @include small-mobile {
         height: 36px;
-    
+
     }
 }
 
