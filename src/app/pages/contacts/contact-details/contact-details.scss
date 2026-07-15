@@ -322,7 +322,7 @@
 
   :host-context(.contacts__main--detail-open) .contact-details__header {
     position: relative;
-    margin-bottom: 48px;
+    margin-bottom: 18px;
   }
 
   :host-context(.contacts__main--detail-open) .contact-details__headline {
@@ -582,6 +582,15 @@
   }
 }
 
+@include small-mobile {
+  :host-context(.contacts__main--detail-open) .contact-details {
+    padding: 18px 16px 0px;
+  }
+}
+
+
+
+
 @include tablet {
   :host-context(.contacts__main--detail-open) .contact-details {
     display: block;
@@ -628,7 +637,8 @@
     // right: max(0px, calc((100vw - var(--mobile-detail-shell-width)) / 2));
     z-index: 1101;
   }
-    :host-context(.contacts__main--detail-open) .contact-details__identity {
+
+  :host-context(.contacts__main--detail-open) .contact-details__identity {
     width: 100%;
 
     min-width: 0;
