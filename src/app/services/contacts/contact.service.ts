@@ -120,8 +120,7 @@ export class ContactService {
     }
 
     const contacts = await this.loadContacts();
-
-    const newContact = contacts.find(c => c.id === data.id);
+    const newContact = contacts.find((c) => c.id === data.id);
 
     if (newContact) {
       this.selectedContact.set(newContact);

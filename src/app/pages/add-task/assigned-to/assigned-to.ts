@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
+
 import { Contact } from '../../../interfaces/contacts/contact';
 import { ContactService } from '../../../services/contacts/contact.service';
 
@@ -12,6 +13,7 @@ export class AssignedTo {
   private contactService = inject(ContactService);
   contacts = this.contactService.contacts;
 
+  assignedContactIdsChange = output<number[]>();
   selectedContacts = signal<Contact[]>([]);
   isDropdownOpen = false;
   // Method to toggle the state of the dropdown (open or closed)
@@ -29,5 +31,7 @@ export class AssignedTo {
     } else {
       this.selectedContacts.update((contacts) => [...contacts, contact]);
     }
+    const selectedIds = this.selectedContacts().map((contact) => contact.id);
+    this.assignedContactIdsChange.emit(selectedIds);
   }
 }
