@@ -1,0 +1,21 @@
+<div class="task-column">
+  <div class="task-column__header">
+    <h2 class="task-column__title">{{ title }}</h2>
+    @if (status !== 'done') {
+      <button class="task-column__add-btn">
+        <img src="assets/img/components/board/plus-button.svg" class="icon-default">
+        <img src="assets/img/components/board/plus-button-hover.svg" class="icon-hover">
+        <img src="assets/img/components/board/plus-button-press.svg" class="icon-active">
+      </button>
+    }
+  </div>
+  <div class="task-column__content">
+    @if (tasks.length === 0) {
+      <div class="task-column__empty">No tasks in {{ title }}</div>
+    } @else {
+      @for (task of tasks; track task.id) {
+        <app-task-card [task]="task"></app-task-card>
+      }
+    }
+  </div>
+</div>

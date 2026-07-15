@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { MainPage } from './layout/mainpage/mainpage';
 import { Home } from './pages/home/home';
 import { Summary } from './pages/summary/summary';
-import { Board } from './pages/board/board';
+import { BoardComponent } from './pages/board/board';
 import { AddTask } from './pages/add-task/add-task';
 import { Contacts } from './pages/contacts/contacts';
 import { PrivacyPolicy } from './pages/privacy-policy/privacy-policy';
@@ -32,7 +32,7 @@ export const routes: Routes = [
             },
             {
                 path: 'board',
-                component: Board,
+                component: BoardComponent,
                 title: 'Board'
 
             },
