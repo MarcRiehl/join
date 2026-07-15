@@ -24,6 +24,7 @@ export class AddTask {
     dueDate: new FormControl('', [Validators.required, noPastDateValidator()]),
     priority: new FormControl('medium', Validators.required),
     category: new FormControl('', Validators.required),
+    assignedContactIds: new FormControl<number[]>([]),
   });
 
   get dueDateControl() {
@@ -104,5 +105,9 @@ export class AddTask {
     if (!clickedInside && this.isCategoryDropdownOpen) {
       this.isCategoryDropdownOpen = false;
     }
+  }
+
+  setAssignedContactIds(ids: number[]): void {
+    this.addTaskForm.get('assignedContactIds')?.setValue(ids);
   }
 }

@@ -1,22 +1,13 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-  inject,
-  computed,
-  input,
-  output
-} from '@angular/core';
 import { from, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators, AsyncValidatorFn } from '@angular/forms';
-import { DialogService } from '../../../../services/dialog/dialog.service';
-import { ContactService } from '../../../../services/contacts/contact.service';
-import { fullNameValidator, splitFullName } from '../../../../utils/name.util/name.util';
-import { ToastService } from '../../../../services/toast/toast-service';
 
+import { AfterViewInit, Component, computed, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { ContactService } from '../../../../services/contacts/contact.service';
+import { DialogService } from '../../../../services/dialog/dialog.service';
+import { ToastService } from '../../../../services/toast/toast-service';
+import { fullNameValidator, splitFullName } from '../../../../utils/name.util/name.util';
 
 @Component({
   selector: 'app-contact-dialog',
@@ -24,9 +15,7 @@ import { ToastService } from '../../../../services/toast/toast-service';
   templateUrl: './contact-dialog.html',
   styleUrl: './contact-dialog.scss',
 })
-
 export class ContactDialog implements AfterViewInit, OnInit {
-
   private readonly dialogService = inject(DialogService);
   private readonly contactService = inject(ContactService);
   private toastService = inject(ToastService);
@@ -54,9 +43,8 @@ export class ContactDialog implements AfterViewInit, OnInit {
     this.newUserForm.patchValue({
       name: `${contact.firstname} ${contact.lastname}`,
       email: contact.email,
-      phone: contact.phone?.toString() ?? ''
+      phone: contact.phone?.toString() ?? '',
     });
-
   }
 
   closeDialog(): void {
@@ -65,7 +53,6 @@ export class ContactDialog implements AfterViewInit, OnInit {
 
   //protected
   private startCloseAnimation(): void {
-
     if (this.isClosing) {
       return;
     }
@@ -80,7 +67,6 @@ export class ContactDialog implements AfterViewInit, OnInit {
   }
 
   onDialogClick(event: MouseEvent): void {
-
     const dialog = this.dialog.nativeElement;
     const rect = dialog.getBoundingClientRect();
 
@@ -93,7 +79,6 @@ export class ContactDialog implements AfterViewInit, OnInit {
     if (!clickedInside) {
       this.startCloseAnimation();
     }
-
   }
 
   animationFinished(event: AnimationEvent): void {
@@ -101,10 +86,7 @@ export class ContactDialog implements AfterViewInit, OnInit {
       return;
     }
 
-    if (
-      event.animationName !== 'dialogOut' &&
-      event.animationName !== 'dialogOutMobile'
-    ) {
+    if (event.animationName !== 'dialogOut' && event.animationName !== 'dialogOutMobile') {
       return;
     }
 
@@ -117,18 +99,22 @@ export class ContactDialog implements AfterViewInit, OnInit {
 
   newUserForm = new FormGroup({
     name: new FormControl('', {
-      validators: [Validators.required, Validators.pattern(/^[A-Za-zÄÖÜäöüß\s'-]+$/), fullNameValidator()],
+      validators: [
+        Validators.required,
+        Validators.pattern(/^[A-Za-zÄÖÜäöüß\s'-]+$/),
+        fullNameValidator(),
+      ],
       asyncValidators: [this.nameValidator()],
-      updateOn: 'blur'
+      updateOn: 'blur',
     }),
     email: new FormControl('', {
       validators: [Validators.required, Validators.email],
-      updateOn: 'blur'
+      updateOn: 'blur',
     }),
     phone: new FormControl('', {
       validators: [Validators.required, Validators.pattern(/^[0-9+\s()-]+$/)],
-      updateOn: 'blur'
-    })
+      updateOn: 'blur',
+    }),
   });
 
   get name() {
@@ -154,58 +140,46 @@ export class ContactDialog implements AfterViewInit, OnInit {
         return of(null);
       }
 
-      return from(
-        this.contactService.contactExists(
-          value,
-          this.selectedContact()?.id
-        )
-      ).pipe(
-        map(exists => (exists ? { nameExists: true } : null)),
-        catchError(() => of(null))
+      return from(this.contactService.contactExists(value, this.selectedContact()?.id)).pipe(
+        map((exists) => (exists ? { nameExists: true } : null)),
+        catchError(() => of(null)),
       );
     };
   }
 
-
   async onSubmit(): Promise<void> {
-
     if (this.newUserForm.invalid) {
       this.newUserForm.markAllAsTouched();
       return;
     }
 
     const { firstname, lastname } = splitFullName(this.name.value!);
+    const editMode = this.isEditMode();
 
     let success = false;
 
     if (this.isEditMode()) {
-
       success = await this.contactService.updateContact({
         id: this.selectedContact()!.id,
         firstname,
         lastname,
         email: this.email.value!,
-        phone: this.phone.value!
+        phone: this.phone.value!,
       });
-
     } else {
-
       success = await this.contactService.addContact({
         firstname,
         lastname,
         email: this.email.value!,
-        phone: this.phone.value!
+        phone: this.phone.value!,
       });
-
     }
 
     if (success) {
       this.newUserForm.reset();
       this.closeDialog();
 
-      if (this.isEditMode()) {
-        return;
-      } else {
+      if (!editMode) {
         this.toastService.success('Contact successfully created.');
       }
     }
@@ -215,6 +189,4 @@ export class ContactDialog implements AfterViewInit, OnInit {
     this.contactService.deleteSelectedContact();
     this.closeDialog();
   }
-
 }
-
