@@ -43,7 +43,9 @@
       </div>
 
       <div class="assign-wrapper">
-        <app-assigned-to></app-assigned-to>
+        <app-assigned-to
+          (assignedContactIdsChange)="setAssignedContactIds($event)"
+        ></app-assigned-to>
       </div>
 
       <div class="category-wrapper">

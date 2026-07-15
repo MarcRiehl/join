@@ -22,6 +22,7 @@ export class AddTask {
     dueDate: new FormControl('', [Validators.required, noPastDateValidator()]),
     priority: new FormControl('medium', Validators.required),
     category: new FormControl('', Validators.required),
+    assignedContactIds: new FormControl<number[]>([]),
   });
 
   // Method to set the priority value in the form
@@ -41,5 +42,9 @@ export class AddTask {
   setCategory(value: string): void {
     this.addTaskForm.get('category')?.setValue(value);
     this.isCategoryDropdownOpen = false;
+  }
+
+  setAssignedContactIds(ids: number[]): void {
+    this.addTaskForm.get('assignedContactIds')?.setValue(ids);
   }
 }
