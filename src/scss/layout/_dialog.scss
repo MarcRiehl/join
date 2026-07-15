@@ -27,25 +27,40 @@ dialog::backdrop {
         animation: dialogInMobile 250ms ease-out forwards;
     }
 
+    @include small-mobile {
+        animation: dialogInMobile 250ms ease-out forwards;
+    }
+
+
     @include mobile {
         width: 100dvw;
-        height: calc(100dvh - 160px);
-        margin: 0 8px;
+        height: calc(100dvh - 80px);
+        top: 0;
+        bottom: 80px;
+
     }
 
     @include small-mobile {
         width: 100dvw;
-        height: calc(100dvh - 160px);
-        margin: 0 8px;
+        height: calc(100dvh - 80px);
+        top: 0;
+        bottom: 80px;
+
     }
 
     @include tablet {
         width: 100dvw;
         height: calc(100dvh - 160px);
-        margin: 0 8px;
+
     }
 
+    @include landscape {
+        width: 100dvw;
+        height: calc(100dvh - 80px);
+        top: 0;
+        bottom: 80px;
 
+    }
 }
 
 .user-dialog.closing {
@@ -97,6 +112,52 @@ dialog::backdrop {
         transform: translate(-50%, -50%);
         opacity: 1;
     }
+
+}
+
+@include small-mobile {
+    @keyframes dialogInMobile {
+        from {
+            transform: translate(-50%, calc(-50% + 100vh));
+            opacity: 0;
+        }
+
+        to {
+            transform: translate(-50%, 0%);
+            opacity: 1;
+        }
+
+    }
+}
+
+@include mobile {
+    @keyframes dialogInMobile {
+        from {
+            transform: translate(-50%, calc(-50% + 100vh));
+            opacity: 0;
+        }
+
+        to {
+            transform: translate(-50%, 0%);
+            opacity: 1;
+        }
+
+    }
+}
+
+@include landscape {
+    @keyframes dialogInMobile {
+        from {
+            transform: translate(-50%, calc(-50% + 100vh));
+            opacity: 0;
+        }
+
+        to {
+            transform: translate(-50%, 0%);
+            opacity: 1;
+        }
+
+    }
 }
 
 @keyframes dialogOutMobile {
@@ -108,6 +169,20 @@ dialog::backdrop {
     to {
         transform: translate(-50%, calc(-50% + 100vh));
         opacity: 0;
+    }
+}
+
+@include small-mobile {
+    @keyframes dialogOutMobile {
+        from {
+            transform: translate(-50%, 0%);
+            opacity: 1;
+        }
+
+        to {
+            transform: translate(-50%, calc(-50% + 100vh));
+            opacity: 0;
+        }
     }
 }
 
@@ -139,13 +214,9 @@ dialog::backdrop {
     }
 
     @include landscape {
-        overflow-y: auto;
+        flex: 1;
         min-height: 0;
-        align-items: flex-start;
-        padding: 20px 0 20px 0;
-        margin-top: 30px;
-        max-height: calc(100dvh - 100px);
-        margin-right: 20px;
+
     }
 }
 
@@ -206,6 +277,7 @@ dialog::backdrop {
         z-index: 9999;
         pointer-events: auto;
     }
+
 }
 
 .dialog-close-btn:hover {
@@ -242,10 +314,17 @@ dialog::backdrop {
 
     @include small-mobile {
         height: 180px;
+        width: 100%;
     }
 
     @include desktop-md {
         padding-right: 0px;
+    }
+
+    @include landscape {
+        height: 100px;
+        position: fixed;
+        top: 0;
     }
 
 }
@@ -269,14 +348,25 @@ dialog::backdrop {
         justify-content: center;
         width: 55%;
     }
+
+    @include landscape {
+        flex: 1;
+        min-height: 0;
+    }
 }
 
 
 .dialog-right-inner-right {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    width: 100%;
-    height: 100%;
+    // display: grid;
+    // grid-template-rows: auto 1fr auto;
+    // width: 100%;
+    // height: 100%;
+    // padding: 32px;
+    // min-height: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
     padding: 32px;
 
     @include mobile {
@@ -286,6 +376,10 @@ dialog::backdrop {
     @include tablet {
         padding: 50px 8px 32px 8px;
     }
+
+    // @include small-mobile{
+    //     padding: 32px 8px 32px 8px;
+    // }
 }
 
 .right-user-form {
@@ -343,6 +437,10 @@ dialog::backdrop {
     @include small-mobile {
         font-size: 36px;
     }
+
+    @include landscape {
+        font-size: 30px;
+    }
 }
 
 .dialog-subline {
@@ -358,6 +456,10 @@ dialog::backdrop {
     @include small-mobile {
         font-size: 16px;
     }
+
+    @include landscape {
+        font-size: 16px;
+    }
 }
 
 .dialog-headline-stroke {
@@ -369,6 +471,8 @@ dialog::backdrop {
 .dialog-form {
     justify-self: end;
     width: 100%;
+    flex: 1;
+    min-height: 0;
 
     &--task {
         display: flex;
@@ -384,12 +488,27 @@ dialog::backdrop {
         padding-top: 10px;
     }
 
+    @include landscape {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+        padding-top: 20px;
+    }
+
+}
+
+.dialog-form form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .dialog-user-close {
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
+    flex-shrink: 0;
 }
 
 
@@ -412,6 +531,12 @@ dialog::backdrop {
         left: 50%;
 
     }
+
+    @include landscape {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+    }
 }
 
 .dialog-user-logo .contact-details__avatar {
@@ -419,7 +544,11 @@ dialog::backdrop {
         width: 80px;
         height: 80px;
         font-size: 36px;
+    }
 
+    @include landscape {
+        width: 80px;
+        height: 80px;
     }
 }
 
@@ -430,6 +559,11 @@ dialog::backdrop {
     @include small-mobile {
         width: 80px;
 
+    }
+
+    @include landscape {
+        width: 80px;
+        height: 80px;
     }
 }
 
@@ -503,16 +637,36 @@ input.ng-invalid.ng-touched {
     padding-right: 21px;
 }
 
+.form-scroll {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0; // ganz wichtig!
+
+    @include landscape {
+        padding: 20px 16px;
+        margin-top: 30px;
+        max-height: calc(100dvh - 220px);
+    }
+}
+
 .form-buttons {
     display: flex;
     justify-content: flex-start;
     gap: 20px;
     padding-top: 20px;
+    flex-shrink: 0;
 
     @include mobile {
         padding-top: 0px;
-        justify-content: center;
 
+    }
+
+    @include landscape {
+        position: fixed;
+        bottom: 10px;
+        width: 100%;
+        gap: 20px;
+        padding: 0 30px 0 16px;
     }
 }
 

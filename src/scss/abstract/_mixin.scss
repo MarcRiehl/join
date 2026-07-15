@@ -70,7 +70,7 @@
 }
 
 @mixin landscape {
-    @media (hover: none) and (orientation: landscape) {
+    @media (hover: none) and (orientation: landscape) and (max-height: 360px){
         @content;
     }
 }

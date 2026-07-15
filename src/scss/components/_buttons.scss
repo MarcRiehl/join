@@ -91,6 +91,10 @@
   border: 1px solid $blue-color;
   box-shadow: none;
 
+  @include small-mobile {
+    font-size: 18px;
+  }
+
 
   &:hover {
     border-color: $light-blue-button;

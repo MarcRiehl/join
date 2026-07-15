@@ -40,81 +40,82 @@
                         </div>
                         <div class="dialog-form">
                             <form [formGroup]="newUserForm" (ngSubmit)="onSubmit()">
-                                <div class="form-cell">
-                                    <div>
-                                        <input id="name" class="input-name" type="text" name="name"
-                                            formControlName="name" placeholder="Name" />
+                                <div class="form-scroll">
+                                    <div class="form-cell">
+                                        <div>
+                                            <input id="name" class="input-name" type="text" name="name"
+                                                formControlName="name" placeholder="Name" />
+                                        </div>
+                                        <div class="form-error-placeholder">
+                                            @if (name.touched) {
+
+                                            @if (name.hasError('required')) {
+                                            <p class="form-error">This field is required.</p>
+
+                                            } @else if (name.hasError('fullName')) {
+                                            <p class="form-error">Enter first and last name.</p>
+
+                                            } @else if (name.hasError('nameTooShort')) {
+                                            <p class="form-error">
+                                                First and last name must each contain at least 3 characters.
+                                            </p>
+                                            }
+                                            @else if (name.hasError('nameExists')) {
+                                            <p class="form-error">
+                                                Contact already exists.
+                                            </p>
+                                            }
+                                            @else if (name.hasError('pattern')){
+                                            <p class="form-error">
+                                                The name must not contain numbers.
+                                            </p>
+                                            }
+                                            }
+                                        </div>
                                     </div>
-                                    <div class="form-error-placeholder">
-                                        @if (name.touched) {
+                                    <div class="form-cell">
+                                        <div>
+                                            <input id="mail" class="input-mail" type="text" name="mail"
+                                                formControlName="email" placeholder="Email" />
+                                        </div>
+                                        <div class="form-error-placeholder">
+                                            @if (email.touched) {
+                                            @if ( email.hasError('required')) {
+                                            <p class="form-error">
+                                                Your email is required.
+                                            </p>
+                                            }
+                                            @else if ( !newUserForm.controls.email.hasError('required') &&
+                                            newUserForm.controls.email.hasError('invalidEmail')) {
+                                            <p class="form-error">
+                                                Wrong email address.
+                                            </p>
+                                            }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-cell">
+                                        <div>
+                                            <input id="phone" class="input-phone" name="phone" type="text"
+                                                formControlName="phone" placeholder="Phone" />
+                                        </div>
+                                        <div class="form-error-placeholder">
+                                            @if (phone.touched) {
+                                            @if (phone.hasError('required')) {
+                                            <p class="form-error">
+                                                Your phone number is required.
+                                            </p>
+                                            }
+                                            @else if (phone.hasError('pattern')){
+                                            <p class="form-error">
+                                                The phone number can only contain numbers.
+                                            </p>
+                                            }
 
-                                        @if (name.hasError('required')) {
-                                        <p class="form-error">This field is required.</p>
-
-                                        } @else if (name.hasError('fullName')) {
-                                        <p class="form-error">Enter first and last name.</p>
-
-                                        } @else if (name.hasError('nameTooShort')) {
-                                        <p class="form-error">
-                                            First and last name must each contain at least 3 characters.
-                                        </p>
-                                        }
-                                        @else if (name.hasError('nameExists')) {
-                                        <p class="form-error">
-                                            Contact already exists.
-                                        </p>
-                                        }
-                                        @else if (name.hasError('pattern')){
-                                        <p class="form-error">
-                                            The name must not contain numbers.
-                                        </p>
-                                        }
-                                        }
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-cell">
-                                    <div>
-                                        <input id="mail" class="input-mail" type="text" name="mail"
-                                            formControlName="email" placeholder="Email" />
-                                    </div>
-                                    <div class="form-error-placeholder">
-                                        @if (email.touched) {
-                                        @if ( email.hasError('required')) {
-                                        <p class="form-error">
-                                            Your email is required.
-                                        </p>
-                                        }
-                                        @else if ( !newUserForm.controls.email.hasError('required') &&
-                                        newUserForm.controls.email.hasError('invalidEmail')) {
-                                        <p class="form-error">
-                                            Wrong email address.
-                                        </p>
-                                        }
-                                        }
-                                    </div>
-                                </div>
-                                <div class="form-cell">
-                                    <div>
-                                        <input id="phone" class="input-phone" name="phone" type="text"
-                                            formControlName="phone" placeholder="Phone" />
-                                    </div>
-                                    <div class="form-error-placeholder">
-                                        @if (phone.touched) {
-                                        @if (phone.hasError('required')) {
-                                        <p class="form-error">
-                                            Your phone number is required.
-                                        </p>
-                                        }
-                                        @else if (phone.hasError('pattern')){
-                                        <p class="form-error">
-                                            The phone number can only contain numbers.
-                                        </p>
-                                        }
-
-                                        }
-                                    </div>
-                                </div>
-
                                 <div class="form-buttons">
                                     @if (isEditMode()) {
                                     <button class="btn-primary btn-primary--border" type="button"
