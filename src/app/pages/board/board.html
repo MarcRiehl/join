@@ -11,7 +11,7 @@
           <img src="assets/img/components/board/search-click.svg" class="icon-active">
         </button>
       </div>
-      <button class="btn-primary btn-primary--create">
+      <button class="btn-primary btn-primary--create" (click)="openDialog()">
         Add task
         <img src="assets/img/components/board/add.svg" class="btn-icon">
       </button>
@@ -20,7 +20,11 @@
 
   <div class="board-lists">
     @for (column of boardColumns; track column.status) {
-      <app-task-view [title]="column.title" [status]="column.status"></app-task-view>
+    <app-task-view [title]="column.title" [status]="column.status"></app-task-view>
     }
   </div>
 </div>
+
+@if (dialogService.current().type === DialogType.AddTask) {
+<app-task-dialog></app-task-dialog>
+}
