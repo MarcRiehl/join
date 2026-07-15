@@ -1,9 +1,26 @@
-<p>board works!</p>
-    <button class="btn-primary btn-primary--list" type="button" (click)="openDialog()">
-      <span>Add task</span>
-      <img src="assets/img/components/contacts/person-add.svg" alt="">
-    </button>
+<div class="board-container">
+  <header class="board-header">
+    <h1 class="board-header__title">Board</h1>
+    <div class="board-header__controls">
+      <div class="search-bar">
+        <input type="text" placeholder="Find Task" [(ngModel)]="searchTerm" class="search-bar__input">
+        <div class="search-bar__divider"></div>
+        <button class="search-bar__btn">
+          <img src="assets/img/components/board/search-default.svg" class="icon-default">
+          <img src="assets/img/components/board/search-hover.svg" class="icon-hover">
+          <img src="assets/img/components/board/search-click.svg" class="icon-active">
+        </button>
+      </div>
+      <button class="btn-primary btn-primary--create">
+        Add task
+        <img src="assets/img/components/board/add.svg" class="btn-icon">
+      </button>
+    </div>
+  </header>
 
-    @if (dialogService.current().type === DialogType.AddTask) {
-  <app-task-dialog></app-task-dialog>
-}
+  <div class="board-lists">
+    @for (column of boardColumns; track column.status) {
+      <app-task-view [title]="column.title" [status]="column.status"></app-task-view>
+    }
+  </div>
+</div>
