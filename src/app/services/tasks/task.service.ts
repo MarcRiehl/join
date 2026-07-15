@@ -136,11 +136,4 @@ export class TaskService {
       return task.status === status;
     });
   }
-
-  //  Board-Logik:
-  // * Tasks nach Status in die vier Spalten einsortieren
-  // * jeder Spalte einen festen TaskStatus zuordnen
-  // * beim Drop den Zielstatus erkennen
-  // * updateTaskStatus(task.id, targetStatus) aufrufen
-  // * danach die Anzeige aktualisieren
 }
