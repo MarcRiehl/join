@@ -31,7 +31,9 @@ export class AssignedTo {
     } else {
       this.selectedContacts.update((contacts) => [...contacts, contact]);
     }
-    const selectedIds = this.selectedContacts().map((contact) => contact.id);
+    const selectedIds = this.selectedContacts()
+      .map((contact) => contact.id)
+      .filter((id): id is number => id !== undefined);
     this.assignedContactIdsChange.emit(selectedIds);
   }
 }
