@@ -21,10 +21,10 @@
     <div class="task-card__assignees">
       @for (id of task.assignedContactIds; track id) {
         <div class="assignee-badge">
-          {{ id }}
+          {{ getContactInitials(id) }}
         </div>
       }
     </div>
-    <img [src]="priorityIcon" alt="Priority" class="task-card__priority">
+    <img [src]="priorityIcon" alt="Priority" class="task-card__priority" />
   </div>
 </div>
