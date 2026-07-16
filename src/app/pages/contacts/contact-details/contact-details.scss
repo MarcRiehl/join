@@ -111,7 +111,7 @@
     // flex-direction: column;
     // align-items: flex-start;
     gap: 16px;
-    padding-right: 16px;
+    padding-right: 20px;
   }
 }
 
@@ -491,7 +491,7 @@
 
   :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button {
     position: fixed;
-    right: 16px;
+    right: 20px;
     bottom: 112px;
     z-index: 1000;
     width: 56px;

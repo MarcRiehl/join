@@ -17,6 +17,7 @@ dialog::backdrop {
     transform: translate(-50%, -50%);
     animation: dialogIn .3s ease;
 
+
     &--task {
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
         height: calc(100% - 160px);
@@ -25,10 +26,7 @@ dialog::backdrop {
 
     @include mobile-tablet {
         animation: dialogInMobile 250ms ease-out forwards;
-    }
-
-    @include small-mobile {
-        animation: dialogInMobile 250ms ease-out forwards;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
     }
 
 
@@ -45,6 +43,9 @@ dialog::backdrop {
         height: calc(100dvh - 80px);
         top: 0;
         bottom: 80px;
+        animation: dialogInMobile 250ms ease-out forwards;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+
 
     }
 
@@ -576,6 +577,12 @@ dialog::backdrop {
     }
 }
 
+.form-cell:first-child {
+    @include landscape {
+        margin-top: 20px;
+    }
+}
+
 .form-cell input {
     width: 422px;
     height: 50px;
@@ -642,10 +649,14 @@ input.ng-invalid.ng-touched {
     overflow-y: auto;
     min-height: 0; // ganz wichtig!
 
+    @include mobile{
+         max-height: calc(100dvh - 240px);
+    }
+
     @include landscape {
-        padding: 20px 16px;
+
         margin-top: 30px;
-        max-height: calc(100dvh - 220px);
+        max-height: calc(100dvh - 240px);
     }
 }
 
@@ -658,6 +669,12 @@ input.ng-invalid.ng-touched {
 
     @include mobile {
         padding-top: 0px;
+        justify-content: center;
+
+    }
+
+    @include tablet {
+        justify-content: center;
 
     }
 
@@ -666,7 +683,6 @@ input.ng-invalid.ng-touched {
         bottom: 10px;
         width: 100%;
         gap: 20px;
-        padding: 0 30px 0 16px;
     }
 }
 
