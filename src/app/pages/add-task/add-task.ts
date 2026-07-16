@@ -1,5 +1,6 @@
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TaskService } from '../../services/tasks/task.service';
 import { noPastDateValidator, getTodayDateString } from '../../utils/date.util/date.util';
 import { AssignedTo } from './assigned-to/assigned-to';
@@ -14,6 +15,7 @@ import { TaskPriority, TaskCategory, TaskStatus } from '../../interfaces/task/ta
 })
 export class AddTask {
   private taskService = inject(TaskService);
+  private router = inject(Router);
   minDate = getTodayDateString();
   private elementRef = inject(ElementRef);
   isSaving = false;
@@ -47,13 +49,14 @@ export class AddTask {
     this.selectedContacts = contacts;
   }
 
-  // Validates the form and saves the task via TaskService
+  // Validates the form, saves the task via TaskService, and redirects to the Board page on success
   async onSubmit(): Promise<void> {
     this.addTaskForm.markAllAsTouched();
     if (this.addTaskForm.invalid) return;
     this.isSaving = true;
     try {
       await this.taskService.createTask(this.buildTaskObject());
+      this.router.navigate(['/board']);
     } finally {
       this.isSaving = false;
     }
