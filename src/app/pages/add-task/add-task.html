@@ -2,9 +2,9 @@
   <div [class.dialog-content]="isTaskDialog()" [class.dialog-content--task]="isTaskDialog()"
     [class.content-add-task]="!isTaskDialog()">
     <div class="add-task-top">
-      <h2 class="dialog-headline dialog-headline--task">
+      <h1 class="dialog-headline dialog-headline--task">
         Add Task
-      </h2>
+      </h1>
       @if (isTaskDialog()) {
       <div class="dialog-user-close dialog-user-close--task">
         <button type="button" class="dialog-close-btn" (click)="closeDialog()">
@@ -12,69 +12,97 @@
       </div>
       }
     </div>
+    <div class="dialog-wrapper-inner dialog-wrapper-inner--task">
+      <div class="dialog-form dialog-form--task">
+        <form [formGroup]="addTaskForm" class="add-tasks__form" (ngSubmit)="onSubmit()">
+          <div class="form-scroll form-scroll--task">
+            <div class="dialog-left dialog-left--task">
+              <div class="form-cell">
+                <div class="form-cell-label">
+                  <label for="title">Title</label>
+                  <input type="text" formControlName="title" placeholder="Enter a title" />
+                </div>
+                <div class="form-error-placeholder"></div>
+              </div>
+              <div class="form-cell">
+                <div class="form-cell-label">
+                  <label for="description">Description</label>
+                </div>
+                <textarea type="text" class="input-description" formControlName="description"
+                  placeholder="Enter a Description" rows="4">
+              </textarea>
+              </div>
+              <div class="form-cell">
+                <div class="form-cell-label">
+                  <label for="dueDate">Due Date</label>
+                </div>
+                <input type="date" formControlName="dueDate"
+                  [class.input-error]="dueDateControl?.invalid && dueDateControl?.touched" />
+                <div class="form-error-placeholder"></div>
+              </div>
+              <!-- <div class="error-space">
+                @if (dueDateControl?.invalid && dueDateControl?.touched) {
+                <span class="error-message">This field is required</span>
+                }
+              </div> -->
+            </div>
+            <div class="dialog-task-stroke"></div>
+            <div class="dialog-right dialog-right--task">
+              <div class="proirity-wrapper">
+                <label class="form-label" for="priority">Priority</label>
+                <button type="button" [class.active-urgent]="isPrioritySelected('urgent')"
+                  (click)="setPriority('urgent')">
+                  Urgent
+                </button>
 
-    <form [formGroup]="addTaskForm" class="add-tasks__form" (ngSubmit)="onSubmit()">
-      <div class="add-tasks__column-left">
-        <label class="form-label" for="title">Title</label>
-        <input type="text" formControlName="title" placeholder="Enter a title" />
-        <label class="form-label" for="description">Description</label>
-        <input type="text" formControlName="description" placeholder="Enter a Description" />
-        <label class="form-label" for="dueDate">Due Date</label>
-        <input type="date" formControlName="dueDate"
-          [class.input-error]="dueDateControl?.invalid && dueDateControl?.touched" />
-        <div class="error-space">
-          @if (dueDateControl?.invalid && dueDateControl?.touched) {
-          <span class="error-message">This field is required</span>
-          }
-        </div>
-      </div>
+                <button type="button" [class.active-medium]="isPrioritySelected('medium')"
+                  (click)="setPriority('medium')">
+                  Medium
+                </button>
 
-      <div class="add-tasks__column-right">
-        <div class="proirity-wrapper">
-          <label class="form-label" for="priority">Priority</label>
-          <button type="button" [class.active-urgent]="isPrioritySelected('urgent')" (click)="setPriority('urgent')">
-            Urgent
-          </button>
+                <button type="button" [class.active-low]="isPrioritySelected('low')" (click)="setPriority('low')">
+                  Low
+                </button>
+              </div>
 
-          <button type="button" [class.active-medium]="isPrioritySelected('medium')" (click)="setPriority('medium')">
-            Medium
-          </button>
+              <div class="assign-wrapper">
+                <label class="form-label">Assigned to</label>
+                <app-assigned-to (selectedContactsChange)="onAssignedContactsChange($event)"></app-assigned-to>
+              </div>
 
-          <button type="button" [class.active-low]="isPrioritySelected('low')" (click)="setPriority('low')">
-            Low
-          </button>
-        </div>
-
-        <div class="assign-wrapper">
-          <label class="form-label">Assigned to</label>
-          <app-assigned-to (selectedContactsChange)="onAssignedContactsChange($event)"></app-assigned-to>
-        </div>
-
-        <label class="form-label">Category</label>
-        <div class="category-wrapper">
-          <div class="category-field" (click)="toggleCategoryDropdown()">
-            <input type="text" class="category-dropdown__input" [value]="getCategoryLabel()"
-              placeholder="Select task category" readonly />
-            <span class="category-dropdown__arrow"
-              [class.category-dropdown__arrow--open]="isCategoryDropdownOpen">▾</span>
+              <label class="form-label">Category</label>
+              <div class="category-wrapper">
+                <div class="category-field" (click)="toggleCategoryDropdown()">
+                  <input type="text" class="category-dropdown__input" [value]="getCategoryLabel()"
+                    placeholder="Select task category" readonly />
+                  <span class="category-dropdown__arrow"
+                    [class.category-dropdown__arrow--open]="isCategoryDropdownOpen">▾</span>
+                </div>
+                @if (isCategoryDropdownOpen) {
+                <div class="category-dropdown__list">
+                  @for (cat of categories; track cat.value) {
+                  <div (click)="setCategory(cat.value)">{{ cat.label }}</div>
+                  }
+                </div>
+                }
+              </div>
+            </div>
           </div>
-          @if (isCategoryDropdownOpen) {
-          <div class="category-dropdown__list">
-            @for (cat of categories; track cat.value) {
-            <div (click)="setCategory(cat.value)">{{ cat.label }}</div>
-            }
+          <div class="add-task-footer">
+            <div class="add-task-footer-left">
+              <div class="add-task-footer-required">
+                <span>*</span>This field is required
+              </div>
+            </div>
+            <div class="form-buttons">
+              <button type="button" class="btn-primary btn-primary--border" (click)="onClear()">Clear</button>
+              <button type="submit" class="btn-primary btn-primary--create btn-primary--mobil"
+                [disabled]="isSaving || addTaskForm.invalid">Create Task
+              </button>
+            </div>
           </div>
-          }
-        </div>
+        </form>
       </div>
-
-      <div class="form-footer">
-        <span class="required-legend">*This field is required</span>
-        <div class="form-buttons">
-          <button type="button" class="btn-clear" (click)="onClear()">Clear ✕</button>
-          <button type="submit" class="btn-create" [disabled]="isSaving || addTaskForm.invalid">Create Task ✓</button>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
 </section>
