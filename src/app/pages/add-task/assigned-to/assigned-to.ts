@@ -35,8 +35,11 @@ export class AssignedTo implements OnInit {
   searchTerm = signal<string>('');
 
   filteredContacts = computed(() => {
-    return this.contacts().filter((contact) =>
-      contact.firstname.toLowerCase().includes(this.searchTerm().toLowerCase()),
+    const term = this.searchTerm().toLowerCase();
+    return this.contacts().filter(
+      (contact) =>
+        contact.firstname.toLowerCase().includes(term) ||
+        contact.lastname.toLowerCase().includes(term),
     );
   });
 
