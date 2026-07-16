@@ -1,16 +1,32 @@
 @use '../abstract/' as *;
 
-.dialog-top {
+.add-task-top {
     display: flex;
     justify-content: space-between;
-}
-.dialog-footer{
-display: flex;
-justify-content: space-between;
-align-items: center;
+    flex-shrink: 0;
 }
 
-.dialog-task-stroke {
+.add-task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-task-footer-required {
+    font-size: 16px;
+
+    span {
+        color: $red-form-color;
+        vertical-align: text-top;
+    }
+
+}
+
+.content-add-task {
+    padding: 48px;
+}
+
+.add-task-stroke {
     height: 100%;
     border-left: 1px solid $grey-task-stroke;
     position: relative;
@@ -25,7 +41,7 @@ align-items: center;
 
     span {
         color: $red-form-color;
-        
+
     }
 
     @include mobile {
@@ -53,8 +69,5 @@ align-items: center;
         width: 100%;
     }
 
-    @include small-mobile {
-       
-
-    }
+    @include small-mobile {}
 }

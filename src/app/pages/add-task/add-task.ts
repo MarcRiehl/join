@@ -1,10 +1,11 @@
-import { Component, inject, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, computed, signal } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TaskService } from '../../services/tasks/task.service';
 import { noPastDateValidator, getTodayDateString } from '../../utils/date.util/date.util';
 import { AssignedTo } from './assigned-to/assigned-to';
 import { Contact } from '../../interfaces/contacts/contact';
 import { TaskPriority, TaskCategory, TaskStatus } from '../../interfaces/task/task.types';
+import { DialogService, DialogType } from '../../services/dialog/dialog.service';
 
 @Component({
   selector: 'app-add-task',
@@ -110,4 +111,33 @@ export class AddTask {
   setAssignedContactIds(ids: number[]): void {
     this.addTaskForm.get('assignedContactIds')?.setValue(ids);
   }
+// ab hier Marc
+  readonly dialogService = inject(DialogService);
+  readonly DialogType = DialogType;
+  type = signal<DialogType | null>(null);
+
+
+  isTaskDialog = computed(() =>
+    this.dialogService.current().type === DialogType.AddTask
+  );
+
+  closeDialog(): void {
+    return;
+  }
+  // ngOnInit() {
+  //   const task = this.selectedTask();
+
+  //   if (!task) {
+  //     return;
+  //   }
+
+  //   this.taskForm.patchValue({
+  //     title: task.title,
+  //     description: task.description,
+  //     dueDate: task.dueDate,
+  //     priority: task.priority,
+  //     category: task.category
+  //   });
+  // }
+  //   isEditMode = computed(() => this.selectedTask() !== null);
 }

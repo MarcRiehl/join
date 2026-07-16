@@ -1,31 +1,35 @@
 <dialog #dialog class="user-dialog user-dialog--task" closedby="any" (cancel)="onCancel($event)"
     (animationend)="animationFinished($event)">
+
     <div class="dialog-content dialog-content--task">
-        <div class="dialog-top">
+    
+        <div class="add-task-top">
             <h2 class="dialog-headline dialog-headline--task">
                 Add Task
             </h2>
+            @if (isTaskDialog()) {
             <div class="dialog-user-close dialog-user-close--task">
                 <button type="button" class="dialog-close-btn" (click)="closeDialog()">
                 </button>
             </div>
+            }
         </div>
-        <div class="dialog-wrapper-inner">
+        <div class="dialog-wrapper-inner dialog-wrapper-inner--task">
 
             <div class="dialog-form dialog-form--task">
                 <form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
-
-                    <div class="dialog-left dialog-left--task">
-                        <div class="form-cell">
-                            <div class="form-cell-label">
-                                <label for="message">Title<span>*</span></label>
-                            </div>
-                            <div>
-                                <input id="input-task-title" class="input-title" type="text" name="title"
-                                    formControlName="name" placeholder="Enter a title" />
-                            </div>
-                            <div class="form-error-placeholder">
-                                <!-- @if (titel.touched) {
+                    <div class="form-scroll form-scroll--task">
+                        <div class="dialog-left dialog-left--task">
+                            <div class="form-cell">
+                                <div class="form-cell-label">
+                                    <label for="message">Title<span>*</span></label>
+                                </div>
+                                <div>
+                                    <input id="input-task-title" class="input-title" type="text" name="title"
+                                        formControlName="name" placeholder="Enter a title" />
+                                </div>
+                                <div class="form-error-placeholder">
+                                    <!-- @if (titel.touched) {
 
                                         @if (name.hasError('required')) {
                                         <p class="form-error">This field is required.</p>
@@ -49,19 +53,19 @@
                                         </p>
                                         }
                                         } -->
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-cell">
-                            <div class="form-cell-label">
-                                <label for="message">Description</label>
-                            </div>
-                            <div>
-                                <textarea id="input-task-description" class="input-description" type="text"
-                                    name="description" formControlName="email" placeholder="Enter a description"
-                                    rows="4"></textarea>
-                            </div>
-                            <div class="form-error-placeholder">
-                                <!-- @if (email.touched) {
+                            <div class="form-cell">
+                                <div class="form-cell-label">
+                                    <label for="message">Description</label>
+                                </div>
+                                <div>
+                                    <textarea id="input-task-description" class="input-description" type="text"
+                                        name="description" formControlName="email" placeholder="Enter a description"
+                                        rows="4"></textarea>
+                                </div>
+                                <div class="form-error-placeholder">
+                                    <!-- @if (email.touched) {
                                         @if ( email.hasError('required')) {
                                         <p class="form-error">
                                             Your email is required.
@@ -73,15 +77,15 @@
                                         </p>
                                         }
                                         } -->
+                                </div>
                             </div>
+
                         </div>
-
-                    </div>
-                    <div class="dialog-task-stroke"></div>
-                    <div class="dialog-right dialog-right--task">
+                        <div class="dialog-task-stroke"></div>
+                        <div class="dialog-right dialog-right--task">
 
 
-                        <!-- <div class="dialog-user-logo">
+                            <!-- <div class="dialog-user-logo">
                             @if (isEditMode()) {
                             @if (selectedContact(); as contact) {
                             <div class="contact-details__avatar" [style.background-color]="contact.colors">
@@ -96,13 +100,13 @@
 
 
 
-                        <div class="form-cell">
-                            <div>
-                                <input id="phone" class="input-phone" name="phone" type="text" formControlName="phone"
-                                    placeholder="Phone" />
-                            </div>
-                            <div class="form-error-placeholder">
-                                <!-- @if (phone.touched) {
+                            <div class="form-cell">
+                                <div>
+                                    <input id="phone" class="input-phone" name="phone" type="text"
+                                        formControlName="phone" placeholder="Phone" />
+                                </div>
+                                <div class="form-error-placeholder">
+                                    <!-- @if (phone.touched) {
                                         @if (phone.hasError('required')) {
                                         <p class="form-error">
                                             Your phone number is required.
@@ -115,12 +119,13 @@
                                         }
 
                                         } -->
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="dialog-footer">
-                        <div class="dialog-footer-left">
-                            <div class="dialog-footer-required">
+                    <div class="add-task-footer">
+                        <div class="add-task-footer-left">
+                            <div class="add-task-footer-required">
                                 <span>*</span>This field is required
                             </div>
                         </div>

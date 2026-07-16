@@ -201,6 +201,9 @@ dialog::backdrop {
     align-items: center;
     height: 100%;
 
+    &--task {
+        align-items: flex-start;
+    }
 
     @include mobile-tablet {
         display: grid;
@@ -649,8 +652,13 @@ input.ng-invalid.ng-touched {
     overflow-y: auto;
     min-height: 0; // ganz wichtig!
 
-    @include mobile{
-         max-height: calc(100dvh - 240px);
+    &--task {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    @include mobile {
+        max-height: calc(100dvh - 240px);
     }
 
     @include landscape {

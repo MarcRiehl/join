@@ -5,12 +5,13 @@ import {
   OnInit,
   ViewChild,
   inject,
-  computed
+  computed,
+  signal
 } from '@angular/core';
 import { from, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators, AsyncValidatorFn } from '@angular/forms';
-import { DialogService } from '../../../services/dialog/dialog.service';
+import { DialogService, DialogType } from '../../../services/dialog/dialog.service';
 import { ToastService } from '../../../services/toast/toast-service';
 import { ContactService } from '../../../services/contacts/contact.service';
 import { noPastDateValidator, getTodayDateString } from '../../../utils/date.util/date.util';
@@ -23,9 +24,17 @@ import { fullNameValidator, splitFullName } from '../../../utils/name.util/name.
   styleUrl: './task-dialog.scss',
 })
 export class TaskDialog implements AfterViewInit, OnInit {
-  private readonly dialogService = inject(DialogService);
+  readonly dialogService = inject(DialogService);
   private readonly contactService = inject(ContactService);
   private toastService = inject(ToastService);
+
+  readonly DialogType = DialogType;
+  type = signal<DialogType | null>(null);
+
+
+  isTaskDialog = computed(() =>
+    this.dialogService.current().type === DialogType.AddTask
+  );
 
   selectedContact = this.contactService.selectedContact;
 
