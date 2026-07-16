@@ -1,1 +1,19 @@
 <p>task-dialog works!</p>
+<div class="contact-selection">
+  @for (contact of contactService.contacts(); track contact.id) {
+    @if (contact.id !== undefined) {
+      <button
+        type="button"
+        class="contact-selection__item"
+        [class.selected]="isContactSelected(contact.id)"
+        (click)="toggleContact(contact.id)"
+      >
+        <span class="assignee-badge" [style.backgroundColor]="contact.colors">
+          {{ contact.initials }}
+        </span>
+
+        <span>{{ contact.firstname }} {{ contact.lastname }}</span>
+      </button>
+    }
+  }
+</div>

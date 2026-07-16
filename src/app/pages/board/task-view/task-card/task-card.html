@@ -10,10 +10,10 @@
 
   @if (totalSubtasks > 0) {
     <div class="task-card__progress">
-      <!-- <div class="progress-bar">
+      <div class="progress-bar">
         <div class="progress-bar__fill" [style.width.%]="progressPercentage"></div>
       </div>
-      <span class="progress-text">{{ completedSubtasks }}/{{ totalSubtasks }} Subtasks</span> -->
+      <span class="progress-text">{{ completedSubtasks }}/{{ totalSubtasks }} Subtasks</span>
     </div>
   }
 
@@ -21,10 +21,10 @@
     <div class="task-card__assignees">
       @for (id of task.assignedContactIds; track id) {
         <div class="assignee-badge">
-          {{ id }}
+          {{ getContactInitials(id) }}
         </div>
       }
     </div>
-    <img [src]="priorityIcon" alt="Priority" class="task-card__priority">
+    <img [src]="priorityIcon" alt="Priority" class="task-card__priority" />
   </div>
 </div>
