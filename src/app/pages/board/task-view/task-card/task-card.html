@@ -10,21 +10,27 @@
 
   @if (totalSubtasks > 0) {
     <div class="task-card__progress">
-      <!-- <div class="progress-bar">
+      <div class="progress-bar">
         <div class="progress-bar__fill" [style.width.%]="progressPercentage"></div>
       </div>
-      <span class="progress-text">{{ completedSubtasks }}/{{ totalSubtasks }} Subtasks</span> -->
+      <span class="progress-text">{{ completedSubtasks }}/{{ totalSubtasks }} Subtasks</span>
     </div>
   }
 
   <div class="task-card__footer">
     <div class="task-card__assignees">
-      @for (id of task.assignedContactIds; track id) {
-        <div class="assignee-badge">
-          {{ id }}
+      @for (id of displayedAssignees; track id) {
+        <div class="assignee-badge" [style.background-color]="getAssigneeColor(id)">
+          {{ getContactInitials(id) }}
+        </div>
+      }
+      
+      @if (extraAssigneesCount > 0) {
+        <div class="assignee-badge extra-badge">
+          +{{ extraAssigneesCount }}
         </div>
       }
     </div>
-    <img [src]="priorityIcon" alt="Priority" class="task-card__priority">
+    <img [src]="priorityIcon" alt="Priority" class="task-card__priority" />
   </div>
 </div>
