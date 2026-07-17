@@ -23,7 +23,7 @@
     </div>
   </header>
 
-  <div class="board-lists">
+  <div class="board-lists" cdkDropListGroup>
     @for (column of boardColumns; track column.status) {
       <app-task-view
         [title]="column.title"
