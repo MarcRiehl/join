@@ -67,7 +67,11 @@
             placeholder="Select task category"
             readonly
           />
-          <span class="category-dropdown__arrow" [class.category-dropdown__arrow--open]="isCategoryDropdownOpen">▾</span>
+          <span
+            class="category-dropdown__arrow"
+            [class.category-dropdown__arrow--open]="isCategoryDropdownOpen"
+            >▾</span
+          >
         </div>
         @if (isCategoryDropdownOpen) {
           <div class="category-dropdown__list">
@@ -77,13 +81,17 @@
           </div>
         }
       </div>
+
+      <app-subtasks (subtasksChange)="onSubtasksChange($event)"></app-subtasks>
     </div>
 
     <div class="form-footer">
       <span class="required-legend">*This field is required</span>
       <div class="form-buttons">
         <button type="button" class="btn-clear" (click)="onClear()">Clear ✕</button>
-        <button type="submit" class="btn-create" [disabled]="isSaving || addTaskForm.invalid">Create Task ✓</button>
+        <button type="submit" class="btn-create" [disabled]="isSaving || addTaskForm.invalid">
+          Create Task ✓
+        </button>
       </div>
     </div>
   </form>
