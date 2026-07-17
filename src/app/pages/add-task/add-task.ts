@@ -1,4 +1,4 @@
-import { Component, inject, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, signal } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TaskService } from '../../services/tasks/task.service';
@@ -6,10 +6,12 @@ import { noPastDateValidator, getTodayDateString } from '../../utils/date.util/d
 import { AssignedTo } from './assigned-to/assigned-to';
 import { Contact } from '../../interfaces/contacts/contact';
 import { TaskPriority, TaskCategory, TaskStatus } from '../../interfaces/task/task.types';
+import { Subtasks } from './subtasks/subtasks/subtasks';
+import { Subtask } from '../../interfaces/task/subtask';
 
 @Component({
   selector: 'app-add-task',
-  imports: [ReactiveFormsModule, AssignedTo],
+  imports: [ReactiveFormsModule, AssignedTo, Subtasks],
   templateUrl: './add-task.html',
   styleUrl: './add-task.scss',
 })
@@ -49,6 +51,12 @@ export class AddTask {
     this.selectedContacts = contacts;
   }
 
+  subtasks = signal<Subtask[]>([]);
+
+  onSubtasksChange(subtasks: Subtask[]): void {
+    this.subtasks.set(subtasks);
+  }
+
   // Validates the form, saves the task via TaskService, and redirects to the Board page on success
   async onSubmit(): Promise<void> {
     this.addTaskForm.markAllAsTouched();
@@ -76,9 +84,9 @@ export class AddTask {
       dueDate: dueDate!,
       priority: priority as TaskPriority,
       category: category as TaskCategory,
-      status: 'to-do' as TaskStatus,
+      status: 'todo' as TaskStatus,
       assignedContactIds: this.selectedContacts.map((c) => c.id!),
-      subtasks: [],
+      subtasks: this.subtasks(),
     };
   }
 
