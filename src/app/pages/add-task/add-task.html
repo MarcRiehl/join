@@ -22,7 +22,14 @@
                   <label for="title">Title<span>*</span></label>
                   <input type="text" formControlName="title" placeholder="Enter a title" />
                 </div>
-                <div class="form-error-placeholder"></div>
+                <div class="form-error-placeholder">
+                  @if ( title.touched) {
+
+                  @if (title.hasError('required')) {
+                  <p class="form-error">This field is required.</p>
+                  }
+                  }
+                </div>
               </div>
               <div class="form-cell">
                 <div class="form-cell-label">
@@ -36,9 +43,29 @@
                 <div class="form-cell-label">
                   <label for="dueDate">Due Date<span>*</span></label>
                 </div>
-                <input type="date" class="input-date" formControlName="dueDate" />
+                <div class="date-input">
+                  <input matInput [matDatepicker]="picker" formControlName="dueDate" placeholder="Select due date">
+
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                    <img matDatepickerToggleIcon src="/assets/img/components/task/event.svg">
+                  </mat-datepicker-toggle>
+
+                  <mat-datepicker #picker></mat-datepicker>
+                </div>
+                <!-- <label for="dueDate">Due Date<span>*</span></label>
+                </div>
+                <input type="date" class="input-date" formControlName="dueDate" /> -->
                 <!-- [class.input-error]="dueDateControl?.invalid && dueDateControl?.touched" /> -->
-                <div class="form-error-placeholder"></div>
+                <div class="form-error-placeholder">
+                  @if ( dueDate.touched) {
+                  @if (addTaskForm.controls.dueDate.hasError('required')) {
+                  <p class="form-error">This field is required.</p>
+                  }
+                  @if (addTaskForm.controls.dueDate.hasError('pastDate')) {
+                 <p class="form-error">Please select today or a future date.</p>
+                  }
+                }
+                </div>
               </div>
               <!-- <div class="error-space">
                 @if (dueDateControl?.invalid && dueDateControl?.touched) {

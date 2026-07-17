@@ -9,10 +9,16 @@ import { DialogService, DialogType } from '../../services/dialog/dialog.service'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-add-task',
-  imports: [ReactiveFormsModule, AssignedTo],
+  imports: [ReactiveFormsModule,
+    AssignedTo,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,],
   templateUrl: './add-task.html',
   styleUrl: './add-task.scss',
 })
@@ -62,6 +68,13 @@ export class AddTask {
       this.isSaving = false;
     }
   }
+      get title() {
+      return this.addTaskForm.controls.title;
+    }
+
+        get dueDate() {
+      return this.addTaskForm.controls.dueDate;
+    }
 
   // Resets the form to its default state (priority back to medium)
   onClear(): void {

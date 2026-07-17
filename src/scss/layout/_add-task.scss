@@ -143,17 +143,18 @@
     position: relative;
 }
 
-input::-webkit-calendar-picker-indicator {
-    opacity: 0;
-    cursor: pointer;
+.date-input {
+    position: relative;
+}
+
+mat-datepicker-toggle {
     position: absolute;
-    right: 21px;
+    right: 36px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-.input-date:invalid::-webkit-datetime-edit {
-  color: $grey-form-color;
+.mat-datepicker-content-container {
+    background-color: $white !important;
 }
 
-.input-date:valid::-webkit-datetime-edit {
-  color: #000;
-}
