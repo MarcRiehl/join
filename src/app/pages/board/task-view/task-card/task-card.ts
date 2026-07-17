@@ -43,4 +43,16 @@ export class TaskCardComponent {
   get priorityIcon(): string {
     return `/assets/img/components/board/priority-symbol-${this.task.priority}.svg`;
   }
+
+  getAssigneeColor(id: number): string {
+    return this.contactService.getBubbleColors(id);
+  }
+
+  get displayedAssignees(): number[] {
+    return this.task.assignedContactIds ? this.task.assignedContactIds.slice(0, 4) : [];
+  }
+
+  get extraAssigneesCount(): number {
+    return this.task.assignedContactIds ? Math.max(0, this.task.assignedContactIds.length - 4) : 0;
+  }
 }

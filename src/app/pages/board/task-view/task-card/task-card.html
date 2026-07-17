@@ -19,9 +19,15 @@
 
   <div class="task-card__footer">
     <div class="task-card__assignees">
-      @for (id of task.assignedContactIds; track id) {
-        <div class="assignee-badge">
+      @for (id of displayedAssignees; track id) {
+        <div class="assignee-badge" [style.background-color]="getAssigneeColor(id)">
           {{ getContactInitials(id) }}
+        </div>
+      }
+      
+      @if (extraAssigneesCount > 0) {
+        <div class="assignee-badge extra-badge">
+          +{{ extraAssigneesCount }}
         </div>
       }
     </div>
