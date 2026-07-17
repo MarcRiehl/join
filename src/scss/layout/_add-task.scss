@@ -38,8 +38,11 @@
     font-weight: 400;
     line-height: 120%;
     color: $blue-color;
+    display: block;
+    margin-bottom: 10px;
 
     span {
+        vertical-align: text-top;
         color: $red-form-color;
 
     }
@@ -70,4 +73,87 @@
     }
 
     @include small-mobile {}
+}
+
+.form-cell textarea::placeholder {
+    color: $grey-form-color;
+}
+
+.proirity-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.button-task-priority {
+    background: $white;
+    border: 0;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+    padding: 16px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+
+    }
+
+    img {
+        padding-left: 10px;
+    }
+}
+
+.active-urgent {
+    background: $red-color;
+    color: $white;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.active-medium {
+    background: $orange-color;
+    color: $white;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.active-low {
+    background: $green-color;
+    color: $white;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.input-date {
+    width: 24px;
+    height: 24px;
+    background: url('/assets/img/components/task/event.svg') 95% no-repeat;
+    object-fit: contain;
+    padding-right: 21px;
+    position: relative;
+}
+
+input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 21px;
+}
+
+.input-date:invalid::-webkit-datetime-edit {
+  color: $grey-form-color;
+}
+
+.input-date:valid::-webkit-datetime-edit {
+  color: #000;
 }

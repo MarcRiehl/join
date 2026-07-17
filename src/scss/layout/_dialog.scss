@@ -432,6 +432,7 @@ dialog::backdrop {
 
     &--task {
         color: $black;
+        padding-bottom: 40px;
     }
 
     @include mobile-tablet {
@@ -617,6 +618,11 @@ dialog::backdrop {
 .form-cell input::placeholder {
     color: $grey-form-color;
 }
+
+.form-cell date::placeholder {
+    color: $grey-form-color;
+}
+
 
 input.ng-invalid.ng-dirty,
 input.ng-invalid.ng-touched {

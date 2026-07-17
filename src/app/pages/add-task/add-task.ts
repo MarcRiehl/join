@@ -111,7 +111,7 @@ export class AddTask {
   setAssignedContactIds(ids: number[]): void {
     this.addTaskForm.get('assignedContactIds')?.setValue(ids);
   }
-// ab hier Marc
+  // ab hier Marc
   readonly dialogService = inject(DialogService);
   readonly DialogType = DialogType;
   type = signal<DialogType | null>(null);
@@ -124,6 +124,12 @@ export class AddTask {
   closeDialog(): void {
     return;
   }
+
+  getPriorityIcon(priority: 'urgent' | 'medium' | 'low'): string {
+    const suffix = this.isPrioritySelected(priority) ? '-white' : '';
+    return `/assets/img/components/task/priority-symbol-${priority}${suffix}.svg`;
+  }
+
   // ngOnInit() {
   //   const task = this.selectedTask();
 
