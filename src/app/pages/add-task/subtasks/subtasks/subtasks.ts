@@ -1,4 +1,4 @@
-import { Component, signal, output } from '@angular/core';
+import { Component, signal, input, effect, output } from '@angular/core';
 import { Subtask } from '../../../../interfaces/task/subtask';
 
 @Component({
@@ -64,4 +64,16 @@ export class Subtasks {
   private emitChange(): void {
     this.subtasksChange.emit(this.subtasks());
   }
+
+  initialSubtasks = input<Subtask[]>([]);
+
+  constructor() {
+    effect(() => {
+      this.subtasks.set([...this.initialSubtasks()]);
+    });
+  }
+
+  isClearHover = signal(false);
+  isAddHover = signal(false);
+
 }

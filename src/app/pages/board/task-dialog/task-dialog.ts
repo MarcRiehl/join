@@ -16,10 +16,11 @@ import { ToastService } from '../../../services/toast/toast-service';
 import { ContactService } from '../../../services/contacts/contact.service';
 import { noPastDateValidator, getTodayDateString } from '../../../utils/date.util/date.util';
 import { fullNameValidator, splitFullName } from '../../../utils/name.util/name.util';
+import { AddTask } from "../../add-task/add-task";
 
 @Component({
   selector: 'app-task-dialog',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AddTask],
   templateUrl: './task-dialog.html',
   styleUrl: './task-dialog.scss',
 })
@@ -69,7 +70,7 @@ export class TaskDialog implements AfterViewInit, OnInit {
   }
 
   //protected
-  private startCloseAnimation(): void {
+ protected startCloseAnimation(): void {
 
     if (this.isClosing) {
       return;

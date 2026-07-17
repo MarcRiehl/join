@@ -62,9 +62,9 @@
                   <p class="form-error">This field is required.</p>
                   }
                   @if (addTaskForm.controls.dueDate.hasError('pastDate')) {
-                 <p class="form-error">Please select today or a future date.</p>
+                  <p class="form-error">Please select today or a future date.</p>
                   }
-                }
+                  }
                 </div>
               </div>
               <!-- <div class="error-space">
@@ -113,15 +113,19 @@
               </div>
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="category">Category</label>
+                  <label for="category">Category<span>*</span></label>
                 </div>
-                <div class="category-wrapper">
+                <!-- <div class="category-wrapper">
                   <div class="category-field" (click)="toggleCategoryDropdown()">
                     <input type="text" class="category-dropdown__input" [value]="getCategoryLabel()"
-                      placeholder="Select task category" readonly />
-                    <span class="category-dropdown__arrow"
-                      [class.category-dropdown__arrow--open]="isCategoryDropdownOpen">▾</span>
+                      placeholder="Select task category" readonly (click)="toggleCategoryDropdown()" />
+              <span class="category-dropdown__arrow"
+                      [class.category-dropdown__arrow--open]="isCategoryDropdownOpen">▾</span> -->
+                <!-- <img src="/assets/img/components/task/arrow-drop-down.svg" class="change-dropdown__arrow"
+                      [class.change__arrow--open]="isCategoryDropdownOpen"
+                      (click)="toggleCategoryDropdown(); $event.stopPropagation()" alt="" />
                   </div>
+
                   @if (isCategoryDropdownOpen) {
                   <div class="category-dropdown__list">
                     @for (cat of categories; track cat.value) {
@@ -129,7 +133,48 @@
                     }
                   </div>
                   }
+                </div> -->
+                <div class="category-wrapper">
+                  <div class="category-field" cdkOverlayOrigin #categoryTrigger="cdkOverlayOrigin"
+                    (click)="toggleCategoryDropdown()">
+
+                    <input type="text" class="category-dropdown__input" [value]="getCategoryLabel()"
+                      placeholder="Select task category" readonly />
+
+                    <img src="/assets/img/components/task/arrow-drop-down.svg" class="change-dropdown__arrow"
+                      [class.change__arrow--open]="isCategoryDropdownOpen"
+                      (click)="toggleCategoryDropdown(); $event.stopPropagation()" alt="" />
+                  </div>
+
+                  <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="categoryTrigger"
+                    [cdkConnectedOverlayOpen]="isCategoryDropdownOpen"
+                    (overlayOutsideClick)="isCategoryDropdownOpen = false">
+
+                    <div class="category-dropdown__list">
+                      @for (cat of categories; track cat.value) {
+                      <div class="category-dropdown__item" (click)="setCategory(cat.value)">
+                        {{ cat.label }}
+                      </div>
+                      }
+                    </div>
+
+                  </ng-template>
+                  <div class="form-error-placeholder">
+                    @if ( category.touched) {
+
+                    @if (category.hasError('required')) {
+                    <p class="form-error">This field is required.</p>
+                    }
+                    }
+                  </div>
                 </div>
+              </div>
+              <div class="form-cell">
+                <div class="form-cell-label">
+                  <label for="category">Subtasks</label>
+                </div>
+                <app-subtasks (subtasksChange)="onSubtasksChange($event)"></app-subtasks>
+                <div class="form-error-placeholder"></div>
               </div>
             </div>
           </div>
@@ -149,7 +194,7 @@
         </form>
       </div>
 
-      <app-subtasks (subtasksChange)="onSubtasksChange($event)"></app-subtasks>
+
     </div>
   </div>
 </section>

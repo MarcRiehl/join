@@ -57,6 +57,7 @@
     border-radius: 10px;
     border: 1px solid $grey-form-color;
     padding: 13px 40px 13px 21px;
+     font-size: 20px;
 
     &:focus {
         border-color: $grey-form-blue;
@@ -77,6 +78,7 @@
 
 .form-cell textarea::placeholder {
     color: $grey-form-color;
+     font-size: 20px;
 }
 
 .proirity-wrapper {
@@ -104,8 +106,6 @@
 
     &:hover {
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
-
     }
 
     img {
@@ -158,3 +158,48 @@ mat-datepicker-toggle {
     background-color: $white !important;
 }
 
+.category-field {
+    position: relative;
+    width: 100%;
+}
+
+.category-dropdown__input {
+    width: 100%;
+    padding-right: 48px; // Platz für den Pfeil
+}
+
+.change-dropdown__arrow {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: transform 200ms ease;
+}
+
+.change__arrow--open {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.category-dropdown__list {
+    width: 422px;
+    max-height: 200px;
+
+    background: $white;
+    border: 1px solid $grey-form-color;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+
+    overflow-y: auto;
+}
+
+.category-dropdown__item {
+    padding: 12px 21px;
+    cursor: pointer;
+    transition: background-color .2s;
+    font-size: 20px;
+}
+
+.category-dropdown__item:hover {
+    background: $grey-dropdown;
+}

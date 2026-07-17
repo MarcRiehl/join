@@ -12,7 +12,7 @@ import { TaskDialog } from './task-dialog/task-dialog';
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [TaskView, FormsModule, CdkDropListGroup],
+  imports: [TaskView, FormsModule, TaskDialog],
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })

@@ -593,6 +593,7 @@ dialog::backdrop {
     border-radius: 10px;
     border: 1px solid $grey-form-color;
     padding: 13px 40px 13px 21px;
+    font-size: 20px;
 
     &:focus {
         border-color: $grey-form-blue;
@@ -617,10 +618,12 @@ dialog::backdrop {
 
 .form-cell input::placeholder {
     color: $grey-form-color;
+      font-size: 20px;
 }
 
 .form-cell date::placeholder {
     color: $grey-form-color;
+     font-size: 20px; 
 }
 
 
