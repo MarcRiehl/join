@@ -19,10 +19,13 @@ export class TaskView {
   private taskService = inject(TaskService);
 
   get tasks(): Task[] {
-    const task = this.taskService.getTasksByStatus(this.status);
+    const tasks = this.taskService.getTasksByStatus(this.status);
 
-    return task.filter((task) => {
-      return task.title.includes(this.searchTerm) || task.description.includes(this.searchTerm);
+    return tasks.filter((task) => {
+      return (
+        task.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        task.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
     });
   }
 }
