@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 
 import { TaskStatus } from '../../interfaces/task/task.types';
 import { ContactService } from '../../services/contacts/contact.service';
@@ -9,7 +10,7 @@ import { TaskView } from './task-view/task-view';
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [TaskView, FormsModule],
+  imports: [TaskView, FormsModule, CdkDropListGroup],
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })

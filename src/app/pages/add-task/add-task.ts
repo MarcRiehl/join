@@ -76,7 +76,7 @@ export class AddTask {
       dueDate: dueDate!,
       priority: priority as TaskPriority,
       category: category as TaskCategory,
-      status: 'to-do' as TaskStatus,
+      status: 'todo' as TaskStatus,
       assignedContactIds: this.selectedContacts.map((c) => c.id!),
       subtasks: [],
     };
