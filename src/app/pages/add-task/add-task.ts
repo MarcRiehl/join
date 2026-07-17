@@ -6,6 +6,9 @@ import { AssignedTo } from './assigned-to/assigned-to';
 import { Contact } from '../../interfaces/contacts/contact';
 import { TaskPriority, TaskCategory, TaskStatus } from '../../interfaces/task/task.types';
 import { DialogService, DialogType } from '../../services/dialog/dialog.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-add-task',
