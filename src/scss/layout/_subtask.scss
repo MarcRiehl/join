@@ -1,12 +1,17 @@
 @use '../abstract/' as *;
 
-.subtasks__input-row{
+.subtasks__input-row {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.subtasks__icon-clear{
+.subtasks__list {
+    position: relative;
+    width: 100%;
+}
+
+.subtasks-icon {
     border: 0;
     background-color: transparent;
     position: absolute;
@@ -15,22 +20,50 @@
     transform: translateY(-50%);
     cursor: pointer;
     transition: transform 200ms ease;
+
+    &--clear {
+        right: 60px;
+        top: 50%;
+    }
+
+    &--add {
+        right: 30px;
+        top: 50%;
+    }
+
+    &--delete {
+        right: 30px;
+        top: 50%;
+    }
+
+
 }
 
-.subtasks__icon-add{
-        border: 0;
-    background-color: transparent;
-    position: absolute;
-    right: 30px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    transition: transform 200ms ease;
-}
+// .subtasks__icon-clear {
+//     border: 0;
+//     background-color: transparent;
+//     position: absolute;
+//     right: 60px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     cursor: pointer;
+//     transition: transform 200ms ease;
+// }
 
-.subtask-stroke{
-       height: 40%;
-           right: 55px;
+// .subtasks__icon-add {
+//     border: 0;
+//     background-color: transparent;
+//     position: absolute;
+//     right: 30px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     cursor: pointer;
+//     transition: transform 200ms ease;
+// }
+
+.subtask-stroke {
+    height: 40%;
+    right: 55px;
     top: 25%;
     border-left: 1px solid $grey-task-stroke;
     position: absolute;
