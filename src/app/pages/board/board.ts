@@ -9,10 +9,11 @@ import { ContactService } from '../../services/contacts/contact.service';
 import { Router } from '@angular/router';
 import { TaskDialog } from './task-dialog/task-dialog';
 
+
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [TaskView, FormsModule, TaskDialog],
+  imports: [TaskView, FormsModule, TaskDialog, CdkDropListGroup],
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })
