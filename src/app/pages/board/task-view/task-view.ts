@@ -15,10 +15,18 @@ import { TaskCardComponent } from './task-card/task-card';
 export class TaskView {
   @Input({ required: true }) title!: string;
   @Input({ required: true }) status!: TaskStatus;
+  @Input() searchTerm = '';
   private taskService = inject(TaskService);
 
   get tasks(): Task[] {
-    return this.taskService.getTasksByStatus(this.status);
+    const tasks = this.taskService.getTasksByStatus(this.status);
+
+    return tasks.filter((task) => {
+      return (
+        task.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        task.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    });
   }
 
   drop(event: CdkDragDrop<Task[]>) {
