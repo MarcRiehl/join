@@ -19,8 +19,8 @@
             <div class="dialog-left dialog-left--task">
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="title">Title<span>*</span></label>
-                  <input type="text" formControlName="title" placeholder="Enter a title" />
+                  <label for="task-title">Title<span>*</span></label>
+                  <input type="text" id="task-title" formControlName="title" placeholder="Enter a title" />
                 </div>
                 <div class="form-error-placeholder">
                   @if ( title.touched) {
@@ -33,18 +33,18 @@
               </div>
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="description">Description</label>
+                  <label for="task-description">Description</label>
                 </div>
-                <textarea type="text" class="input-description" formControlName="description"
+                <textarea type="text" id="task-description" class="input-description" formControlName="description"
                   placeholder="Enter a Description" rows="4">
               </textarea>
               </div>
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="dueDate">Due Date<span>*</span></label>
+                  <label for="task-dueDate">Due Date<span>*</span></label>
                 </div>
                 <div class="date-input">
-                  <input matInput [matDatepicker]="picker" formControlName="dueDate" placeholder="Select due date">
+                  <input matInput [matDatepicker]="picker" id="task-dueDate" formControlName="dueDate" placeholder="Select due date">
 
                   <mat-datepicker-toggle matSuffix [for]="picker">
                     <img matDatepickerToggleIcon src="/assets/img/components/task/event.svg">
@@ -78,9 +78,9 @@
 
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="priority">Priority</label>
+                  <label for="task-priority">Priority</label>
                 </div>
-                <div class="proirity-wrapper">
+                <div class="proirity-wrapper" id="task-priority">
                   <button type="button" class="button-task-priority"
                     [class.active-urgent]="isPrioritySelected('urgent')" (click)="setPriority('urgent')">
                     Urgent
@@ -105,7 +105,7 @@
               <div class="assign-wrapper">
                 <div class="form-cell">
                   <div class="form-cell-label">
-                    <label for="assigned-to">Assigned to</label>
+                    <label>Assigned to</label>
                   </div>
                   <app-assigned-to (selectedContactsChange)="onAssignedContactsChange($event)"></app-assigned-to>
                   <div class="form-error-placeholder"></div>
@@ -113,7 +113,7 @@
               </div>
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="category">Category<span>*</span></label>
+                  <label for="task-category">Category<span>*</span></label>
                 </div>
                 <!-- <div class="category-wrapper">
                   <div class="category-field" (click)="toggleCategoryDropdown()">
@@ -138,7 +138,7 @@
                   <div class="category-field" cdkOverlayOrigin #categoryTrigger="cdkOverlayOrigin"
                     (click)="toggleCategoryDropdown()">
 
-                    <input type="text" class="category-dropdown__input" [value]="getCategoryLabel()"
+                    <input type="text" id="task-category" class="category-dropdown__input" [value]="getCategoryLabel()"
                       placeholder="Select task category" readonly />
 
                     <img src="/assets/img/components/task/arrow-drop-down.svg" class="change-dropdown__arrow"

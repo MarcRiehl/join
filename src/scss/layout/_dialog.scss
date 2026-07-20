@@ -203,12 +203,14 @@ dialog::backdrop {
 
     &--task {
         align-items: flex-start;
+        max-width: 900px;
     }
 
     @include mobile-tablet {
         display: grid;
         grid-template-rows: auto 1fr;
         justify-content: stretch;
+
     }
 
     @include small-mobile {
@@ -303,6 +305,8 @@ dialog::backdrop {
         background-color: $white;
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
+        justify-content: flex-start;
+        width: unset;
     }
 
     @include mobile-tablet {
@@ -421,7 +425,6 @@ dialog::backdrop {
 .dialog-logo-img {
     height: 67px;
     width: auto;
-    ;
 }
 
 .dialog-headline {
@@ -618,12 +621,12 @@ dialog::backdrop {
 
 .form-cell input::placeholder {
     color: $grey-form-color;
-      font-size: 20px;
+    font-size: 20px;
 }
 
 .form-cell date::placeholder {
     color: $grey-form-color;
-     font-size: 20px; 
+    font-size: 20px;
 }
 
 
@@ -664,6 +667,7 @@ input.ng-invalid.ng-touched {
     &--task {
         display: flex;
         justify-content: space-between;
+
     }
 
     @include mobile {
