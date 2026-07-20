@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, computed, signal } from '@angular/core';
 import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { Task } from '../../../interfaces/task/task';
 import { TaskStatus } from '../../../interfaces/task/task.types';
@@ -15,19 +15,28 @@ import { TaskCardComponent } from './task-card/task-card';
 export class TaskView {
   @Input({ required: true }) title!: string;
   @Input({ required: true }) status!: TaskStatus;
-  @Input() searchTerm = '';
+  
+  private _searchTerm = signal('');
+  
+  @Input() set searchTerm(value: string) {
+    this._searchTerm.set(value ? value.toLowerCase() : '');
+  }
+
   private taskService = inject(TaskService);
 
-  get tasks(): Task[] {
-    const tasks = this.taskService.getTasksByStatus(this.status);
+  tasks = computed(() => {
+    const search = this._searchTerm();
+    let columnTasks = this.taskService.tasks().filter((task) => task.status === this.status);
 
-    return tasks.filter((task) => {
-      return (
-        task.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        task.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+    if (search) {
+      columnTasks = columnTasks.filter(task => 
+        task.title?.toLowerCase().includes(search) || 
+        task.description?.toLowerCase().includes(search)
       );
-    });
-  }
+    }
+
+    return columnTasks;
+  });
 
   drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer !== event.container) {

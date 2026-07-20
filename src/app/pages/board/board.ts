@@ -35,6 +35,11 @@ export class BoardComponent implements OnInit {
     this.taskService.subscribeToTaskChanges();
   }
 
+  ngOnDestroy(): void {
+    this.taskService.unsubscribeFromTaskChanges();
+  }
+
+
   readonly dialogService = inject(DialogService);
   readonly DialogType = DialogType;
   private router = inject(Router);
