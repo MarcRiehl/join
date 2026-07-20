@@ -16,7 +16,7 @@
           <img src="assets/img/components/board/search-click.svg" class="icon-active" />
         </button>
       </div>
-      <button class="btn-primary btn-primary--create">
+      <button class="btn-primary btn-primary--create" (click)="openDialog()">
         Add task
         <img src="assets/img/components/board/add.svg" class="btn-icon" />
       </button>
@@ -33,3 +33,7 @@
     }
   </div>
 </div>
+
+@if (dialogService.current().type === DialogType.AddTask) {
+<app-task-dialog></app-task-dialog>
+}

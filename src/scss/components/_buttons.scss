@@ -15,6 +15,15 @@
   font-weight: 700;
   font-size: 21px;
 
+  @include small-mobile {
+    padding: 8px 10px;
+  }
+
+  @include landscape {
+    padding: 8px 10px;
+  }
+
+
   &:hover {
     background-color: $ligth-blue-color;
   }
@@ -64,32 +73,48 @@
   @include mobile {
     display: none;
   }
+    @include landscape {
+    display: none;
+  }
 }
 
 
 .btn-primary.btn-primary--mobil {
-  width: 100%;
+  // width: 100%;
 
   @include small-mobile {
     font-size: 18px;
-    width: 100%;
+    // width: 100%;
   }
 
   @include mobile-tablet {
-    width: 100%;
+    // width: 100%;
+  }
+
+  @include landscape {
+    // width: 100%;
+    font-size: 18px;
   }
 }
 
 
 .btn-primary.btn-primary--border {
   background-color: $white;
-  font-size: 20px;
+  font-size: 21px;
   color: $blue-color;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   gap: 8px;
   border: 1px solid $blue-color;
   box-shadow: none;
+
+  @include small-mobile {
+    font-size: 18px;
+  }
+
+  @include landscape {
+    font-size: 18px;
+  }
 
 
   &:hover {

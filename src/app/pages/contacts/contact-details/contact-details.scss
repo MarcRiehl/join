@@ -111,7 +111,7 @@
     // flex-direction: column;
     // align-items: flex-start;
     gap: 16px;
-    padding-right: 16px;
+    padding-right: 20px;
   }
 }
 
@@ -323,6 +323,10 @@
   :host-context(.contacts__main--detail-open) .contact-details__header {
     position: relative;
     margin-bottom: 48px;
+
+    @include small-mobile{
+            margin-bottom: 10px;
+    }
   }
 
   :host-context(.contacts__main--detail-open) .contact-details__headline {
@@ -442,7 +446,6 @@
 
     @include small-mobile {
       word-break: break-word;
-
     }
 
     @include desktop-hd {
@@ -488,7 +491,7 @@
 
   :host-context(.contacts__main--detail-open) .contact-details__mobile-options-button {
     position: fixed;
-    right: 16px;
+    right: 20px;
     bottom: 112px;
     z-index: 1000;
     width: 56px;
@@ -582,6 +585,12 @@
   }
 }
 
+@include small-mobile {
+  :host-context(.contacts__main--detail-open) .contact-details {
+    padding: 18px 16px 0px;
+  }
+}
+
 @include tablet {
   :host-context(.contacts__main--detail-open) .contact-details {
     display: block;
@@ -628,7 +637,8 @@
     // right: max(0px, calc((100vw - var(--mobile-detail-shell-width)) / 2));
     z-index: 1101;
   }
-    :host-context(.contacts__main--detail-open) .contact-details__identity {
+
+  :host-context(.contacts__main--detail-open) .contact-details__identity {
     width: 100%;
 
     min-width: 0;

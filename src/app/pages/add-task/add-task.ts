@@ -1,4 +1,4 @@
-import { Component, inject, ElementRef, HostListener, signal } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, signal, computed, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TaskService } from '../../services/tasks/task.service';
@@ -8,10 +8,25 @@ import { Contact } from '../../interfaces/contacts/contact';
 import { TaskPriority, TaskCategory, TaskStatus } from '../../interfaces/task/task.types';
 import { Subtasks } from './subtasks/subtasks/subtasks';
 import { Subtask } from '../../interfaces/task/subtask';
+import { DialogService, DialogType } from '../../services/dialog/dialog.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { OverlayModule } from '@angular/cdk/overlay';
+
 
 @Component({
   selector: 'app-add-task',
-  imports: [ReactiveFormsModule, AssignedTo, Subtasks],
+  imports: [ReactiveFormsModule,
+    AssignedTo,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    Subtasks,
+    OverlayModule
+  ],
   templateUrl: './add-task.html',
   styleUrl: './add-task.scss',
 })
@@ -70,6 +85,18 @@ export class AddTask {
     }
   }
 
+  get title() {
+    return this.addTaskForm.controls.title;
+  }
+
+  get dueDate() {
+    return this.addTaskForm.controls.dueDate;
+  }
+
+  get category() {
+    return this.addTaskForm.controls.category;
+  }
+
   // Resets the form to its default state (priority back to medium)
   onClear(): void {
     this.addTaskForm.reset();
@@ -102,6 +129,7 @@ export class AddTask {
   // Property to track the state of the category dropdown (open or closed)
   isCategoryDropdownOpen = false;
   toggleCategoryDropdown(): void {
+    this.addTaskForm.controls.category.markAsTouched();
     this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
   }
 
@@ -121,4 +149,47 @@ export class AddTask {
   setAssignedContactIds(ids: number[]): void {
     this.addTaskForm.get('assignedContactIds')?.setValue(ids);
   }
+
+  // ab hier Marc
+  readonly dialogService = inject(DialogService);
+  readonly DialogType = DialogType;
+  type = signal<DialogType | null>(null);
+
+
+  isTaskDialog = computed(() =>
+    this.dialogService.current().type === DialogType.AddTask
+  );
+
+  @Input() isDialog = false;
+  @Output() close = new EventEmitter<void>();
+
+  closeDialog() {
+    if (this.isDialog) {
+      this.close.emit();
+    } else {
+      this.router.navigate(['/board']);
+    }
+  }
+ 
+  getPriorityIcon(priority: 'urgent' | 'medium' | 'low'): string {
+    const suffix = this.isPrioritySelected(priority) ? '-white' : '';
+    return `/assets/img/components/task/priority-symbol-${priority}${suffix}.svg`;
+  }
+
+  // ngOnInit() {
+  //   const task = this.selectedTask();
+
+  //   if (!task) {
+  //     return;
+  //   }
+
+  //   this.taskForm.patchValue({
+  //     title: task.title,
+  //     description: task.description,
+  //     dueDate: task.dueDate,
+  //     priority: task.priority,
+  //     category: task.category
+  //   });
+  // }
+  //   isEditMode = computed(() => this.selectedTask() !== null);
 }

@@ -1,0 +1,6 @@
+<dialog #dialog class="user-dialog user-dialog--task" closedby="any" (cancel)="onCancel($event)"
+    (animationend)="animationFinished($event)">
+    <app-add-task [isDialog]="true" (close)="startCloseAnimation()">
+    </app-add-task>
+
+</dialog>
