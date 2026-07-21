@@ -1,4 +1,4 @@
-import { Component, inject, ElementRef, HostListener, signal, computed, Output, EventEmitter, Input } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, signal, computed, Output, EventEmitter, Input, viewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TaskService } from '../../services/tasks/task.service';
@@ -13,7 +13,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { OverlayModule } from '@angular/cdk/overlay';;
+import { OverlayModule } from '@angular/cdk/overlay';
+import { Task } from '../../interfaces/task/task';
 
 
 @Component({
@@ -36,6 +37,9 @@ export class AddTask {
   minDate = getTodayDateString();
   private elementRef = inject(ElementRef);
   isSaving = false;
+  initialSubtasks: Subtask[] = [];
+  subtasksComponent = viewChild(Subtasks);
+  assignedToComponent = viewChild(AssignedTo);
 
   addTaskForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -80,7 +84,11 @@ export class AddTask {
     this.isSaving = true;
 
     try {
-      await this.taskService.createTask(this.buildTaskObject());
+      if (this.isEditMode) {
+        await this.taskService.updateTask(this.buildUpdateTask());
+      } else {
+        await this.taskService.createTask(this.buildCreateTask());
+      }
 
       if (this.isDialog) {
         this.close.emit();
@@ -109,21 +117,45 @@ export class AddTask {
   onClear(): void {
     this.addTaskForm.reset();
     this.addTaskForm.get('priority')?.setValue('medium');
+    this.subtasksComponent()?.clear();
+    this.assignedToComponent()?.clear();
   }
 
   selectedStatus: TaskStatus = 'todo';
 
-  private buildTaskObject() {
-    const { title, description, dueDate, priority, category } = this.addTaskForm.value;
+  private buildCreateTask(): Omit<Task, 'id' | 'createdAt'> {
+    const { title, description, dueDate, priority, category } =
+      this.addTaskForm.getRawValue();
+
     return {
       title: title!,
-      description: description!,
+      description: description ?? '',
       dueDate: dueDate!,
       priority: priority as TaskPriority,
       category: category as TaskCategory,
-      // status: 'todo' as TaskStatus,
       status: this.selectedStatus,
-      assignedContactIds: this.selectedContacts.map((c) => c.id!),
+      assignedContactIds: this.selectedContacts.map(c => c.id!),
+      subtasks: this.subtasks(),
+    };
+  }
+  private buildUpdateTask(): Task {
+    const task = this.selectedTask();
+
+    if (!task) {
+      throw new Error('No task selected.');
+    }
+
+    const { title, description, dueDate, priority, category } =
+      this.addTaskForm.getRawValue();
+
+    return {
+      ...task,
+      title: title!,
+      description: description ?? '',
+      dueDate: dueDate!,
+      priority: priority as TaskPriority,
+      category: category as TaskCategory,
+      assignedContactIds: this.selectedContacts.map(c => c.id!),
       subtasks: this.subtasks(),
     };
   }
@@ -172,6 +204,9 @@ export class AddTask {
     this.dialogService.current().type === DialogType.AddTask
   );
 
+  @Input() isEditMode = false;
+
+  readonly selectedTask = this.taskService.selectedTask;
   @Input() isDialog = false;
   @Output() close = new EventEmitter<void>();
 
@@ -193,8 +228,33 @@ export class AddTask {
     return `/assets/img/components/task/priority-symbol-${priority}${suffix}.svg`;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.selectedStatus = this.initialStatus ?? 'todo';
+
+    if (this.isEditMode) {
+      this.loadTaskIntoForm();
+    } else {
+      this.initialSubtasks = [];
+    }
+  }
+
+  private loadTaskIntoForm(): void {
+    const task = this.selectedTask();
+
+    if (!task) {
+      return;
+    }
+
+    this.addTaskForm.patchValue({
+      title: task.title,
+      description: task.description,
+      dueDate: task.dueDate,
+      priority: task.priority,
+      category: task.category,
+      assignedContactIds: task.assignedContactIds,
+    });
+
+    this.initialSubtasks = [...task.subtasks];
   }
 
 }

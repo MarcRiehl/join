@@ -36,7 +36,8 @@
 
 @if (
   dialogService.current().type === DialogType.AddTask ||
-  dialogService.current().type === DialogType.TaskDetails
+  dialogService.current().type === DialogType.TaskDetails || 
+  dialogService.current().type === DialogType.EditTask
 ) {
   <app-task-dialog />
 }

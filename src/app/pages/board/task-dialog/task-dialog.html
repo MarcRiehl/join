@@ -1,6 +1,8 @@
 <dialog
   #dialog
-  class="user-dialog user-dialog--task"
+  class="user-dialog"
+  [class.user-dialog--task]="dialogService.current().type === DialogType.AddTask"
+  [class.user-dialog--task-view]="dialogService.current().type === DialogType.TaskDetails"
   closedby="any"
   (cancel)="onCancel($event)"
   (animationend)="animationFinished($event)">
@@ -17,5 +19,13 @@
       (close)="startCloseAnimation()">
     </app-task-view-dialog>
   }
+
+  @if (dialogService.current().type === DialogType.EditTask) {
+  <app-add-task
+    [isDialog]="true"
+    [isEditMode]="true"
+    (close)="startCloseAnimation()">
+  </app-add-task>
+}
 
 </dialog>

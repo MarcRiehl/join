@@ -24,6 +24,13 @@ dialog::backdrop {
         height: calc(100dvh - 80px);
     }
 
+        &--task-view {
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+        height: calc(100dvh - 80px);
+        width: 520px;;
+    }
+
+
     @include mobile-tablet {
         animation: dialogInMobile 250ms ease-out forwards;
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
@@ -440,6 +447,12 @@ dialog::backdrop {
         padding-bottom: 40px;
     }
 
+    &--task-view {
+        color: $black;
+        padding-bottom: 20px;
+    }
+
+
     @include mobile-tablet {
         font-size: 47px;
     }
@@ -675,7 +688,7 @@ input.ng-invalid.ng-touched {
         display: flex;
         justify-content: space-between;
         gap: 48px;
-         max-height: calc(100dvh - 400px);
+        max-height: calc(100dvh - 400px);
 
     }
 

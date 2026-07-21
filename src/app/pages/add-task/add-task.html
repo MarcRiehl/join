@@ -38,14 +38,15 @@
                 <textarea type="text" id="task-description" class="input-description" formControlName="description"
                   placeholder="Enter a Description" rows="4">
               </textarea>
-              <div class="form-error-placeholder"></div>
+                <div class="form-error-placeholder"></div>
               </div>
               <div class="form-cell">
                 <div class="form-cell-label">
                   <label for="task-dueDate">Due Date<span>*</span></label>
                 </div>
                 <div class="date-input">
-                  <input matInput [matDatepicker]="picker" id="task-dueDate" formControlName="dueDate" placeholder="Select due date">
+                  <input matInput [matDatepicker]="picker" id="task-dueDate" formControlName="dueDate"
+                    placeholder="Select due date">
 
                   <mat-datepicker-toggle matSuffix [for]="picker">
                     <img matDatepickerToggleIcon src="/assets/img/components/task/event.svg">
@@ -99,7 +100,9 @@
                   <div class="form-cell-label">
                     <label>Assigned to</label>
                   </div>
-                  <app-assigned-to (selectedContactsChange)="onAssignedContactsChange($event)"></app-assigned-to>
+                  <app-assigned-to [preselectedIds]="isEditMode ? (selectedTask()?.assignedContactIds ?? []) : []"
+                    (selectedContactsChange)="onAssignedContactsChange($event)">
+                  </app-assigned-to>
                   <div class="form-error-placeholder"></div>
                 </div>
               </div>
@@ -142,11 +145,12 @@
                   </div>
                 </div>
               </div>
-                <div class="form-cell-label">
-                  <label for="category">Subtasks</label>
-                </div>
-                <app-subtasks (subtasksChange)="onSubtasksChange($event)"></app-subtasks>
-                        
+              <div class="form-cell-label">
+                <label for="category">Subtasks</label>
+              </div>
+              <app-subtasks [initialSubtasks]="initialSubtasks" (subtasksChange)="onSubtasksChange($event)">
+              </app-subtasks>
+
             </div>
           </div>
           <div class="add-task-footer">
@@ -156,9 +160,12 @@
               </div>
             </div>
             <div class="form-buttons">
+              @if (!isEditMode) {
               <button type="button" class="btn-primary btn-primary--border" (click)="onClear()">Clear</button>
+              }
               <button type="submit" class="btn-primary btn-primary--create btn-primary--mobil"
-                [disabled]="isSaving || addTaskForm.invalid">Create Task
+                [disabled]="isSaving || addTaskForm.invalid">
+                {{ isEditMode ? 'OK' : 'Create Task' }}
               </button>
             </div>
           </div>

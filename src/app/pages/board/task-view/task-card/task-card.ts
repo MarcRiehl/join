@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
-
 import { Task } from '../../../../interfaces/task/task';
 import { ContactService } from '../../../../services/contacts/contact.service';
 import { DialogService, DialogType } from '../../../../services/dialog/dialog.service';
+import { TaskService } from '../../../../services/tasks/task.service';
 
 @Component({
   selector: 'app-task-card',
@@ -57,12 +57,16 @@ export class TaskCardComponent {
     return this.task.assignedContactIds ? Math.max(0, this.task.assignedContactIds.length - 4) : 0;
   }
 
-private dialogService = inject(DialogService);
+  private dialogService = inject(DialogService);
+  private taskService = inject(TaskService);
 
   openTaskDetails(): void {
-    this.dialogService.open(DialogType.TaskDetails, {
-      task: this.task,
-    });
+    this.taskService.selectedTask.set(this.task);
+    this.dialogService.open(DialogType.TaskDetails);
   }
+
+  ngOnInit() {
+  console.log(this.task.category);
+}
 
 }
