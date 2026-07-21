@@ -3,6 +3,7 @@ import { Injectable, signal } from '@angular/core';
 export enum DialogType {
   Contact = 'contact',
   AddTask = 'add-task',
+  TaskDetails = 'task-details',
   EditTask = 'edit-task'
 }
 
@@ -20,12 +21,12 @@ export class DialogService {
     type: null
   });
 
-open<T>(type: DialogType, data?: T): void {
-  this.current.set({
-    type,
-    data
-  });
-}
+  open<T>(type: DialogType, data?: T): void {
+    this.current.set({
+      type,
+      data
+    });
+  }
 
   clear(): void {
     this.current.set({

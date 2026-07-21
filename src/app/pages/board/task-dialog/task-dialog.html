@@ -1,6 +1,21 @@
-<dialog #dialog class="user-dialog user-dialog--task" closedby="any" (cancel)="onCancel($event)"
-    (animationend)="animationFinished($event)">
-    <app-add-task [isDialog]="true" (close)="startCloseAnimation()">
+<dialog
+  #dialog
+  class="user-dialog user-dialog--task"
+  closedby="any"
+  (cancel)="onCancel($event)"
+  (animationend)="animationFinished($event)">
+
+  @if (dialogService.current().type === DialogType.AddTask) {
+    <app-add-task
+      [isDialog]="true"
+      (close)="startCloseAnimation()">
     </app-add-task>
+  }
+
+  @if (dialogService.current().type === DialogType.TaskDetails) {
+    <app-task-view-dialog
+      (close)="startCloseAnimation()">
+    </app-task-view-dialog>
+  }
 
 </dialog>

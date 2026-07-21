@@ -193,33 +193,8 @@ export class AddTask {
     return `/assets/img/components/task/priority-symbol-${priority}${suffix}.svg`;
   }
 
-  // selectedStatus: TaskStatus = 'todo';
-
-  // ngOnInit() {
-  //   if (this.initialStatus) {
-  //     this.selectedStatus = this.initialStatus;
-  //   }
-  // }
-
   ngOnInit() {
     this.selectedStatus = this.initialStatus ?? 'todo';
   }
 
-
-  // ngOnInit() {
-  //   const task = this.selectedTask();
-
-  //   if (!task) {
-  //     return;
-  //   }
-
-  //   this.taskForm.patchValue({
-  //     title: task.title,
-  //     description: task.description,
-  //     dueDate: task.dueDate,
-  //     priority: task.priority,
-  //     category: task.category
-  //   });
-  // }
-  //   isEditMode = computed(() => this.selectedTask() !== null);
 }

@@ -3,6 +3,7 @@ import { Component, inject, Input } from '@angular/core';
 
 import { Task } from '../../../../interfaces/task/task';
 import { ContactService } from '../../../../services/contacts/contact.service';
+import { DialogService, DialogType } from '../../../../services/dialog/dialog.service';
 
 @Component({
   selector: 'app-task-card',
@@ -55,4 +56,13 @@ export class TaskCardComponent {
   get extraAssigneesCount(): number {
     return this.task.assignedContactIds ? Math.max(0, this.task.assignedContactIds.length - 4) : 0;
   }
+
+private dialogService = inject(DialogService);
+
+  openTaskDetails(): void {
+    this.dialogService.open(DialogType.TaskDetails, {
+      task: this.task,
+    });
+  }
+
 }

@@ -34,6 +34,9 @@
   </div>
 </div>
 
-@if (dialogService.current().type === DialogType.AddTask) {
-<app-task-dialog></app-task-dialog>
+@if (
+  dialogService.current().type === DialogType.AddTask ||
+  dialogService.current().type === DialogType.TaskDetails
+) {
+  <app-task-dialog />
 }
