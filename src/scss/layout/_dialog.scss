@@ -665,7 +665,7 @@ input.ng-invalid.ng-touched {
 .form-scroll {
     flex: 1;
     overflow-y: auto;
-    min-height: 0; // ganz wichtig!
+    min-height: 0;
 
     &--task {
         flex: 1;

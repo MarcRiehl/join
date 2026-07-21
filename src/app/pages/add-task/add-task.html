@@ -38,6 +38,7 @@
                 <textarea type="text" id="task-description" class="input-description" formControlName="description"
                   placeholder="Enter a Description" rows="4">
               </textarea>
+              <div class="form-error-placeholder"></div>
               </div>
               <div class="form-cell">
                 <div class="form-cell-label">
@@ -52,10 +53,6 @@
 
                   <mat-datepicker #picker></mat-datepicker>
                 </div>
-                <!-- <label for="dueDate">Due Date<span>*</span></label>
-                </div>
-                <input type="date" class="input-date" formControlName="dueDate" /> -->
-                <!-- [class.input-error]="dueDateControl?.invalid && dueDateControl?.touched" /> -->
                 <div class="form-error-placeholder">
                   @if ( dueDate.touched) {
                   @if (addTaskForm.controls.dueDate.hasError('required')) {
@@ -67,11 +64,6 @@
                   }
                 </div>
               </div>
-              <!-- <div class="error-space">
-                @if (dueDateControl?.invalid && dueDateControl?.touched) {
-                <span class="error-message">This field is required</span>
-                }
-              </div> -->
             </div>
             <div class="add-task-stroke"></div>
             <div class="dialog-right dialog-right--task">
@@ -115,25 +107,6 @@
                 <div class="form-cell-label">
                   <label for="task-category">Category<span>*</span></label>
                 </div>
-                <!-- <div class="category-wrapper">
-                  <div class="category-field" (click)="toggleCategoryDropdown()">
-                    <input type="text" class="category-dropdown__input" [value]="getCategoryLabel()"
-                      placeholder="Select task category" readonly (click)="toggleCategoryDropdown()" />
-              <span class="category-dropdown__arrow"
-                      [class.category-dropdown__arrow--open]="isCategoryDropdownOpen">▾</span> -->
-                <!-- <img src="/assets/img/components/task/arrow-drop-down.svg" class="change-dropdown__arrow"
-                      [class.change__arrow--open]="isCategoryDropdownOpen"
-                      (click)="toggleCategoryDropdown(); $event.stopPropagation()" alt="" />
-                  </div>
-
-                  @if (isCategoryDropdownOpen) {
-                  <div class="category-dropdown__list">
-                    @for (cat of categories; track cat.value) {
-                    <div (click)="setCategory(cat.value)">{{ cat.label }}</div>
-                    }
-                  </div>
-                  }
-                </div> -->
                 <div class="category-wrapper">
                   <div class="category-field" cdkOverlayOrigin #categoryTrigger="cdkOverlayOrigin"
                     (click)="toggleCategoryDropdown()">
@@ -191,8 +164,6 @@
           </div>
         </form>
       </div>
-
-
     </div>
   </div>
 </section>

@@ -57,3 +57,16 @@
     position: relative;
     width: 100%;
 }
+
+.cdk-overlay-container {
+    z-index: 999999 !important;
+}
+
+.cdk-overlay-pane {
+    z-index: 999999 !important;
+}
+
+.cdk-overlay-popover {
+        z-index: 999999 !important;
+}
+

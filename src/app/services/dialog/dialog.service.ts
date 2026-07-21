@@ -20,17 +20,16 @@ export class DialogService {
     type: null
   });
 
-  open(type: DialogType, data?: unknown): void {
-    this.current.set({
-      type,
-      data
-    });
-  }
+open<T>(type: DialogType, data?: T): void {
+  this.current.set({
+    type,
+    data
+  });
+}
 
   clear(): void {
     this.current.set({
       type: null
     });
   }
-
 }

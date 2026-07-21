@@ -17,6 +17,7 @@ import { ContactService } from '../../../services/contacts/contact.service';
 import { noPastDateValidator, getTodayDateString } from '../../../utils/date.util/date.util';
 import { fullNameValidator, splitFullName } from '../../../utils/name.util/name.util';
 import { AddTask } from "../../add-task/add-task";
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-task-dialog',
@@ -46,8 +47,22 @@ export class TaskDialog implements AfterViewInit, OnInit {
 
   private isClosing = false;
 
+  private overlayContainer = inject(OverlayContainer);
+  private observer?: MutationObserver;
+
   ngAfterViewInit(): void {
     this.dialog.nativeElement.showModal();
+
+    const container = this.overlayContainer.getContainerElement();
+
+    this.observer = new MutationObserver(() => {
+      this.moveOverlayIntoDialog();
+    });
+
+    this.observer.observe(container, {
+      childList: true,
+      subtree: true
+    });
   }
 
   ngOnInit(): void {
@@ -70,7 +85,7 @@ export class TaskDialog implements AfterViewInit, OnInit {
   }
 
   //protected
- protected startCloseAnimation(): void {
+  protected startCloseAnimation(): void {
 
     if (this.isClosing) {
       return;
@@ -114,11 +129,29 @@ export class TaskDialog implements AfterViewInit, OnInit {
       return;
     }
 
+    this.moveOverlayBackToBody();
+    this.observer?.disconnect();
     const dialog = this.dialog.nativeElement;
     dialog.classList.remove('closing');
     dialog.close();
     this.isClosing = false;
     this.dialogService.clear();
+  }
+
+  private moveOverlayIntoDialog(): void {
+    const container = this.overlayContainer.getContainerElement();
+
+    if (container.parentElement !== this.dialog.nativeElement) {
+      this.dialog.nativeElement.appendChild(container);
+    }
+  }
+
+  private moveOverlayBackToBody(): void {
+    const container = this.overlayContainer.getContainerElement();
+
+    if (container.parentElement !== document.body) {
+      document.body.appendChild(container);
+    }
   }
 
   addTaskForm = new FormGroup({
@@ -220,5 +253,4 @@ export class TaskDialog implements AfterViewInit, OnInit {
     this.contactService.deleteSelectedContact();
     this.closeDialog();
   }
-
 }

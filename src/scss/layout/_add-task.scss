@@ -1,8 +1,13 @@
 @use '../abstract/' as *;
 
+
 :host {
-    display: contents;
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
 }
+
 
 .add-tasks {
     display: flex;
@@ -12,12 +17,6 @@
     height: 100%;
 }
 
-:host {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-    height: 100%;
-}
 
 .add-task-top {
     display: flex;

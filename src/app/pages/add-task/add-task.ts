@@ -13,7 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { OverlayModule } from '@angular/cdk/overlay';
+import { OverlayModule } from '@angular/cdk/overlay';;
 
 
 @Component({
@@ -72,14 +72,22 @@ export class AddTask {
     this.subtasks.set(subtasks);
   }
 
-  // Validates the form, saves the task via TaskService, and redirects to the Board page on success
   async onSubmit(): Promise<void> {
     this.addTaskForm.markAllAsTouched();
+
     if (this.addTaskForm.invalid) return;
+
     this.isSaving = true;
+
     try {
       await this.taskService.createTask(this.buildTaskObject());
-      this.router.navigate(['/board']);
+
+      if (this.isDialog) {
+        this.close.emit();
+      } else {
+        this.router.navigate(['/board']);
+      }
+
     } finally {
       this.isSaving = false;
     }
@@ -103,6 +111,8 @@ export class AddTask {
     this.addTaskForm.get('priority')?.setValue('medium');
   }
 
+  selectedStatus: TaskStatus = 'todo';
+
   private buildTaskObject() {
     const { title, description, dueDate, priority, category } = this.addTaskForm.value;
     return {
@@ -111,7 +121,8 @@ export class AddTask {
       dueDate: dueDate!,
       priority: priority as TaskPriority,
       category: category as TaskCategory,
-      status: 'todo' as TaskStatus,
+      // status: 'todo' as TaskStatus,
+      status: this.selectedStatus,
       assignedContactIds: this.selectedContacts.map((c) => c.id!),
       subtasks: this.subtasks(),
     };
@@ -151,6 +162,7 @@ export class AddTask {
   }
 
   // ab hier Marc
+
   readonly dialogService = inject(DialogService);
   readonly DialogType = DialogType;
   type = signal<DialogType | null>(null);
@@ -170,11 +182,29 @@ export class AddTask {
       this.router.navigate(['/board']);
     }
   }
- 
+
+  get initialStatus(): TaskStatus | undefined {
+    return (this.dialogService.current().data as { status: TaskStatus } | undefined)?.status;
+  }
+
+
   getPriorityIcon(priority: 'urgent' | 'medium' | 'low'): string {
     const suffix = this.isPrioritySelected(priority) ? '-white' : '';
     return `/assets/img/components/task/priority-symbol-${priority}${suffix}.svg`;
   }
+
+  // selectedStatus: TaskStatus = 'todo';
+
+  // ngOnInit() {
+  //   if (this.initialStatus) {
+  //     this.selectedStatus = this.initialStatus;
+  //   }
+  // }
+
+  ngOnInit() {
+    this.selectedStatus = this.initialStatus ?? 'todo';
+  }
+
 
   // ngOnInit() {
   //   const task = this.selectedTask();
