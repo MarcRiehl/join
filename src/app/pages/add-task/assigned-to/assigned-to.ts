@@ -7,6 +7,9 @@ import {
   output,
   computed,
   OnInit,
+  input,
+  effect,
+  ViewChild
 } from '@angular/core';
 import { Contact } from '../../../interfaces/contacts/contact';
 import { ContactService } from '../../../services/contacts/contact.service';
@@ -22,8 +25,24 @@ import { OverlayModule } from '@angular/cdk/overlay';
 export class AssignedTo implements OnInit {
   private contactService = inject(ContactService);
   private elementRef = inject(ElementRef);
+  preselectedIds = input<number[]>([]);
 
   contacts = this.contactService.contacts;
+
+  constructor() {
+  effect(() => {
+    const ids = this.preselectedIds();
+    const contacts = this.contacts();
+
+    if (!ids.length || !contacts.length) {
+      return;
+    }
+
+    this.selectedContacts.set(
+      contacts.filter(contact => ids.includes(contact.id!))
+    );
+  });
+}
 
   // Loads the contact list when the component is created
   ngOnInit(): void {
@@ -54,13 +73,13 @@ export class AssignedTo implements OnInit {
   }
 
   // Opens the dropdown when the search input is focused/clicked
-openDropdown(): void {
-  if (this.isDropdownOpen) return;
+  openDropdown(): void {
+    if (this.isDropdownOpen) return;
 
-  setTimeout(() => {
-    this.isDropdownOpen = true;
-  });
-}
+    setTimeout(() => {
+      this.isDropdownOpen = true;
+    });
+  }
   // Method to check if a contact is selected. It returns true if the contact is present in the selectedContacts signal; otherwise, it returns false.
   isSelected(contact: Contact): boolean {
     return this.selectedContacts().some((c) => c.id === contact.id);
@@ -88,4 +107,12 @@ openDropdown(): void {
     const total = this.selectedContacts().length;
     return total > 3 ? total - 3 : 0;
   });
+
+clear(): void {
+  this.selectedContacts.set([]);
+  this.searchTerm.set('');
+  this.isDropdownOpen = false;
+
+  this.selectedContactsChange.emit([]);
+}
 }

@@ -1,0 +1,61 @@
+@use '../abstract/' as *;
+
+.task-view-wrapper{
+padding: 48px 40px;
+}
+.task-view-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-view-description{
+    font-size: 20px;
+}
+
+.task-view-date{
+    display: flex;
+}
+
+.task-view-priority{
+     display: flex;
+     align-items: center;
+     
+}
+
+.task-view-priority > div{
+font-size: 20px;
+}
+
+.task-view-date > div{
+       font-size: 20px;
+}
+
+.task-view-assigned-to > div{
+font-size: 20px;
+}
+
+.task-view-assigned-user{
+    display: flex;
+}
+
+.task-view-subtask{
+    display: flex;
+    flex-direction: column;
+        :hover{
+         background-color: $grey-dropdown;
+    }
+}
+
+.task-view-subtask-item{
+    border: 0;
+    background-color: $white;
+
+
+}
+
+.task-view-footer{
+    display: flex;
+    justify-content: flex-end;
+}
+

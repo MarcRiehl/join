@@ -1,5 +1,23 @@
 @use '../abstract/' as *;
 
+
+:host {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+}
+
+
+.add-tasks {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+}
+
+
 .add-task-top {
     display: flex;
     justify-content: space-between;
@@ -10,6 +28,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .add-task-footer-required {
@@ -19,7 +38,6 @@
         color: $red-form-color;
         vertical-align: text-top;
     }
-
 }
 
 .content-add-task {
@@ -87,6 +105,7 @@
     align-items: center;
     gap: 8px;
     width: 100%;
+    padding: 0 4px;
 }
 
 .button-task-priority {
@@ -202,4 +221,12 @@ mat-datepicker-toggle {
 
 .category-dropdown__item:hover {
     background: $grey-dropdown;
+}
+
+.add-tasks__form {
+    display: flex;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }

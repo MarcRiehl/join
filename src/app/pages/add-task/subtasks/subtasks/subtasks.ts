@@ -76,4 +76,12 @@ export class Subtasks {
   isClearHover = signal(false);
   isAddHover = signal(false);
 
+  clear(): void {
+  this.subtasks.set([]);
+  this.newSubtaskTitle.set('');
+  this.editingIndex.set(null);
+
+  this.emitChange();
+}
+
 }

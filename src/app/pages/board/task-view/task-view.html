@@ -2,7 +2,7 @@
   <div class="task-column__header">
     <h2 class="task-column__title">{{ title }}</h2>
     @if (status !== 'done') {
-      <button class="task-column__add-btn">
+      <button class="task-column__add-btn" (click)="openAddTask()">
         <img src="assets/img/components/board/plus-button.svg" class="icon-default">
         <img src="assets/img/components/board/plus-button-hover.svg" class="icon-hover">
         <img src="assets/img/components/board/plus-button-press.svg" class="icon-active">

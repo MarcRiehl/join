@@ -19,8 +19,8 @@
             <div class="dialog-left dialog-left--task">
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="title">Title<span>*</span></label>
-                  <input type="text" formControlName="title" placeholder="Enter a title" />
+                  <label for="task-title">Title<span>*</span></label>
+                  <input type="text" id="task-title" formControlName="title" placeholder="Enter a title" />
                 </div>
                 <div class="form-error-placeholder">
                   @if ( title.touched) {
@@ -33,18 +33,20 @@
               </div>
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="description">Description</label>
+                  <label for="task-description">Description</label>
                 </div>
-                <textarea type="text" class="input-description" formControlName="description"
+                <textarea type="text" id="task-description" class="input-description" formControlName="description"
                   placeholder="Enter a Description" rows="4">
               </textarea>
+                <div class="form-error-placeholder"></div>
               </div>
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="dueDate">Due Date<span>*</span></label>
+                  <label for="task-dueDate">Due Date<span>*</span></label>
                 </div>
                 <div class="date-input">
-                  <input matInput [matDatepicker]="picker" formControlName="dueDate" placeholder="Select due date">
+                  <input matInput [matDatepicker]="picker" id="task-dueDate" formControlName="dueDate"
+                    placeholder="Select due date">
 
                   <mat-datepicker-toggle matSuffix [for]="picker">
                     <img matDatepickerToggleIcon src="/assets/img/components/task/event.svg">
@@ -52,10 +54,6 @@
 
                   <mat-datepicker #picker></mat-datepicker>
                 </div>
-                <!-- <label for="dueDate">Due Date<span>*</span></label>
-                </div>
-                <input type="date" class="input-date" formControlName="dueDate" /> -->
-                <!-- [class.input-error]="dueDateControl?.invalid && dueDateControl?.touched" /> -->
                 <div class="form-error-placeholder">
                   @if ( dueDate.touched) {
                   @if (addTaskForm.controls.dueDate.hasError('required')) {
@@ -67,20 +65,15 @@
                   }
                 </div>
               </div>
-              <!-- <div class="error-space">
-                @if (dueDateControl?.invalid && dueDateControl?.touched) {
-                <span class="error-message">This field is required</span>
-                }
-              </div> -->
             </div>
             <div class="add-task-stroke"></div>
             <div class="dialog-right dialog-right--task">
 
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="priority">Priority</label>
+                  <label for="task-priority">Priority</label>
                 </div>
-                <div class="proirity-wrapper">
+                <div class="proirity-wrapper" id="task-priority">
                   <button type="button" class="button-task-priority"
                     [class.active-urgent]="isPrioritySelected('urgent')" (click)="setPriority('urgent')">
                     Urgent
@@ -105,40 +98,23 @@
               <div class="assign-wrapper">
                 <div class="form-cell">
                   <div class="form-cell-label">
-                    <label for="assigned-to">Assigned to</label>
+                    <label>Assigned to</label>
                   </div>
-                  <app-assigned-to (selectedContactsChange)="onAssignedContactsChange($event)"></app-assigned-to>
+                  <app-assigned-to [preselectedIds]="isEditMode ? (selectedTask()?.assignedContactIds ?? []) : []"
+                    (selectedContactsChange)="onAssignedContactsChange($event)">
+                  </app-assigned-to>
                   <div class="form-error-placeholder"></div>
                 </div>
               </div>
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="category">Category<span>*</span></label>
+                  <label for="task-category">Category<span>*</span></label>
                 </div>
-                <!-- <div class="category-wrapper">
-                  <div class="category-field" (click)="toggleCategoryDropdown()">
-                    <input type="text" class="category-dropdown__input" [value]="getCategoryLabel()"
-                      placeholder="Select task category" readonly (click)="toggleCategoryDropdown()" />
-              <span class="category-dropdown__arrow"
-                      [class.category-dropdown__arrow--open]="isCategoryDropdownOpen">▾</span> -->
-                <!-- <img src="/assets/img/components/task/arrow-drop-down.svg" class="change-dropdown__arrow"
-                      [class.change__arrow--open]="isCategoryDropdownOpen"
-                      (click)="toggleCategoryDropdown(); $event.stopPropagation()" alt="" />
-                  </div>
-
-                  @if (isCategoryDropdownOpen) {
-                  <div class="category-dropdown__list">
-                    @for (cat of categories; track cat.value) {
-                    <div (click)="setCategory(cat.value)">{{ cat.label }}</div>
-                    }
-                  </div>
-                  }
-                </div> -->
                 <div class="category-wrapper">
                   <div class="category-field" cdkOverlayOrigin #categoryTrigger="cdkOverlayOrigin"
                     (click)="toggleCategoryDropdown()">
 
-                    <input type="text" class="category-dropdown__input" [value]="getCategoryLabel()"
+                    <input type="text" id="task-category" class="category-dropdown__input" [value]="getCategoryLabel()"
                       placeholder="Select task category" readonly />
 
                     <img src="/assets/img/components/task/arrow-drop-down.svg" class="change-dropdown__arrow"
@@ -169,13 +145,12 @@
                   </div>
                 </div>
               </div>
-              <div class="form-cell">
-                <div class="form-cell-label">
-                  <label for="category">Subtasks</label>
-                </div>
-                <app-subtasks (subtasksChange)="onSubtasksChange($event)"></app-subtasks>
-                <div class="form-error-placeholder"></div>
+              <div class="form-cell-label">
+                <label for="category">Subtasks</label>
               </div>
+              <app-subtasks [initialSubtasks]="initialSubtasks" (subtasksChange)="onSubtasksChange($event)">
+              </app-subtasks>
+
             </div>
           </div>
           <div class="add-task-footer">
@@ -185,16 +160,17 @@
               </div>
             </div>
             <div class="form-buttons">
+              @if (!isEditMode) {
               <button type="button" class="btn-primary btn-primary--border" (click)="onClear()">Clear</button>
+              }
               <button type="submit" class="btn-primary btn-primary--create btn-primary--mobil"
-                [disabled]="isSaving || addTaskForm.invalid">Create Task
+                [disabled]="isSaving || addTaskForm.invalid">
+                {{ isEditMode ? 'OK' : 'Create Task' }}
               </button>
             </div>
           </div>
         </form>
       </div>
-
-
     </div>
   </div>
 </section>

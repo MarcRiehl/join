@@ -1,4 +1,4 @@
-import { Component, inject, ElementRef, HostListener, signal, computed, Output, EventEmitter, Input } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, signal, computed, Output, EventEmitter, Input, viewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TaskService } from '../../services/tasks/task.service';
@@ -14,6 +14,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { Task } from '../../interfaces/task/task';
 
 
 @Component({
@@ -36,6 +37,9 @@ export class AddTask {
   minDate = getTodayDateString();
   private elementRef = inject(ElementRef);
   isSaving = false;
+  initialSubtasks: Subtask[] = [];
+  subtasksComponent = viewChild(Subtasks);
+  assignedToComponent = viewChild(AssignedTo);
 
   addTaskForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -72,14 +76,26 @@ export class AddTask {
     this.subtasks.set(subtasks);
   }
 
-  // Validates the form, saves the task via TaskService, and redirects to the Board page on success
   async onSubmit(): Promise<void> {
     this.addTaskForm.markAllAsTouched();
+
     if (this.addTaskForm.invalid) return;
+
     this.isSaving = true;
+
     try {
-      await this.taskService.createTask(this.buildTaskObject());
-      this.router.navigate(['/board']);
+      if (this.isEditMode) {
+        await this.taskService.updateTask(this.buildUpdateTask());
+      } else {
+        await this.taskService.createTask(this.buildCreateTask());
+      }
+
+      if (this.isDialog) {
+        this.close.emit();
+      } else {
+        this.router.navigate(['/board']);
+      }
+
     } finally {
       this.isSaving = false;
     }
@@ -101,18 +117,45 @@ export class AddTask {
   onClear(): void {
     this.addTaskForm.reset();
     this.addTaskForm.get('priority')?.setValue('medium');
+    this.subtasksComponent()?.clear();
+    this.assignedToComponent()?.clear();
   }
 
-  private buildTaskObject() {
-    const { title, description, dueDate, priority, category } = this.addTaskForm.value;
+  selectedStatus: TaskStatus = 'todo';
+
+  private buildCreateTask(): Omit<Task, 'id' | 'createdAt'> {
+    const { title, description, dueDate, priority, category } =
+      this.addTaskForm.getRawValue();
+
     return {
       title: title!,
-      description: description!,
+      description: description ?? '',
       dueDate: dueDate!,
       priority: priority as TaskPriority,
       category: category as TaskCategory,
-      status: 'todo' as TaskStatus,
-      assignedContactIds: this.selectedContacts.map((c) => c.id!),
+      status: this.selectedStatus,
+      assignedContactIds: this.selectedContacts.map(c => c.id!),
+      subtasks: this.subtasks(),
+    };
+  }
+  private buildUpdateTask(): Task {
+    const task = this.selectedTask();
+
+    if (!task) {
+      throw new Error('No task selected.');
+    }
+
+    const { title, description, dueDate, priority, category } =
+      this.addTaskForm.getRawValue();
+
+    return {
+      ...task,
+      title: title!,
+      description: description ?? '',
+      dueDate: dueDate!,
+      priority: priority as TaskPriority,
+      category: category as TaskCategory,
+      assignedContactIds: this.selectedContacts.map(c => c.id!),
       subtasks: this.subtasks(),
     };
   }
@@ -151,6 +194,7 @@ export class AddTask {
   }
 
   // ab hier Marc
+
   readonly dialogService = inject(DialogService);
   readonly DialogType = DialogType;
   type = signal<DialogType | null>(null);
@@ -160,6 +204,9 @@ export class AddTask {
     this.dialogService.current().type === DialogType.AddTask
   );
 
+  @Input() isEditMode = false;
+
+  readonly selectedTask = this.taskService.selectedTask;
   @Input() isDialog = false;
   @Output() close = new EventEmitter<void>();
 
@@ -170,26 +217,44 @@ export class AddTask {
       this.router.navigate(['/board']);
     }
   }
- 
+
+  get initialStatus(): TaskStatus | undefined {
+    return (this.dialogService.current().data as { status: TaskStatus } | undefined)?.status;
+  }
+
+
   getPriorityIcon(priority: 'urgent' | 'medium' | 'low'): string {
     const suffix = this.isPrioritySelected(priority) ? '-white' : '';
     return `/assets/img/components/task/priority-symbol-${priority}${suffix}.svg`;
   }
 
-  // ngOnInit() {
-  //   const task = this.selectedTask();
+  ngOnInit(): void {
+    this.selectedStatus = this.initialStatus ?? 'todo';
 
-  //   if (!task) {
-  //     return;
-  //   }
+    if (this.isEditMode) {
+      this.loadTaskIntoForm();
+    } else {
+      this.initialSubtasks = [];
+    }
+  }
 
-  //   this.taskForm.patchValue({
-  //     title: task.title,
-  //     description: task.description,
-  //     dueDate: task.dueDate,
-  //     priority: task.priority,
-  //     category: task.category
-  //   });
-  // }
-  //   isEditMode = computed(() => this.selectedTask() !== null);
+  private loadTaskIntoForm(): void {
+    const task = this.selectedTask();
+
+    if (!task) {
+      return;
+    }
+
+    this.addTaskForm.patchValue({
+      title: task.title,
+      description: task.description,
+      dueDate: task.dueDate,
+      priority: task.priority,
+      category: task.category,
+      assignedContactIds: task.assignedContactIds,
+    });
+
+    this.initialSubtasks = [...task.subtasks];
+  }
+
 }

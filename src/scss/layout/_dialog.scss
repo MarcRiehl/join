@@ -8,7 +8,7 @@ dialog::backdrop {
     position: fixed;
     top: 50%;
     left: 50%;
-    display: grid;
+    // display: grid;
     width: 1212px;
     height: 592px;
     background: $white;
@@ -16,13 +16,20 @@ dialog::backdrop {
     border-radius: 30px;
     transform: translate(-50%, -50%);
     animation: dialogIn .3s ease;
-
+    display: flex;
+    flex-direction: column;
 
     &--task {
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
-        height: calc(100% - 160px);
-
+        height: calc(100dvh - 80px);
     }
+
+        &--task-view {
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+        height: calc(100dvh - 80px);
+        width: 520px;;
+    }
+
 
     @include mobile-tablet {
         animation: dialogInMobile 250ms ease-out forwards;
@@ -189,9 +196,15 @@ dialog::backdrop {
 
 .dialog-content {
     width: 100%;
+    height: 100%;
 
     &--task {
         padding: 64px 74px;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+
+
     }
 }
 
@@ -202,13 +215,17 @@ dialog::backdrop {
     height: 100%;
 
     &--task {
-        align-items: flex-start;
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        align-items: stretch;
     }
 
     @include mobile-tablet {
         display: grid;
         grid-template-rows: auto 1fr;
         justify-content: stretch;
+
     }
 
     @include small-mobile {
@@ -303,6 +320,8 @@ dialog::backdrop {
         background-color: $white;
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
+        justify-content: flex-start;
+        width: unset;
     }
 
     @include mobile-tablet {
@@ -338,7 +357,7 @@ dialog::backdrop {
     display: flex;
 
     &--task {
-        display: block;
+        flex-direction: column;
     }
 
 
@@ -361,12 +380,6 @@ dialog::backdrop {
 
 
 .dialog-right-inner-right {
-    // display: grid;
-    // grid-template-rows: auto 1fr auto;
-    // width: 100%;
-    // height: 100%;
-    // padding: 32px;
-    // min-height: 0;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -421,7 +434,6 @@ dialog::backdrop {
 .dialog-logo-img {
     height: 67px;
     width: auto;
-    ;
 }
 
 .dialog-headline {
@@ -434,6 +446,12 @@ dialog::backdrop {
         color: $black;
         padding-bottom: 40px;
     }
+
+    &--task-view {
+        color: $black;
+        padding-bottom: 20px;
+    }
+
 
     @include mobile-tablet {
         font-size: 47px;
@@ -507,6 +525,7 @@ dialog::backdrop {
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-height: 0;
 }
 
 .dialog-user-close {
@@ -618,12 +637,12 @@ dialog::backdrop {
 
 .form-cell input::placeholder {
     color: $grey-form-color;
-      font-size: 20px;
+    font-size: 20px;
 }
 
 .form-cell date::placeholder {
     color: $grey-form-color;
-     font-size: 20px; 
+    font-size: 20px;
 }
 
 
@@ -659,11 +678,18 @@ input.ng-invalid.ng-touched {
 .form-scroll {
     flex: 1;
     overflow-y: auto;
-    min-height: 0; // ganz wichtig!
+    min-height: 0;
 
     &--task {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+
         display: flex;
         justify-content: space-between;
+        gap: 48px;
+        max-height: calc(100dvh - 400px);
+
     }
 
     @include mobile {
@@ -671,7 +697,6 @@ input.ng-invalid.ng-touched {
     }
 
     @include landscape {
-
         margin-top: 30px;
         max-height: calc(100dvh - 240px);
     }

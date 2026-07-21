@@ -12,6 +12,7 @@ export class TaskService {
   private supabase = inject(SupabaseService);
   private taskChannel: RealtimeChannel | undefined;
   tasks = signal<Task[]>([]);
+  selectedTask = signal<Task | null>(null);
 
   async loadTasks(): Promise<Task[]> {
     const { data, error } = await this.supabase.supabase.from('tasks').select('*');
@@ -34,6 +35,8 @@ export class TaskService {
 
       this.tasks.set(mappedTasks);
       return mappedTasks;
+
+
     }
     return [];
   }
@@ -82,6 +85,9 @@ export class TaskService {
     if (error) {
       throw error;
     }
+    if (this.selectedTask()?.id === taskId) {
+      this.selectedTask.set(null);
+    }
     await this.loadTasks();
   }
 
@@ -124,5 +130,15 @@ export class TaskService {
     return this.tasks().filter((task) => {
       return task.status === status;
     });
+  }
+
+  async toggleSubtask(task: Task, index: number): Promise<void> {
+    task.subtasks[index].done = !task.subtasks[index].done;
+
+    await this.updateTask(task);
+  }
+
+  clearSelectedTask(): void {
+    this.selectedTask.set(null);
   }
 }
