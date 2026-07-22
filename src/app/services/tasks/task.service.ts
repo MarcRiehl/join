@@ -59,26 +59,54 @@ export class TaskService {
     }
   }
 
-  async updateTask(task: Task): Promise<void> {
-    const { error } = await this.supabase.supabase
-      .from('tasks')
-      .update({
-        title: task.title,
-        description: task.description,
-        due_date: task.dueDate,
-        priority: task.priority,
-        category: task.category,
-        status: task.status,
-        assigned_contact_ids: task.assignedContactIds,
-        subtasks: task.subtasks,
-      })
-      .eq('id', task.id);
+  // async updateTask(task: Task): Promise<void> {
+  //   const { error } = await this.supabase.supabase
+  //     .from('tasks')
+  //     .update({
+  //       title: task.title,
+  //       description: task.description,
+  //       due_date: task.dueDate,
+  //       priority: task.priority,
+  //       category: task.category,
+  //       status: task.status,
+  //       assigned_contact_ids: task.assignedContactIds,
+  //       subtasks: task.subtasks,
+  //     })
+  //     .eq('id', task.id);
 
-    if (error) {
-      throw error;
-    }
-    await this.loadTasks();
+  //   if (error) {
+  //     throw error;
+  //   }
+  //   await this.loadTasks();
+  // }
+
+  async updateTask(task: Task): Promise<void> {
+  const { error } = await this.supabase.supabase
+    .from('tasks')
+    .update({
+      title: task.title,
+      description: task.description,
+      due_date: task.dueDate,
+      priority: task.priority,
+      category: task.category,
+      status: task.status,
+      assigned_contact_ids: task.assignedContactIds,
+      subtasks: task.subtasks,
+    })
+    .eq('id', task.id);
+
+  if (error) {
+    throw error;
   }
+
+  await this.loadTasks();
+
+  const updatedTask = this.tasks().find(t => t.id === task.id);
+
+  if (updatedTask) {
+    this.selectedTask.set(updatedTask);
+  }
+}
 
   async deleteTask(taskId: number): Promise<void> {
     const { error } = await this.supabase.supabase.from('tasks').delete().eq('id', taskId);

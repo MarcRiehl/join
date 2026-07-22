@@ -3,6 +3,7 @@
   class="user-dialog"
   [class.user-dialog--task]="dialogService.current().type === DialogType.AddTask"
   [class.user-dialog--task-view]="dialogService.current().type === DialogType.TaskDetails"
+  [class.user-dialog--task-view-edit]="dialogService.current().type === DialogType.EditTask"
   closedby="any"
   (cancel)="onCancel($event)"
   (animationend)="animationFinished($event)">

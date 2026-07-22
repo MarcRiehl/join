@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { Task } from '../../interfaces/task/task';
+import { ToastService } from '../../services/toast/toast-service';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class AddTask {
   initialSubtasks: Subtask[] = [];
   subtasksComponent = viewChild(Subtasks);
   assignedToComponent = viewChild(AssignedTo);
+  private toastService = inject(ToastService);
 
   addTaskForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -86,8 +88,11 @@ export class AddTask {
     try {
       if (this.isEditMode) {
         await this.taskService.updateTask(this.buildUpdateTask());
+        this.dialogService.open(DialogType.TaskDetails);
+        return;
       } else {
         await this.taskService.createTask(this.buildCreateTask());
+        this.toastService.success('Task added to board.');
       }
 
       if (this.isDialog) {
@@ -255,6 +260,7 @@ export class AddTask {
     });
 
     this.initialSubtasks = [...task.subtasks];
+    this.subtasks.set([...task.subtasks]);
   }
 
 }

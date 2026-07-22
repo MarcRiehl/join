@@ -66,7 +66,7 @@ export class TaskCardComponent {
   }
 
   ngOnInit() {
-  console.log(this.task.category);
+  // console.log(this.task.category);
 }
 
 }

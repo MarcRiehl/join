@@ -28,21 +28,46 @@ export class AssignedTo implements OnInit {
   preselectedIds = input<number[]>([]);
 
   contacts = this.contactService.contacts;
+  private initialized = false;
 
   constructor() {
-  effect(() => {
-    const ids = this.preselectedIds();
-    const contacts = this.contacts();
+    // effect(() => {
+    //   const ids = this.preselectedIds();
+    //   const contacts = this.contacts();
 
-    if (!ids.length || !contacts.length) {
-      return;
-    }
+    //   if (!ids.length || !contacts.length) {
+    //     return;
+    //   }
 
-    this.selectedContacts.set(
-      contacts.filter(contact => ids.includes(contact.id!))
-    );
-  });
-}
+    //   this.selectedContacts.set(
+    //     contacts.filter(contact => ids.includes(contact.id!))
+    //   );
+    // });
+    effect(() => {
+      if (this.initialized) {
+        return;
+      }
+
+      const ids = this.preselectedIds();
+      const contacts = this.contacts();
+
+      // Warten bis die Kontakte geladen sind
+      if (!contacts.length) {
+        return;
+      }
+
+      const selected = contacts.filter(contact =>
+        ids.includes(contact.id!)
+      );
+
+      this.selectedContacts.set(selected);
+
+      // Parent (AddTask) über den Initialzustand informieren
+      this.selectedContactsChange.emit(selected);
+
+      this.initialized = true;
+    });
+  }
 
   // Loads the contact list when the component is created
   ngOnInit(): void {
@@ -108,11 +133,12 @@ export class AssignedTo implements OnInit {
     return total > 3 ? total - 3 : 0;
   });
 
-clear(): void {
-  this.selectedContacts.set([]);
-  this.searchTerm.set('');
-  this.isDropdownOpen = false;
+  clear(): void {
+    this.selectedContacts.set([]);
+    this.searchTerm.set('');
+    this.isDropdownOpen = false;
 
-  this.selectedContactsChange.emit([]);
-}
+    this.selectedContactsChange.emit([]);
+      this.initialized = false;
+  }
 }

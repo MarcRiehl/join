@@ -2,20 +2,22 @@
   <div [class.dialog-content]="isTaskDialog()" [class.dialog-content--task]="isTaskDialog()"
     [class.content-add-task]="!isTaskDialog()">
     <div class="add-task-top">
+      @if (isTaskDialog()) {
       <h1 class="dialog-headline dialog-headline--task">
         Add Task
       </h1>
-      @if (isTaskDialog()) {
+      }
+  
       <div class="dialog-user-close dialog-user-close--task">
-        <button type="button" class="dialog-close-btn" (click)="closeDialog()">
+        <button type="button" class="dialog-close-btn dialog-close-btn--edit" (click)="closeDialog()">
         </button>
       </div>
-      }
+ 
     </div>
     <div class="dialog-wrapper-inner dialog-wrapper-inner--task">
       <div class="dialog-form dialog-form--task">
         <form [formGroup]="addTaskForm" class="add-tasks__form" (ngSubmit)="onSubmit()">
-          <div class="form-scroll form-scroll--task">
+          <div class="form-scroll form-scroll--task" [class.form-scroll--edit]="isEditMode">
             <div class="dialog-left dialog-left--task">
               <div class="form-cell">
                 <div class="form-cell-label">
@@ -66,12 +68,14 @@
                 </div>
               </div>
             </div>
+            @if (isTaskDialog()) {
             <div class="add-task-stroke"></div>
+            }
             <div class="dialog-right dialog-right--task">
 
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="task-priority">Priority</label>
+                  <label>Priority</label>
                 </div>
                 <div class="proirity-wrapper" id="task-priority">
                   <button type="button" class="button-task-priority"
@@ -146,7 +150,7 @@
                 </div>
               </div>
               <div class="form-cell-label">
-                <label for="category">Subtasks</label>
+                <label>Subtasks</label>
               </div>
               <app-subtasks [initialSubtasks]="initialSubtasks" (subtasksChange)="onSubtasksChange($event)">
               </app-subtasks>
