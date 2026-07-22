@@ -1,6 +1,11 @@
 <div class="board-container">
   <header class="board-header">
-    <h1 class="board-header__title">Board</h1>
+    <div class="board-header__top">
+      <h1 class="board-header__title">Board</h1>
+      <button class="btn-primary mobile-add-btn" (click)="openDialog()">
+        <img src="assets/img/components/board/add.svg" class="btn-icon" />
+      </button>
+    </div>
     <div class="board-header__controls">
       <div class="search-bar">
         <input
@@ -16,8 +21,8 @@
           <img src="assets/img/components/board/search-click.svg" class="icon-active" />
         </button>
       </div>
-      <button class="btn-primary btn-primary--create" (click)="openDialog()">
-        Add task
+      <button class="btn-primary desktop-add-btn" (click)="openDialog()">
+        <span>Add task</span>
         <img src="assets/img/components/board/add.svg" class="btn-icon" />
       </button>
     </div>
