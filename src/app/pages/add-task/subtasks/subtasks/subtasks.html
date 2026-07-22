@@ -2,7 +2,7 @@
   <!-- <label class="subtasks__label">Subtasks</label> -->
 
   <div class="subtasks__input-row">
-    <div class="form-cell form-cell--subtask">
+    <div class="form-cell form-cell--subtask form-cell--task">
 
     <input type="text" class="subtasks__input" placeholder="Add new subtask" [value]="newSubtaskTitle()"
       (input)="onInputChange($any($event.target).value)" (keydown.enter)="$event.preventDefault(); addSubtask()" />

@@ -80,19 +80,16 @@
 
 
 .btn-primary.btn-primary--mobil {
-  // width: 100%;
 
   @include small-mobile {
     font-size: 18px;
-    // width: 100%;
   }
 
   @include mobile-tablet {
-    // width: 100%;
+     font-size: 18px;
   }
 
   @include landscape {
-    // width: 100%;
     font-size: 18px;
   }
 }

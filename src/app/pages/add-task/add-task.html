@@ -19,7 +19,7 @@
         <form [formGroup]="addTaskForm" class="add-tasks__form" (ngSubmit)="onSubmit()">
           <div class="form-scroll form-scroll--task" [class.form-scroll--edit]="isEditMode">
             <div class="dialog-left dialog-left--task">
-              <div class="form-cell">
+              <div class="form-cell form-cell--task">
                 <div class="form-cell-label">
                   <label for="task-title">Title<span>*</span></label>
                   <input type="text" id="task-title" formControlName="title" placeholder="Enter a title" />
@@ -33,7 +33,7 @@
                   }
                 </div>
               </div>
-              <div class="form-cell">
+              <div class="form-cell form-cell--task">
                 <div class="form-cell-label">
                   <label for="task-description">Description</label>
                 </div>
@@ -42,7 +42,7 @@
               </textarea>
                 <div class="form-error-placeholder"></div>
               </div>
-              <div class="form-cell">
+              <div class="form-cell form-cell--task">
                 <div class="form-cell-label">
                   <label for="task-dueDate">Due Date<span>*</span></label>
                 </div>
@@ -73,7 +73,7 @@
             }
             <div class="dialog-right dialog-right--task">
 
-              <div class="form-cell">
+              <div class="form-cell form-cell--task">
                 <div class="form-cell-label">
                   <label>Priority</label>
                 </div>
@@ -100,7 +100,7 @@
                 <div class="form-error-placeholder"></div>
               </div>
               <div class="assign-wrapper">
-                <div class="form-cell">
+                <div class="form-cell form-cell--task">
                   <div class="form-cell-label">
                     <label>Assigned to</label>
                   </div>
@@ -110,7 +110,7 @@
                   <div class="form-error-placeholder"></div>
                 </div>
               </div>
-              <div class="form-cell">
+              <div class="form-cell form-cell--task">
                 <div class="form-cell-label">
                   <label for="task-category">Category<span>*</span></label>
                 </div>
@@ -165,7 +165,7 @@
                 }
               </div>
             </div>
-            <div class="form-buttons">
+            <div class="form-buttons form-buttons--task">
               @if (!isEditMode) {
               <button type="button" class="btn-primary btn-primary--border" (click)="onClear()">Clear</button>
               }

@@ -8,8 +8,8 @@
     min-height: 0;
     width: 100%;
 
-    @include desktop-plus{
-    max-width: 60dvw;
+    @include desktop-plus {
+        max-width: 60dvw;
     }
 }
 
@@ -25,6 +25,12 @@
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+
+
+    @include mobile-tablet {
+        justify-content: flex-end;
+                width: 95%;
+    }
 }
 
 .add-task-footer-required {
@@ -33,6 +39,10 @@
     span {
         color: $red-form-color;
         vertical-align: text-top;
+    }
+
+    @include mobile-tablet {
+        display: none;
     }
 }
 
@@ -44,7 +54,15 @@
     min-height: 0;
     width: 100%;
     flex-direction: column;
-    
+
+    @include tablet {
+        padding: 16px;
+    }
+
+    @include mobile {
+        padding: 8px;
+    }
+
 }
 
 .add-task-stroke {
@@ -68,7 +86,7 @@
     }
 
     @include mobile {
-        font-size: 20px;
+        font-size: 16px;
     }
 }
 
@@ -96,10 +114,33 @@
     @include small-mobile {}
 }
 
+.form-cell--task textarea {
+    @include mobile {
+        font-size: 16px;
+    }
+
+    @include small-mobile {
+        font-size: 16px;
+
+    }
+}
+
 .form-cell textarea::placeholder {
     color: $grey-form-color;
     font-size: 20px;
 }
+
+.form-cell--task textarea::placeholder {
+    @include mobile {
+        font-size: 16px;
+    }
+
+    @include small-mobile {
+        font-size: 16px;
+
+    }
+}
+
 
 .proirity-wrapper {
     display: flex;
@@ -125,12 +166,27 @@
     align-items: center;
     justify-content: center;
 
+
+    @include mobile-tablet {
+        font-size: 16px;
+    }
+
+    @include mobile {
+        padding: 8px 12px;
+    }
+
     &:hover {
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     }
 
     img {
         padding-left: 10px;
+
+        @include mobile {
+            width: 20px;
+            height: auto;
+            padding-left: 6px;
+        }
     }
 }
 
@@ -139,6 +195,10 @@
     color: $white;
     font-size: 21px;
     font-weight: bold;
+
+    @include mobile-tablet {
+        font-size: 16px;
+    }
 }
 
 .active-medium {
@@ -146,6 +206,10 @@
     color: $white;
     font-size: 21px;
     font-weight: bold;
+
+    @include mobile-tablet {
+        font-size: 16px;
+    }
 }
 
 .active-low {
@@ -153,6 +217,10 @@
     color: $white;
     font-size: 21px;
     font-weight: bold;
+
+    @include mobile-tablet {
+        font-size: 16px;
+    }
 }
 
 .input-date {
