@@ -10,6 +10,19 @@
     border-radius: 10px;
 
     box-shadow: 0 8px 24px rgba(0, 0, 0, .15);
+
+
+    @include tablet {
+        width: 100%;
+    }
+
+    @include mobile {
+        width: 100%;
+    }
+        @include small-mobile {
+        width: calc(100% - 24px);
+    }
+
 }
 
 .assigned-to__item {
@@ -67,6 +80,5 @@
 }
 
 .cdk-overlay-popover {
-        z-index: 999999 !important;
+    z-index: 999999 !important;
 }
-

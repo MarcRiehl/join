@@ -22,8 +22,10 @@
 
     .subtasks-icon {
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+        // top: 50%;
+        // transform: translateY(-50%);
+        top: 0%;
+        transform: translateY(-130%);
 
         &--delete {
             right: 60px;
@@ -42,8 +44,10 @@
 .subtask-stroke {
     position: absolute;
     right: 55px;
-    top: 50%;
-    transform: translateY(-50%);
+    // top: 50%;
+    // transform: translateY(-50%);
+    top: 0%;
+    transform: translateY(-150%);
     height: 20px;
     width: 1px;
     background: $grey-task-stroke;
@@ -130,4 +134,10 @@
     border-bottom: 1px solid $grey-form-blue;
     width: 100%;
     padding: 4px 16px;
+}
+
+.buttons-new-subtask {
+    display: flex;
+    align-items: center;
+    position: relative;
 }

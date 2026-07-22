@@ -375,6 +375,12 @@ dialog::backdrop {
             height: 100%;
             padding: 0;
         }
+                @include desktop-s {
+            align-items: flex-start;
+            justify-content: center;
+            // width: 100%;
+            width: 50%;
+        }
     }
 
 
@@ -408,12 +414,10 @@ dialog::backdrop {
         @include desktop-s {
             align-items: flex-start;
             justify-content: center;
+            // width: 100%;
+            width: 50%;
         }
-
     }
-
-
-
 }
 
 
@@ -504,7 +508,7 @@ dialog::backdrop {
 
         @include tablet {
             font-size: 47px;
-            padding-top: 40px;
+            padding-top: 80px;
             padding-bottom: 20px;
         }
 
@@ -598,7 +602,10 @@ dialog::backdrop {
 }
 
 .dialog-form--task form {
-width: 100%;
+    @include small-mobile {
+        width: 100%;
+    }
+
 }
 
 .dialog-user-close {
@@ -821,7 +828,7 @@ input.ng-invalid.ng-touched {
 
         @include small-mobile {
             flex-direction: column;
-               max-height: calc(80dvh - 200px);
+            max-height: calc(80dvh - 200px);
         }
 
         @include widesscreen {

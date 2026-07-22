@@ -3,7 +3,7 @@
     [class.content-add-task]="!isTaskDialog()">
     <div class="add-task-top">
       @if (!isEditMode) {
-      <h1 class="dialog-headline dialog-headline--task">
+      <h1 class="dialog-headline dialog-headline--task" [class.dialog-headline--page]="!isDialog">
         Add Task
       </h1>
       }

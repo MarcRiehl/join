@@ -7,7 +7,7 @@
     <input type="text" class="subtasks__input" placeholder="Add new subtask" [value]="newSubtaskTitle()"
       (input)="onInputChange($any($event.target).value)" (keydown.enter)="$event.preventDefault(); addSubtask()" />
     @if (newSubtaskTitle()) {
-    
+    <div class="buttons-new-subtask">
     <button type="button" class="subtasks-icon subtasks-icon--clear" (click)="clearInput()">
       <!-- icon: general/close.svg + close-hover.svg -->
       <img [src]="isClearHover()
@@ -22,7 +22,7 @@
     ? '/assets/img/components/task/task-check-hover.svg'
     : '/assets/img/components/task/task-check.svg'">
     </button>
-
+</div>
 
     }
   </div>
