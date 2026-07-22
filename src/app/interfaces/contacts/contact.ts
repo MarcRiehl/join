@@ -7,5 +7,5 @@ export interface Contact {
   phone?: string | number;
   initials?: string;
   colors?: string;
-  authUserID?: number;
+  authUserId?: string;
 }

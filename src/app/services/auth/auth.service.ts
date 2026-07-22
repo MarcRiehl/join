@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { createClient } from '@supabase/supabase-js';
 
+import { Contact } from '../../interfaces/contacts/contact';
 import { splitFullName } from '../../utils/name.util/name.util';
+import { ContactService } from '../contacts/contact.service';
 import { SupabaseService } from '../supabase/supabase.service';
 
 @Injectable({
@@ -9,12 +10,7 @@ import { SupabaseService } from '../supabase/supabase.service';
 })
 export class AuthService {
   private supabaseService = inject(SupabaseService);
-
-  // ----------------------------
-  // AUTHENTIFIZIERUNG
-  // ----------------------------
-
-  // Welche Parameter sind zwingend notwendig, damit ein Account überhaupt angelegt werden kann?
+  private contactService = inject(ContactService);
 
   // signInAnonymously() erstellt einen anonymen user
 
@@ -26,32 +22,47 @@ export class AuthService {
   // Diese URL muss als Weiterleitungs URL konfiguriert sein.
   // Wenn Sie keine Weiterleitungs-URL angeben, wird der Benutzer automatisch zur URL Ihrer Website weitergeleitet. Standardmäßig ist dies „localhost:3000“, kann konfiguriert werden.
 
+  async signUpNewUser(fullName: string, email: string, password: string): Promise<boolean> {
+    const { firstname, lastname } = splitFullName(fullName);
+    const exists = await this.contactService.contactExists(fullName);
 
+    if (exists) {
+      console.log('Kontakt existiert bereits');
+      return false;
+    }
+    const { data, error } = await this.supabaseService.supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        emailRedirectTo: 'https://example.com/welcome', // hier muss die Login URL rein
+      },
+    });
 
-const supabase = createClient('https://your-project-id.supabase.co', 'sb_publishable_...')
+    if (error) {
+      console.log(error); // ERROR MESSAGE
+      return false;
+    }
 
-async function signUpNewUser() {
-  const { data, error } = await this.supabase.auth.signUp({
-    email: 'valid.email@supabase.io',
-    password: 'example-password',
-    options: {
-      emailRedirectTo: 'https://example.com/welcome',
-    },
-  })
+    const contactAdded = await this.contactService.addContact({
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      authUserId: data.user?.id,
+    });
+    if (!contactAdded) {
+      console.log('Kontakt konnte nicht angelegt werden');
+      return false;
+    }
+    return true;
+  }
 
-  // contactExists()
-  // prüfen, ob der Kontakt bereits existiert, dann signUp()
-}
-
-
-// ---cut---
-async function signInWithEmail() {
-  const { data, error } = await this.supabase.SupabaseService.auth.signInWithPassword({
-    email: 'valid.email@supabase.io',
-    password: 'example-password',
-  })
-}
-
+  // ---cut---
+  async signInWithEmail() {
+    const { data, error } = await this.supabaseService.supabase.auth.signInWithPassword({
+      email: 'valid.email@supabase.io',
+      password: 'example-password',
+    });
+  }
 
   // Benutzer anmelden
   // -> signInWithPassword()
@@ -67,8 +78,6 @@ async function signInWithEmail() {
   // -> updateUser()
   // Prüfen, ob ein Benutzer eingeloggt ist
   // Auth-Status beobachten
-  // Benutzer anmelden
-  // -> signInWithPassword()
   // Benutzer abmelden
   // -> signOut()
   // Aktuell eingeloggten Benutzer laden
