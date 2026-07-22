@@ -30,7 +30,7 @@ dialog::backdrop {
         width: 520px;
     }
 
-   &--task-view-edit {
+    &--task-view-edit {
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
         height: calc(100dvh - 80px);
         width: 520px;
@@ -296,6 +296,8 @@ dialog::backdrop {
     background: url('/assets/img/components/general/close.svg') center no-repeat;
     border: 0;
 
+
+
     @include mobile-tablet {
         width: 32px;
         height: 32px;
@@ -303,6 +305,10 @@ dialog::backdrop {
         position: relative;
         z-index: 9999;
         pointer-events: auto;
+
+        &--edit {
+            background: url('/assets/img/components/general/close.svg') center no-repeat;
+        }
     }
 
 }
@@ -459,8 +465,12 @@ dialog::backdrop {
     }
 
 
-    @include mobile-tablet {
+    @include tablet {
         font-size: 47px;
+    }
+
+    @include mobile {
+        font-size: 36px;
     }
 
     @include small-mobile {
@@ -694,7 +704,6 @@ input.ng-invalid.ng-touched {
         display: flex;
         justify-content: space-between;
         gap: 48px;
-        max-height: calc(100dvh - 400px);
 
     }
 
@@ -707,7 +716,7 @@ input.ng-invalid.ng-touched {
         flex-direction: column;
         justify-content: space-between;
         gap: 48px;
-        max-height: calc(100dvh - 400px);
+      
 
     }
 

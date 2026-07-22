@@ -9,7 +9,7 @@
       }
   
       <div class="dialog-user-close dialog-user-close--task">
-        <button type="button" class="dialog-close-btn" (click)="closeDialog()">
+        <button type="button" class="dialog-close-btn dialog-close-btn--edit" (click)="closeDialog()">
         </button>
       </div>
  
@@ -75,7 +75,7 @@
 
               <div class="form-cell">
                 <div class="form-cell-label">
-                  <label for="task-priority">Priority</label>
+                  <label>Priority</label>
                 </div>
                 <div class="proirity-wrapper" id="task-priority">
                   <button type="button" class="button-task-priority"
@@ -150,7 +150,7 @@
                 </div>
               </div>
               <div class="form-cell-label">
-                <label for="category">Subtasks</label>
+                <label>Subtasks</label>
               </div>
               <app-subtasks [initialSubtasks]="initialSubtasks" (subtasksChange)="onSubtasksChange($event)">
               </app-subtasks>
