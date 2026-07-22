@@ -37,7 +37,7 @@
 .task-view-priority {
     display: flex;
     align-items: center;
-    padding-bottom: 16px;
+    padding-bottom: 24px;
 
 }
 
@@ -186,8 +186,4 @@
         position: relative;
         z-index: 9999;
         pointer-events: auto;
-}
-
-.task-view-scroll{
-    overflow-y: auto;
 }

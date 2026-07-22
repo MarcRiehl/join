@@ -77,6 +77,18 @@ dialog::backdrop {
     }
 }
 
+.user-dialog--task-view > app-task-view-dialog {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+}
+
+.user-dialog--task > app-task-view-dialog {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+}
+
 .user-dialog.closing {
 
     animation: dialogOut .3s ease forwards;
@@ -703,7 +715,7 @@ input.ng-invalid.ng-touched {
 
         display: flex;
         justify-content: space-between;
-        gap: 48px;
+        // gap: 48px;
 
     }
 
@@ -715,7 +727,7 @@ input.ng-invalid.ng-touched {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 48px;
+        //  gap: 24px;
       
 
     }
