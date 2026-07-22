@@ -1,11 +1,11 @@
 @use '../abstract/' as *;
 
-:host {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-    height: 100%;
-}
+// :host {
+//     display: flex;
+//     flex: 1;
+//     min-height: 0;
+//     height: 100%;
+// }
 
 .task-view-wrapper {
     padding: 48px 40px;
