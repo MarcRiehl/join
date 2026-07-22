@@ -66,10 +66,24 @@ export class Subtasks {
   }
 
   initialSubtasks = input<Subtask[]>([]);
+  private initialized = false;
 
   constructor() {
+    // effect(() => {
+    //     console.log('Subtasks effect');
+    //   this.subtasks.set([...this.initialSubtasks()]);
+    // });
     effect(() => {
-      this.subtasks.set([...this.initialSubtasks()]);
+      if (this.initialized) {
+        return;
+      }
+
+      const initial = this.initialSubtasks();
+
+      this.subtasks.set([...initial]);
+      this.subtasksChange.emit([...initial]);
+
+      this.initialized = true;
     });
   }
 
@@ -77,11 +91,12 @@ export class Subtasks {
   isAddHover = signal(false);
 
   clear(): void {
-  this.subtasks.set([]);
-  this.newSubtaskTitle.set('');
-  this.editingIndex.set(null);
+    this.subtasks.set([]);
+    this.newSubtaskTitle.set('');
+    this.editingIndex.set(null);
 
-  this.emitChange();
-}
+    this.emitChange();
+      this.initialized = false;
+  }
 
 }

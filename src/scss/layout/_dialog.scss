@@ -24,10 +24,16 @@ dialog::backdrop {
         height: calc(100dvh - 80px);
     }
 
-        &--task-view {
+    &--task-view {
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
         height: calc(100dvh - 80px);
-        width: 520px;;
+        width: 520px;
+    }
+
+   &--task-view-edit {
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+        height: calc(100dvh - 80px);
+        width: 520px;
     }
 
 
@@ -686,6 +692,19 @@ input.ng-invalid.ng-touched {
         overflow-y: auto;
 
         display: flex;
+        justify-content: space-between;
+        gap: 48px;
+        max-height: calc(100dvh - 400px);
+
+    }
+
+    &--edit {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
         justify-content: space-between;
         gap: 48px;
         max-height: calc(100dvh - 400px);
