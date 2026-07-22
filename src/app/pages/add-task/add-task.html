@@ -1,4 +1,4 @@
-<section class="add-tasks">
+<section class="add-tasks" [class.add-tasks--page]="!isDialog">
   <div [class.dialog-content]="isTaskDialog()" [class.dialog-content--task]="isTaskDialog()"
     [class.content-add-task]="!isTaskDialog()">
     <div class="add-task-top">

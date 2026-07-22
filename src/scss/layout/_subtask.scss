@@ -1,10 +1,6 @@
 @use '../abstract/' as *;
 
-.subtasks__input-row {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
+
 
 .subtasks-icon {
     border: 0;
@@ -15,43 +11,54 @@
     align-items: center;
     justify-content: center;
     transition: transform .2s ease;
+
+}
+
+.form-cell--subtask {
+    position: relative;
+    padding-bottom: 0px;
+    margin-bottom: 12px;
+}
+
+.buttons-new-subtask {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 
-.subtasks__input-row {
+.subtasks-icon {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
 
-    .subtasks-icon {
-        position: absolute;
-        // top: 50%;
-        // transform: translateY(-50%);
-        top: 0%;
-        transform: translateY(-130%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        &--delete {
-            right: 60px;
-        }
-    }
-
-    .subtasks-icon--clear {
-        right: 60px;
-    }
-
-    .subtasks-icon--add {
-        right: 30px;
+    img {
+        display: block;
     }
 }
 
 .subtask-stroke {
-    position: absolute;
-    right: 55px;
-    // top: 50%;
-    // transform: translateY(-50%);
-    top: 0%;
-    transform: translateY(-150%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 20px;
     width: 1px;
     background: $grey-task-stroke;
 }
+
+
+
 
 .subtasks__list {
     // margin: 12px 0 0;
@@ -134,10 +141,4 @@
     border-bottom: 1px solid $grey-form-blue;
     width: 100%;
     padding: 4px 16px;
-}
-
-.buttons-new-subtask {
-    display: flex;
-    align-items: center;
-    position: relative;
 }

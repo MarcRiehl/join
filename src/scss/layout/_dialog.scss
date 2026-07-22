@@ -228,14 +228,6 @@ dialog::backdrop {
     align-items: center;
     height: 100%;
 
-    &--task {
-        flex: 1;
-        min-height: 0;
-        display: flex;
-        align-items: stretch;
-
-    }
-
     @include mobile-tablet {
         display: grid;
         grid-template-rows: auto 1fr;
@@ -254,6 +246,22 @@ dialog::backdrop {
         min-height: 0;
 
     }
+
+
+    &--task {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        align-items: stretch;
+
+        @include landscape {
+         align-items: flex-start;
+
+        }
+
+    }
+
+
 }
 
 .backdrop {
@@ -348,6 +356,8 @@ dialog::backdrop {
 
     }
 
+
+
     @include small-mobile {
         height: 180px;
         width: 100%;
@@ -375,12 +385,22 @@ dialog::backdrop {
             height: 100%;
             padding: 0;
         }
-                @include desktop-s {
+
+        @include desktop-s {
             align-items: flex-start;
-            justify-content: center;
+            justify-content: flex-start;
             // width: 100%;
-            width: 50%;
+            width: 45%;
         }
+
+
+        @include landscape {
+            height: 100%;
+            position: unset;
+            padding: 0;
+        }
+
+
     }
 
 
@@ -413,10 +433,15 @@ dialog::backdrop {
 
         @include desktop-s {
             align-items: flex-start;
-            justify-content: center;
+            justify-content: flex-start;
             // width: 100%;
-            width: 50%;
+            width: 45%;
         }
+
+        @include landscape {
+            width: 100%;
+        }
+
     }
 }
 
@@ -508,7 +533,7 @@ dialog::backdrop {
 
         @include tablet {
             font-size: 47px;
-            padding-top: 80px;
+            padding-top: 0px;
             padding-bottom: 20px;
         }
 
@@ -516,6 +541,12 @@ dialog::backdrop {
             font-size: 47px;
             padding-top: 0px;
             padding-bottom: 20px;
+        }
+
+        @include landscape {
+            font-size: 24px;
+            padding-top: 0px;
+            padding-bottom: 0px;
         }
 
     }
@@ -588,6 +619,11 @@ dialog::backdrop {
             width: calc(100dvw - 16px);
         }
 
+        @include landscape {
+            padding-top: 0px;
+            width: calc(100dvw - 16px);
+        }
+
     }
 
 
@@ -603,6 +639,10 @@ dialog::backdrop {
 
 .dialog-form--task form {
     @include small-mobile {
+        width: 100%;
+    }
+
+    @include landscape {
         width: 100%;
     }
 
@@ -687,12 +727,22 @@ dialog::backdrop {
         @include mobile-tablet {
             width: 100%;
         }
+
+        @include landscape {
+            width: 100%;
+        }
     }
 }
 
 .form-cell:first-child {
     @include landscape {
         margin-top: 20px;
+    }
+
+    &--task {
+        @include landscape {
+            margin-top: 0px;
+        }
     }
 }
 
@@ -712,6 +762,7 @@ dialog::backdrop {
 
     @include desktop-s {
         width: 100%;
+        max-width: 400px;
     }
 
     @include small-mobile {
@@ -737,6 +788,11 @@ dialog::backdrop {
         font-size: 16px;
 
     }
+
+    @include landscape {
+        font-size: 16px;
+
+    }
 }
 
 .form-cell input::placeholder {
@@ -751,7 +807,10 @@ dialog::backdrop {
 
     @include small-mobile {
         font-size: 16px;
+    }
 
+    @include landscape {
+        font-size: 16px;
     }
 }
 
@@ -824,6 +883,8 @@ input.ng-invalid.ng-touched {
         @include mobile-tablet {
             flex-direction: column;
             // gap: 48px;
+            max-height: calc(100dvh - 360px);
+
         }
 
         @include small-mobile {
@@ -833,6 +894,11 @@ input.ng-invalid.ng-touched {
 
         @include widesscreen {
             flex: unset;
+        }
+
+        @include landscape {
+            margin-top: 0px;
+            max-height: calc(100dvh - 245px);
         }
 
 
@@ -875,6 +941,13 @@ input.ng-invalid.ng-touched {
 
     &--task {
         padding-top: 20px;
+
+        @include landscape {
+            position: fixed;
+            bottom: 85px;
+            width: 100%;
+            gap: 20px;
+        }
     }
 }
 
