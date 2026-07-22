@@ -1,20 +1,16 @@
 @use '../abstract/' as *;
 
-
-:host {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-    height: 100%;
-}
-
-
 .add-tasks {
     display: flex;
     flex-direction: column;
     flex: 1;
-    min-height: 0;
     height: 100%;
+    min-height: 0;
+    width: 100%;
+
+    @include desktop-plus{
+    max-width: 60dvw;
+    }
 }
 
 
@@ -42,10 +38,16 @@
 
 .content-add-task {
     padding: 48px;
+    display: flex;
+    flex: 1;
+    height: 100%;
+    min-height: 0;
+    width: 100%;
+    flex-direction: column;
+    
 }
 
 .add-task-stroke {
-    height: 100%;
     border-left: 1px solid $grey-task-stroke;
     position: relative;
     z-index: 1;
@@ -75,7 +77,7 @@
     border-radius: 10px;
     border: 1px solid $grey-form-color;
     padding: 13px 40px 13px 21px;
-     font-size: 20px;
+    font-size: 20px;
 
     &:focus {
         border-color: $grey-form-blue;
@@ -96,7 +98,7 @@
 
 .form-cell textarea::placeholder {
     color: $grey-form-color;
-     font-size: 20px;
+    font-size: 20px;
 }
 
 .proirity-wrapper {

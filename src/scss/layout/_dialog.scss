@@ -77,15 +77,11 @@ dialog::backdrop {
     }
 }
 
-.user-dialog--task-view > app-task-view-dialog {
-    flex: 1;
+.user-dialog--task>app-add-task,
+.user-dialog--task-view-edit>app-add-task,
+.user-dialog--task-view>app-task-view-dialog {
     display: flex;
-    min-height: 0;
-}
-
-.user-dialog--task > app-task-view-dialog {
     flex: 1;
-    display: flex;
     min-height: 0;
 }
 
@@ -237,6 +233,7 @@ dialog::backdrop {
         min-height: 0;
         display: flex;
         align-items: stretch;
+
     }
 
     @include mobile-tablet {
@@ -380,11 +377,6 @@ dialog::backdrop {
 
     display: flex;
 
-    &--task {
-        flex-direction: column;
-    }
-
-
     @include mobile-tablet {
         // flex: 1;
         width: 100%;
@@ -400,6 +392,20 @@ dialog::backdrop {
         flex: 1;
         min-height: 0;
     }
+
+
+    &--task {
+        flex-direction: column;
+
+        @include desktop-s {
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+    }
+
+
+
 }
 
 
@@ -521,6 +527,7 @@ dialog::backdrop {
 
 .dialog-form {
     justify-self: end;
+
     width: 100%;
     flex: 1;
     min-height: 0;
@@ -529,6 +536,7 @@ dialog::backdrop {
         display: flex;
         justify-self: unset;
         justify-content: space-between;
+        // align-items: flex-start;
     }
 
     @include mobile-tablet {
@@ -704,33 +712,7 @@ input.ng-invalid.ng-touched {
 }
 
 .form-scroll {
-    flex: 1;
     overflow-y: auto;
-    min-height: 0;
-
-    &--task {
-        flex: 1;
-        min-height: 0;
-        overflow-y: auto;
-
-        display: flex;
-        justify-content: space-between;
-        // gap: 48px;
-
-    }
-
-    &--edit {
-        flex: 1;
-        min-height: 0;
-        overflow-y: auto;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        //  gap: 24px;
-      
-
-    }
 
     @include mobile {
         max-height: calc(100dvh - 240px);
@@ -740,6 +722,29 @@ input.ng-invalid.ng-touched {
         margin-top: 30px;
         max-height: calc(100dvh - 240px);
     }
+
+    &--task {
+        justify-content: space-between;
+        // gap: 48px;
+        flex: 1;
+        min-height: 0;
+        display: flex;
+
+         @include mobile {
+            flex-direction: column;
+         }
+
+
+    }
+
+    &--edit {
+        display: flex;
+        flex-direction: column;
+        //  gap: 24px;
+        margin: 24px 0;
+    }
+
+
 }
 
 .form-buttons {

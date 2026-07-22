@@ -2,20 +2,17 @@
   <div [class.dialog-content]="isTaskDialog()" [class.dialog-content--task]="isTaskDialog()"
     [class.content-add-task]="!isTaskDialog()">
     <div class="add-task-top">
-      @if (isTaskDialog()) {
+      @if (!isEditMode) {
       <h1 class="dialog-headline dialog-headline--task">
         Add Task
       </h1>
       }
-  
-        <!-- <div [class.dialog-user-close]="isTaskDialog()" [class.dialog-user-close--task]="isTaskDialog()"
-    [class.dialog-user-close--edit]="!isTaskDialog()"> -->
-
-      <div class="dialog-user-close dialog-user-close--task">
+      @if (isDialog) {
+      <div class="dialog-user-close" [class.dialog-user-close--task]="!isEditMode">
         <button type="button" class="dialog-close-btn dialog-close-btn--edit" (click)="closeDialog()">
         </button>
       </div>
- 
+      }
     </div>
     <div class="dialog-wrapper-inner dialog-wrapper-inner--task">
       <div class="dialog-form dialog-form--task">
@@ -71,7 +68,7 @@
                 </div>
               </div>
             </div>
-            @if (isTaskDialog()) {
+            @if (!isEditMode) {
             <div class="add-task-stroke"></div>
             }
             <div class="dialog-right dialog-right--task">
@@ -163,7 +160,9 @@
           <div class="add-task-footer">
             <div class="add-task-footer-left">
               <div class="add-task-footer-required">
+                @if (!isEditMode) {
                 <span>*</span>This field is required
+                }
               </div>
             </div>
             <div class="form-buttons">

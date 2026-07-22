@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject, input } from '@angular/core';
 import { DialogService, DialogType } from '../../../../services/dialog/dialog.service';
 import { ContactService } from '../../../../services/contacts/contact.service';
 import { Task } from '../../../../interfaces/task/task';
@@ -71,27 +71,27 @@ export class TaskViewDialog {
     this.taskService.toggleSubtask(task, index);
   }
 
-async deleteTask(): Promise<void> {
-  const task = this.task();
+  async deleteTask(): Promise<void> {
+    const task = this.task();
 
-  if (!task) {
-    return;
+    if (!task) {
+      return;
+    }
+
+    try {
+      await this.taskService.deleteTask(task.id);
+
+      this.close.emit();
+    } catch (error) {
+      console.error('Task could not be deleted:', error);
+    }
   }
-
-  try {
-    await this.taskService.deleteTask(task.id);
-
-    this.close.emit();
-  } catch (error) {
-    console.error('Task could not be deleted:', error);
-  }
-}
 
   readonly dialogService = inject(DialogService);
   readonly DialogType = DialogType;
 
-editTask(): void {
-  this.dialogService.open(DialogType.EditTask);
-}
+  editTask(): void {
+    this.dialogService.open(DialogType.EditTask);
+  }
 
 }

@@ -17,8 +17,7 @@ import { TaskService } from '../../../services/tasks/task.service';
   selector: 'app-task-dialog',
   standalone: true,
   imports: [
-    AddTask,
-    TaskViewDialog,
+    AddTask,TaskViewDialog
   ],
   templateUrl: './task-dialog.html',
   styleUrl: './task-dialog.scss',
