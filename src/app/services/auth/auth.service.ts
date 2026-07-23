@@ -126,11 +126,4 @@ export class AuthService {
     this.currentUser.set(user);
     return true;
   }
-
-  // Passwort zurücksetzen
-  // -> resetPassword()
-  // Passwort ändern
-  // -> updateUser()
-  // Prüfen, ob ein Benutzer eingeloggt ist
-  // Auth-Status beobachten
 }
