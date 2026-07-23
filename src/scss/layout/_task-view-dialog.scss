@@ -14,6 +14,13 @@
     height: 100%;
     min-height: 0;
     width: 100%;
+
+    @include small-mobile {
+        padding: 28px 20px;
+    }
+       @include landscape {
+        padding: 28px 20px;
+    }
 }
 
 .task-view-top {
@@ -89,6 +96,9 @@
     span {
         font-size: 19px;
         padding-left: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+         overflow: hidden;
         ;
     }
 }
@@ -130,7 +140,7 @@
 .task-view-subtask-description {
     padding-left: 12px;
     word-break: break-word;
-        text-align: left;
+    text-align: left;
 }
 
 .task-view-footer {
@@ -176,25 +186,32 @@
 }
 
 .footer-task-view-btn--delete:hover img {
-  content: url('/assets/img/components/task/task-view-delete-hover.svg');
+    content: url('/assets/img/components/task/task-view-delete-hover.svg');
 }
 
 .footer-task-view-btn--edit:hover img {
-  content: url('/assets/img/components/task/task-view-edit-hover.svg');
+    content: url('/assets/img/components/task/task-view-edit-hover.svg');
 }
 
-.dialog-task-view-close-btn{
-           width: 32px;
-        height: 32px;
-        background: url('/assets/img/components/general/dialog-close-mobil.svg') center no-repeat;
-        position: relative;
-        z-index: 9999;
-        pointer-events: auto;
+.dialog-task-view-close-btn {
+    width: 32px;
+    height: 32px;
+    background: url('/assets/img/components/general/dialog-close-mobil.svg') center no-repeat;
+    position: relative;
+    z-index: 9999;
+    pointer-events: auto;
 }
 
-.task-view-close{
+.task-view-close {
     position: absolute;
     top: 40px;
     right: 24px;
     z-index: 1001;
+
+    @include small-mobile{
+         top: 28px;
+    }
+       @include landscape{
+         top: 28px;
+    }
 }

@@ -48,7 +48,7 @@
                 </div>
                 <div class="date-input">
                   <input matInput [matDatepicker]="picker" id="task-dueDate" formControlName="dueDate"
-                    placeholder="Select due date">
+                    placeholder="Select due date" [min]="today">
 
                   <mat-datepicker-toggle matSuffix [for]="picker">
                     <img matDatepickerToggleIcon src="/assets/img/components/task/event.svg">
@@ -107,7 +107,6 @@
                   <app-assigned-to [preselectedIds]="isEditMode ? (selectedTask()?.assignedContactIds ?? []) : []"
                     (selectedContactsChange)="onAssignedContactsChange($event)">
                   </app-assigned-to>
-                  <div class="form-error-placeholder"></div>
                 </div>
               </div>
               <div class="form-cell form-cell--task">
@@ -153,9 +152,9 @@
                 <label>Subtasks</label>
               </div>
               <div class="subtasks-wrapper">
-              <app-subtasks [initialSubtasks]="initialSubtasks" (subtasksChange)="onSubtasksChange($event)">
-              </app-subtasks>
-</div>
+                <app-subtasks [initialSubtasks]="initialSubtasks" (subtasksChange)="onSubtasksChange($event)">
+                </app-subtasks>
+              </div>
             </div>
           </div>
           <div class="add-task-footer">

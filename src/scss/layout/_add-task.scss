@@ -41,6 +41,11 @@
         justify-content: flex-end;
         width: 95%;
     }
+
+        @include small-mobile {
+        justify-content: flex-end;
+        width: 90%;
+    }
 }
 
 .add-task-footer-required {
@@ -181,6 +186,10 @@
     gap: 8px;
     width: 100%;
     padding: 0 4px;
+
+    @include small-mobile{
+        gap: 4px;
+    }
 }
 
 .button-task-priority {
@@ -210,6 +219,10 @@
     @include desktop-s {
         font-size: 16px;
         padding: 12px 12px;
+    }
+        @include small-mobile{
+        font-size: 14px;
+        padding: 8px 16px;
     }
 
     &:hover {
@@ -246,6 +259,9 @@
     @include desktop-s {
         font-size: 16px;
     }
+    @include small-mobile{
+        font-size: 14px;
+    }
 }
 
 .active-medium {
@@ -261,6 +277,9 @@
     @include desktop-s {
         font-size: 16px;
     }
+        @include small-mobile{
+        font-size: 14px;
+    }
 }
 
 .active-low {
@@ -275,6 +294,9 @@
 
     @include desktop-s {
         font-size: 16px;
+    }
+        @include small-mobile{
+        font-size: 14px;
     }
 }
 
@@ -300,6 +322,10 @@ mat-datepicker-toggle {
 
 .mat-datepicker-content-container {
     background-color: $white !important;
+}
+
+.mat-calendar-body-disabled {
+  opacity: 0.35 !important;
 }
 
 .category-field {

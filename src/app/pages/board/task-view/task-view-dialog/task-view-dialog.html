@@ -35,7 +35,7 @@
             <div class="task-view-assigned-to-list">
 
                 <span class="task-view-label">Assigned to:</span>
-
+  <div class="assigned-scroll">
                 @for (contactId of task.assignedContactIds; track contactId) {
 
                 @if (getContact(contactId); as contact) {
@@ -53,6 +53,7 @@
                 }
 
                 }
+                </div>
 
             </div>
         </div>

@@ -12,7 +12,6 @@
     (overlayOutsideClick)="isDropdownOpen = false">
 
     <div class="assigned-to__list">
-
       @for (contact of filteredContacts(); track contact.id) {
       <div class="assigned-to__item" [class.assigned-to__item--selected]="isSelected(contact)"
         (click)="toggleContact(contact); $event.stopPropagation()">
@@ -33,17 +32,16 @@
         </div>
       </div>
       }
-
     </div>
 
   </ng-template>
-  <div class="assigned-to__bubbles">
-    @for (contact of visibleBubbles(); track contact.id) {
-    <app-user-bubble [initials]="contact.initials ?? ''" [color]="contact.colors ?? ''" />
-    }
-    @if (remainingCount() > 0) {
-    <div class="assigned-to__bubble-more">+{{ remainingCount() }}</div>
-    }
-  </div>
 
+    <div class="assigned-to__bubbles">
+      @for (contact of visibleBubbles(); track contact.id) {
+      <app-user-bubble [initials]="contact.initials ?? ''" [color]="contact.colors ?? ''" />
+      }
+      @if (remainingCount() > 0) {
+      <div class="assignee-badge extra-badge">+{{ remainingCount() }}</div>
+      }
+  </div>
 </div>

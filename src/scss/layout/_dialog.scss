@@ -21,7 +21,7 @@ dialog::backdrop {
 
     &--task {
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
-        height: calc(100dvh - 80px);
+        height: calc(100dvh - 50px);
     }
 
     &--task-view {
@@ -531,7 +531,7 @@ dialog::backdrop {
 
     &--task {
         color: $black;
-        padding-bottom: 40px;
+        padding-bottom: 20px;
 
         @include tablet {
             font-size: 47px;
@@ -618,7 +618,7 @@ dialog::backdrop {
 
         @include small-mobile {
             padding-top: 10px;
-            width: calc(100dvw - 16px);
+            // width: calc(100dvw - 16px);
         }
 
         @include landscape {
@@ -891,7 +891,7 @@ input.ng-invalid.ng-touched {
 
         @include small-mobile {
             flex-direction: column;
-            max-height: calc(80dvh - 200px);
+            max-height: calc(100dvh - 200px);
         }
 
         @include widesscreen {
@@ -910,7 +910,7 @@ input.ng-invalid.ng-touched {
         display: flex;
         flex-direction: column;
         //  gap: 24px;
-        margin: 24px 0;
+        margin: 30px 0;
     }
 
 
@@ -954,7 +954,7 @@ input.ng-invalid.ng-touched {
 }
 
 .form-error-placeholder {
-    height: 20px;
+    height: 15px;
     display: flex;
 }
 
