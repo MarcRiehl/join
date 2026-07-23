@@ -40,7 +40,7 @@
 }
 
 @mixin small-mobile {
-  @media (width <=360px) {
+  @media (width <=380px) {
     @content;
   }
 }
@@ -70,7 +70,7 @@
 }
 
 @mixin landscape {
-    @media (hover: none) and (orientation: landscape) {
+    @media (hover: none) and (orientation: landscape) and (max-height: 420px){
         @content;
     }
 }

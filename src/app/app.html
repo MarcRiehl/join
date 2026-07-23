@@ -1,4 +1,17 @@
-
+@if (showSplash()) {
+  <div class="splash-overlay" (animationend)="onSplashAnimationEnd($event)">
+    <img
+      class="splash-logo splash-logo--desktop"
+      src="assets/img/logo/logo-join.svg"
+      alt="Join Logo"
+    />
+    <img
+      class="splash-logo splash-logo--mobile"
+      src="assets/img/logo/logo-join-white.svg"
+      alt="Join Logo"
+    />
+  </div>
+}
 <router-outlet />
 
 <app-toast />

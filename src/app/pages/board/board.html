@@ -1,26 +1,48 @@
 <div class="board-container">
   <header class="board-header">
-    <h1 class="board-header__title">Board</h1>
+    <div class="board-header__top">
+      <h1 class="board-header__title">Board</h1>
+      <button class="btn-primary mobile-add-btn" (click)="openDialog()">
+        <img src="assets/img/components/board/add.svg" class="btn-icon" />
+      </button>
+    </div>
     <div class="board-header__controls">
       <div class="search-bar">
-        <input type="text" placeholder="Find Task" [(ngModel)]="searchTerm" class="search-bar__input">
+        <input
+          type="text"
+          placeholder="Find Task"
+          [(ngModel)]="searchTerm"
+          class="search-bar__input"
+        />
         <div class="search-bar__divider"></div>
         <button class="search-bar__btn">
-          <img src="assets/img/components/board/search-default.svg" class="icon-default">
-          <img src="assets/img/components/board/search-hover.svg" class="icon-hover">
-          <img src="assets/img/components/board/search-click.svg" class="icon-active">
+          <img src="assets/img/components/board/search-default.svg" class="icon-default" />
+          <img src="assets/img/components/board/search-hover.svg" class="icon-hover" />
+          <img src="assets/img/components/board/search-click.svg" class="icon-active" />
         </button>
       </div>
-      <button class="btn-primary btn-primary--create">
-        Add task
-        <img src="assets/img/components/board/add.svg" class="btn-icon">
+      <button class="btn-primary desktop-add-btn" (click)="openDialog()">
+        <span>Add task</span>
+        <img src="assets/img/components/board/add.svg" class="btn-icon" />
       </button>
     </div>
   </header>
 
-  <div class="board-lists">
+  <div class="board-lists" cdkDropListGroup>
     @for (column of boardColumns; track column.status) {
-      <app-task-view [title]="column.title" [status]="column.status"></app-task-view>
+      <app-task-view
+        [title]="column.title"
+        [status]="column.status"
+        [searchTerm]="searchTerm"
+      ></app-task-view>
     }
   </div>
 </div>
+
+@if (
+  dialogService.current().type === DialogType.AddTask ||
+  dialogService.current().type === DialogType.TaskDetails || 
+  dialogService.current().type === DialogType.EditTask
+) {
+  <app-task-dialog />
+}

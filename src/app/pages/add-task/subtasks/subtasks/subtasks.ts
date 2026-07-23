@@ -1,4 +1,4 @@
-import { Component, signal, output } from '@angular/core';
+import { Component, signal, input, effect, output } from '@angular/core';
 import { Subtask } from '../../../../interfaces/task/subtask';
 
 @Component({
@@ -64,4 +64,39 @@ export class Subtasks {
   private emitChange(): void {
     this.subtasksChange.emit(this.subtasks());
   }
+
+  initialSubtasks = input<Subtask[]>([]);
+  private initialized = false;
+
+  constructor() {
+    // effect(() => {
+    //     console.log('Subtasks effect');
+    //   this.subtasks.set([...this.initialSubtasks()]);
+    // });
+    effect(() => {
+      if (this.initialized) {
+        return;
+      }
+
+      const initial = this.initialSubtasks();
+
+      this.subtasks.set([...initial]);
+      this.subtasksChange.emit([...initial]);
+
+      this.initialized = true;
+    });
+  }
+
+  isClearHover = signal(false);
+  isAddHover = signal(false);
+
+  clear(): void {
+    this.subtasks.set([]);
+    this.newSubtaskTitle.set('');
+    this.editingIndex.set(null);
+
+    this.emitChange();
+      this.initialized = false;
+  }
+
 }

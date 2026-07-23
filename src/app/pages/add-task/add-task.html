@@ -1,99 +1,180 @@
 <section class="add-tasks">
-  <header class="add-tasks__header">
-    <h1 class="add-tasks__title">Add Task</h1>
-  </header>
-
-  <form [formGroup]="addTaskForm" class="add-tasks__form" (ngSubmit)="onSubmit()">
-    <div class="add-tasks__column-left">
-      <label class="form-label" for="title">Title</label>
-      <input type="text" formControlName="title" placeholder="Enter a title" />
-      <label class="form-label" for="description">Description</label>
-      <input type="text" formControlName="description" placeholder="Enter a Description" />
-      <label class="form-label" for="dueDate">Due Date</label>
-      <input
-        type="date"
-        formControlName="dueDate"
-        [min]="minDate"
-        [class.input-error]="dueDateControl?.invalid && dueDateControl?.touched"
-      />
-      <div class="error-space">
-        @if (dueDateControl?.invalid && dueDateControl?.touched) {
-          <span class="error-message">This field is required</span>
-        }
+  <div [class.dialog-content]="isTaskDialog()" [class.dialog-content--task]="isTaskDialog()"
+    [class.content-add-task]="!isTaskDialog()">
+    <div class="add-task-top">
+      @if (isTaskDialog()) {
+      <h1 class="dialog-headline dialog-headline--task">
+        Add Task
+      </h1>
+      }
+  
+      <div class="dialog-user-close dialog-user-close--task">
+        <button type="button" class="dialog-close-btn dialog-close-btn--edit" (click)="closeDialog()">
+        </button>
       </div>
+ 
     </div>
+    <div class="dialog-wrapper-inner dialog-wrapper-inner--task">
+      <div class="dialog-form dialog-form--task">
+        <form [formGroup]="addTaskForm" class="add-tasks__form" (ngSubmit)="onSubmit()">
+          <div class="form-scroll form-scroll--task" [class.form-scroll--edit]="isEditMode">
+            <div class="dialog-left dialog-left--task">
+              <div class="form-cell">
+                <div class="form-cell-label">
+                  <label for="task-title">Title<span>*</span></label>
+                  <input type="text" id="task-title" formControlName="title" placeholder="Enter a title" />
+                </div>
+                <div class="form-error-placeholder">
+                  @if ( title.touched) {
 
-    <div class="add-tasks__column-right">
-      <div class="proirity-wrapper">
-        <label class="form-label" for="priority">Priority</label>
-        <button
-          type="button"
-          [class.active-urgent]="isPrioritySelected('urgent')"
-          (click)="setPriority('urgent')"
-        >
-          Urgent
-        </button>
+                  @if (title.hasError('required')) {
+                  <p class="form-error">This field is required.</p>
+                  }
+                  }
+                </div>
+              </div>
+              <div class="form-cell">
+                <div class="form-cell-label">
+                  <label for="task-description">Description</label>
+                </div>
+                <textarea type="text" id="task-description" class="input-description" formControlName="description"
+                  placeholder="Enter a Description" rows="4">
+              </textarea>
+                <div class="form-error-placeholder"></div>
+              </div>
+              <div class="form-cell">
+                <div class="form-cell-label">
+                  <label for="task-dueDate">Due Date<span>*</span></label>
+                </div>
+                <div class="date-input">
+                  <input matInput [matDatepicker]="picker" id="task-dueDate" formControlName="dueDate"
+                    placeholder="Select due date">
 
-        <button
-          type="button"
-          [class.active-medium]="isPrioritySelected('medium')"
-          (click)="setPriority('medium')"
-        >
-          Medium
-        </button>
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                    <img matDatepickerToggleIcon src="/assets/img/components/task/event.svg">
+                  </mat-datepicker-toggle>
 
-        <button
-          type="button"
-          [class.active-low]="isPrioritySelected('low')"
-          (click)="setPriority('low')"
-        >
-          Low
-        </button>
-      </div>
-
-      <div class="assign-wrapper">
-        <label class="form-label">Assigned to</label>
-        <app-assigned-to
-          (selectedContactsChange)="onAssignedContactsChange($event)"
-        ></app-assigned-to>
-      </div>
-
-      <label class="form-label">Category</label>
-      <div class="category-wrapper">
-        <div class="category-field" (click)="toggleCategoryDropdown()">
-          <input
-            type="text"
-            class="category-dropdown__input"
-            [value]="getCategoryLabel()"
-            placeholder="Select task category"
-            readonly
-          />
-          <span
-            class="category-dropdown__arrow"
-            [class.category-dropdown__arrow--open]="isCategoryDropdownOpen"
-            >▾</span
-          >
-        </div>
-        @if (isCategoryDropdownOpen) {
-          <div class="category-dropdown__list">
-            @for (cat of categories; track cat.value) {
-              <div (click)="setCategory(cat.value)">{{ cat.label }}</div>
+                  <mat-datepicker #picker></mat-datepicker>
+                </div>
+                <div class="form-error-placeholder">
+                  @if ( dueDate.touched) {
+                  @if (addTaskForm.controls.dueDate.hasError('required')) {
+                  <p class="form-error">This field is required.</p>
+                  }
+                  @if (addTaskForm.controls.dueDate.hasError('pastDate')) {
+                  <p class="form-error">Please select today or a future date.</p>
+                  }
+                  }
+                </div>
+              </div>
+            </div>
+            @if (isTaskDialog()) {
+            <div class="add-task-stroke"></div>
             }
+            <div class="dialog-right dialog-right--task">
+
+              <div class="form-cell">
+                <div class="form-cell-label">
+                  <label>Priority</label>
+                </div>
+                <div class="proirity-wrapper" id="task-priority">
+                  <button type="button" class="button-task-priority"
+                    [class.active-urgent]="isPrioritySelected('urgent')" (click)="setPriority('urgent')">
+                    Urgent
+                    <img [src]="getPriorityIcon('urgent')" alt="Urgent">
+                  </button>
+
+                  <button type="button" class="button-task-priority"
+                    [class.active-medium]="isPrioritySelected('medium')" (click)="setPriority('medium')">
+                    Medium
+                    <img [src]="getPriorityIcon('medium')" alt="Medium">
+                  </button>
+
+                  <button type="button" class="button-task-priority" [class.active-low]="isPrioritySelected('low')"
+                    (click)="setPriority('low')">
+                    Low
+                    <img [src]="getPriorityIcon('low')" alt="Low">
+                  </button>
+
+                </div>
+                <div class="form-error-placeholder"></div>
+              </div>
+              <div class="assign-wrapper">
+                <div class="form-cell">
+                  <div class="form-cell-label">
+                    <label>Assigned to</label>
+                  </div>
+                  <app-assigned-to [preselectedIds]="isEditMode ? (selectedTask()?.assignedContactIds ?? []) : []"
+                    (selectedContactsChange)="onAssignedContactsChange($event)">
+                  </app-assigned-to>
+                  <div class="form-error-placeholder"></div>
+                </div>
+              </div>
+              <div class="form-cell">
+                <div class="form-cell-label">
+                  <label for="task-category">Category<span>*</span></label>
+                </div>
+                <div class="category-wrapper">
+                  <div class="category-field" cdkOverlayOrigin #categoryTrigger="cdkOverlayOrigin"
+                    (click)="toggleCategoryDropdown()">
+
+                    <input type="text" id="task-category" class="category-dropdown__input" [value]="getCategoryLabel()"
+                      placeholder="Select task category" readonly />
+
+                    <img src="/assets/img/components/task/arrow-drop-down.svg" class="change-dropdown__arrow"
+                      [class.change__arrow--open]="isCategoryDropdownOpen"
+                      (click)="toggleCategoryDropdown(); $event.stopPropagation()" alt="" />
+                  </div>
+
+                  <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="categoryTrigger"
+                    [cdkConnectedOverlayOpen]="isCategoryDropdownOpen"
+                    (overlayOutsideClick)="isCategoryDropdownOpen = false">
+
+                    <div class="category-dropdown__list">
+                      @for (cat of categories; track cat.value) {
+                      <div class="category-dropdown__item" (click)="setCategory(cat.value)">
+                        {{ cat.label }}
+                      </div>
+                      }
+                    </div>
+
+                  </ng-template>
+                  <div class="form-error-placeholder">
+                    @if ( category.touched) {
+
+                    @if (category.hasError('required')) {
+                    <p class="form-error">This field is required.</p>
+                    }
+                    }
+                  </div>
+                </div>
+              </div>
+              <div class="form-cell-label">
+                <label>Subtasks</label>
+              </div>
+              <app-subtasks [initialSubtasks]="initialSubtasks" (subtasksChange)="onSubtasksChange($event)">
+              </app-subtasks>
+
+            </div>
           </div>
-        }
+          <div class="add-task-footer">
+            <div class="add-task-footer-left">
+              <div class="add-task-footer-required">
+                <span>*</span>This field is required
+              </div>
+            </div>
+            <div class="form-buttons">
+              @if (!isEditMode) {
+              <button type="button" class="btn-primary btn-primary--border" (click)="onClear()">Clear</button>
+              }
+              <button type="submit" class="btn-primary btn-primary--create btn-primary--mobil"
+                [disabled]="isSaving || addTaskForm.invalid">
+                {{ isEditMode ? 'OK' : 'Create Task' }}
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-
-      <app-subtasks (subtasksChange)="onSubtasksChange($event)"></app-subtasks>
     </div>
-
-    <div class="form-footer">
-      <span class="required-legend">*This field is required</span>
-      <div class="form-buttons">
-        <button type="button" class="btn-clear" (click)="onClear()">Clear ✕</button>
-        <button type="submit" class="btn-create" [disabled]="isSaving || addTaskForm.invalid">
-          Create Task ✓
-        </button>
-      </div>
-    </div>
-  </form>
+  </div>
 </section>

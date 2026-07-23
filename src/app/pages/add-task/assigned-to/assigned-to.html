@@ -1,37 +1,49 @@
 <div class="assigned-to">
-  <div class="assigned-to__field" (click)="openDropdown()">
-    <input
-      type="text"
-      class="assigned-to__search"
-      placeholder="Select contacts to assign"
-      [value]="searchTerm()"
-      (input)="onSearchInput($event)"
-      (focus)="openDropdown()"
-    />
-    <span class="assigned-to__arrow" [class.assigned-to__arrow--open]="isDropdownOpen" (click)="toggleDropdown(); $event.stopPropagation()">▾</span>
+  <div class="assigned-to__field" cdkOverlayOrigin #trigger="cdkOverlayOrigin" (click)="openDropdown()">
+    <input type="text" class="assigned-to__search" placeholder="Select contacts to assign" [value]="searchTerm()"
+      (input)="onSearchInput($event)" (focus)="openDropdown()" />
+
+    <img src="/assets/img/components/task/arrow-drop-down.svg" class="change-dropdown__arrow"
+      [class.change__arrow--open]="isDropdownOpen" (click)="toggleDropdown();  $event.stopPropagation()" alt="" />
   </div>
 
-  @if (isDropdownOpen) {
+  <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger" [cdkConnectedOverlayOpen]="isDropdownOpen"
+    [cdkConnectedOverlayHasBackdrop]="true" cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+    (overlayOutsideClick)="isDropdownOpen = false">
+
     <div class="assigned-to__list">
+
       @for (contact of filteredContacts(); track contact.id) {
-        <div
-          class="assigned-to__item"
-          [class.assigned-to__item--selected]="isSelected(contact)"
-          (click)="toggleContact(contact)"
-        >
-          <app-user-bubble [initials]="contact.initials ?? ''" [color]="contact.colors ?? ''" />
-          <span class="assigned-to__item-name">{{ contact.firstname }} {{ contact.lastname }}</span>
-          <input type="checkbox" [checked]="isSelected(contact)" />
+      <div class="assigned-to__item" [class.assigned-to__item--selected]="isSelected(contact)"
+        (click)="toggleContact(contact); $event.stopPropagation()">
+        <div class="dropdown-bubble-name">
+          <div class="dropdown-bubble">
+            <app-user-bubble [initials]="contact.initials ?? ''" [color]="contact.colors ?? ''" />
+          </div>
+
+          <div class="assigned-to__item-name">
+            {{ contact.firstname }}
+            {{ contact.lastname }}
+          </div>
         </div>
+        <div>
+          <img [src]="isSelected(contact)
+    ? '/assets/img/components/task/drop-down-check-button-white.svg'
+    : '/assets/img/components/task/drop-down-check-button.svg'" class="assign-to-check" alt="">
+        </div>
+      </div>
       }
+
     </div>
-  }
+
+  </ng-template>
   <div class="assigned-to__bubbles">
     @for (contact of visibleBubbles(); track contact.id) {
-      <app-user-bubble [initials]="contact.initials ?? ''" [color]="contact.colors ?? ''" />
+    <app-user-bubble [initials]="contact.initials ?? ''" [color]="contact.colors ?? ''" />
     }
     @if (remainingCount() > 0) {
-      <div class="assigned-to__bubble-more">+{{ remainingCount() }}</div>
+    <div class="assigned-to__bubble-more">+{{ remainingCount() }}</div>
     }
   </div>
+
 </div>

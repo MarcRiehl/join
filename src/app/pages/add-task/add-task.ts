@@ -1,4 +1,4 @@
-import { Component, inject, ElementRef, HostListener, signal } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, signal, computed, Output, EventEmitter, Input, viewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TaskService } from '../../services/tasks/task.service';
@@ -8,10 +8,27 @@ import { Contact } from '../../interfaces/contacts/contact';
 import { TaskPriority, TaskCategory, TaskStatus } from '../../interfaces/task/task.types';
 import { Subtasks } from './subtasks/subtasks/subtasks';
 import { Subtask } from '../../interfaces/task/subtask';
+import { DialogService, DialogType } from '../../services/dialog/dialog.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { Task } from '../../interfaces/task/task';
+import { ToastService } from '../../services/toast/toast-service';
+
 
 @Component({
   selector: 'app-add-task',
-  imports: [ReactiveFormsModule, AssignedTo, Subtasks],
+  imports: [ReactiveFormsModule,
+    AssignedTo,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    Subtasks,
+    OverlayModule
+  ],
   templateUrl: './add-task.html',
   styleUrl: './add-task.scss',
 })
@@ -21,6 +38,10 @@ export class AddTask {
   minDate = getTodayDateString();
   private elementRef = inject(ElementRef);
   isSaving = false;
+  initialSubtasks: Subtask[] = [];
+  subtasksComponent = viewChild(Subtasks);
+  assignedToComponent = viewChild(AssignedTo);
+  private toastService = inject(ToastService);
 
   addTaskForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -57,35 +78,89 @@ export class AddTask {
     this.subtasks.set(subtasks);
   }
 
-  // Validates the form, saves the task via TaskService, and redirects to the Board page on success
   async onSubmit(): Promise<void> {
     this.addTaskForm.markAllAsTouched();
+
     if (this.addTaskForm.invalid) return;
+
     this.isSaving = true;
+
     try {
-      await this.taskService.createTask(this.buildTaskObject());
-      this.router.navigate(['/board']);
+      if (this.isEditMode) {
+        await this.taskService.updateTask(this.buildUpdateTask());
+        this.dialogService.open(DialogType.TaskDetails);
+        return;
+      } else {
+        await this.taskService.createTask(this.buildCreateTask());
+        this.toastService.success('Task added to board.');
+      }
+
+      if (this.isDialog) {
+        this.close.emit();
+      } else {
+        this.router.navigate(['/board']);
+      }
+
     } finally {
       this.isSaving = false;
     }
+  }
+
+  get title() {
+    return this.addTaskForm.controls.title;
+  }
+
+  get dueDate() {
+    return this.addTaskForm.controls.dueDate;
+  }
+
+  get category() {
+    return this.addTaskForm.controls.category;
   }
 
   // Resets the form to its default state (priority back to medium)
   onClear(): void {
     this.addTaskForm.reset();
     this.addTaskForm.get('priority')?.setValue('medium');
+    this.subtasksComponent()?.clear();
+    this.assignedToComponent()?.clear();
   }
 
-  private buildTaskObject() {
-    const { title, description, dueDate, priority, category } = this.addTaskForm.value;
+  selectedStatus: TaskStatus = 'todo';
+
+  private buildCreateTask(): Omit<Task, 'id' | 'createdAt'> {
+    const { title, description, dueDate, priority, category } =
+      this.addTaskForm.getRawValue();
+
     return {
       title: title!,
-      description: description!,
+      description: description ?? '',
       dueDate: dueDate!,
       priority: priority as TaskPriority,
       category: category as TaskCategory,
-      status: 'todo' as TaskStatus,
-      assignedContactIds: this.selectedContacts.map((c) => c.id!),
+      status: this.selectedStatus,
+      assignedContactIds: this.selectedContacts.map(c => c.id!),
+      subtasks: this.subtasks(),
+    };
+  }
+  private buildUpdateTask(): Task {
+    const task = this.selectedTask();
+
+    if (!task) {
+      throw new Error('No task selected.');
+    }
+
+    const { title, description, dueDate, priority, category } =
+      this.addTaskForm.getRawValue();
+
+    return {
+      ...task,
+      title: title!,
+      description: description ?? '',
+      dueDate: dueDate!,
+      priority: priority as TaskPriority,
+      category: category as TaskCategory,
+      assignedContactIds: this.selectedContacts.map(c => c.id!),
       subtasks: this.subtasks(),
     };
   }
@@ -102,6 +177,7 @@ export class AddTask {
   // Property to track the state of the category dropdown (open or closed)
   isCategoryDropdownOpen = false;
   toggleCategoryDropdown(): void {
+    this.addTaskForm.controls.category.markAsTouched();
     this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
   }
 
@@ -121,4 +197,70 @@ export class AddTask {
   setAssignedContactIds(ids: number[]): void {
     this.addTaskForm.get('assignedContactIds')?.setValue(ids);
   }
+
+  // ab hier Marc
+
+  readonly dialogService = inject(DialogService);
+  readonly DialogType = DialogType;
+  type = signal<DialogType | null>(null);
+
+
+  isTaskDialog = computed(() =>
+    this.dialogService.current().type === DialogType.AddTask
+  );
+
+  @Input() isEditMode = false;
+
+  readonly selectedTask = this.taskService.selectedTask;
+  @Input() isDialog = false;
+  @Output() close = new EventEmitter<void>();
+
+  closeDialog() {
+    if (this.isDialog) {
+      this.close.emit();
+    } else {
+      this.router.navigate(['/board']);
+    }
+  }
+
+  get initialStatus(): TaskStatus | undefined {
+    return (this.dialogService.current().data as { status: TaskStatus } | undefined)?.status;
+  }
+
+
+  getPriorityIcon(priority: 'urgent' | 'medium' | 'low'): string {
+    const suffix = this.isPrioritySelected(priority) ? '-white' : '';
+    return `/assets/img/components/task/priority-symbol-${priority}${suffix}.svg`;
+  }
+
+  ngOnInit(): void {
+    this.selectedStatus = this.initialStatus ?? 'todo';
+
+    if (this.isEditMode) {
+      this.loadTaskIntoForm();
+    } else {
+      this.initialSubtasks = [];
+    }
+  }
+
+  private loadTaskIntoForm(): void {
+    const task = this.selectedTask();
+
+    if (!task) {
+      return;
+    }
+
+    this.addTaskForm.patchValue({
+      title: task.title,
+      description: task.description,
+      dueDate: task.dueDate,
+      priority: task.priority,
+      category: task.category,
+      assignedContactIds: task.assignedContactIds,
+    });
+
+    this.initialSubtasks = [...task.subtasks];
+    this.subtasks.set([...task.subtasks]);
+  }
+
 }

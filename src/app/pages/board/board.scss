@@ -2,12 +2,25 @@
 
 .board-container {
   padding: 48px;
-  max-width: 1440px;
   margin: 0 auto;
+  width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 96px);
+  overflow: hidden;
+
+  @include mobile-tablet {
+    padding: 16px;
+    height: auto;
+    min-height: calc(100vh - 80px);
+    padding-top: 96px;
+    overflow-y: visible;
+  }
+
+  @include mobile {
+    padding-top: 16px;
+  }
 }
 
 .board-header {
@@ -16,6 +29,27 @@
   align-items: center;
   margin-bottom: 48px;
   flex-shrink: 0;
+
+  @media (max-width: 1015px) {
+    gap: 32px;
+  }
+
+  @include mobile-tablet {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+}
+
+.board-header__top {
+  display: flex;
+  align-items: center;
+
+  @include mobile-tablet {
+    justify-content: space-between;
+    width: 100%;
+  }
 }
 
 .board-header__title {
@@ -23,12 +57,53 @@
   font-weight: 700;
   margin: 0;
   color: #000000;
+
+  @include mobile-tablet {
+    font-size: 47px;
+  }
+}
+
+.mobile-add-btn {
+  display: none;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+
+  @include mobile-tablet {
+    display: flex;
+  }
+}
+
+.desktop-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  @media (max-width: 1015px) {
+    span {
+      display: none;
+    }
+  }
+
+  @include mobile-tablet {
+    display: none;
+  }
 }
 
 .board-header__controls {
   display: flex;
-  align-items: center;
   gap: 32px;
+
+  @media (max-width: 1015px) {
+    gap: 32px;
+  }
+
+  @include mobile-tablet {
+    width: 100%;
+  }
 }
 
 .search-bar {
@@ -45,6 +120,18 @@
 
   &:focus-within {
     border-color: #29abe2;
+  }
+
+  @media (max-width: 1015px) {
+    width: 85%;
+  }
+
+  @media (max-width: 975px) {
+    width: 70%;
+  }
+
+  @include mobile-tablet {
+    width: 100%;
   }
 }
 
@@ -100,16 +187,6 @@
   }
 }
 
-.btn-primary--create {
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  
-  &::after {
-    display: none !important;
-  }
-}
-
 .btn-icon {
   width: 16px;
   height: 16px;
@@ -117,8 +194,35 @@
 
 .board-lists {
   display: flex;
-  gap: 24px;
+  gap: 38px;
   flex: 1;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-height: 0;
+  height: 100%;
   overflow-x: auto;
-  align-items: flex-start;
+  overflow-y: hidden;
+  padding-bottom: 16px;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #a8a8a8;
+    border-radius: 4px;
+  }
+
+  @include mobile-tablet {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    overflow-x: visible;
+    overflow-y: visible;
+  }
 }

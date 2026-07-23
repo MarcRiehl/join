@@ -1,0 +1,49 @@
+@use '../scss/abstract' as styles;
+
+.splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: styles.$white;
+  animation: splashFadeOut 500ms ease-in-out 200ms forwards;
+
+  @include styles.flex-center;
+}
+
+.splash-logo {
+  width: 274px;
+  height: 334px;
+}
+
+.splash-logo--mobile {
+  display: none;
+}
+
+@include styles.mobile {
+  .splash-overlay {
+    background: styles.$blue-color;
+    animation-duration: 800ms;
+  }
+
+  .splash-logo {
+    width: 100px;
+    height: 122px;
+  }
+
+  .splash-logo--desktop {
+    display: none;
+  }
+
+  .splash-logo--mobile {
+    display: block;
+  }
+}
+
+@keyframes splashFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

@@ -1,18 +1,25 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TaskService } from '../../services/tasks/task.service';
+import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { TaskStatus } from '../../interfaces/task/task.types';
+import { TaskService } from '../../services/tasks/task.service';
 import { TaskView } from './task-view/task-view';
+import { DialogService, DialogType } from '../../services/dialog/dialog.service';
+import { ContactService } from '../../services/contacts/contact.service';
+import { Router } from '@angular/router';
+import { TaskDialog } from './task-dialog/task-dialog';
+
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [TaskView, FormsModule],
+  imports: [TaskView, FormsModule, TaskDialog, CdkDropListGroup],
   templateUrl: './board.html',
-  styleUrl: './board.scss'
+  styleUrl: './board.scss',
 })
 export class BoardComponent implements OnInit {
   taskService = inject(TaskService);
+  private contactService = inject(ContactService);
   searchTerm = '';
 
   boardColumns: { title: string; status: TaskStatus }[] = [
@@ -22,8 +29,28 @@ export class BoardComponent implements OnInit {
     { title: 'Done', status: 'done' },
   ];
 
-  async ngOnInit() {
-    await this.taskService.loadTasks();
+  ngOnInit(): void {
+    this.taskService.loadTasks();
+    this.contactService.loadContacts();
     this.taskService.subscribeToTaskChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.taskService.unsubscribeFromTaskChanges();
+  }
+
+
+  readonly dialogService = inject(DialogService);
+  readonly DialogType = DialogType;
+  private router = inject(Router);
+
+  openDialog(): void {
+    const isDesktop = window.matchMedia('(min-width: 569px)').matches;
+
+    if (isDesktop) {
+      this.dialogService.open(DialogType.AddTask);
+    } else {
+      this.router.navigate(['/add-task']);
+    }
   }
 }

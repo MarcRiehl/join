@@ -1,34 +1,19 @@
-@use '../../../../../scss/abstract' as *;
+@use '../abstract/' as *;
 
 .task-card {
   background-color: #ffffff;
   border-radius: 24px;
   padding: 16px;
-  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
   gap: 24px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  overflow: hidden;
 
   &:hover {
     transform: scale(1.02);
-    box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.1);
-  }
-
-  @include mobile-tablet {
-    min-width: 252px;
-  }
-
-  @include mobile-tablet-hover {
-    &:hover {
-      transform: none;
-      box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.04);
-    }
+    box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -42,13 +27,16 @@
 
   &.technicalTask { background-color: #1fd7c1; }
   &.userStory { background-color: #0038ff; }
+
+  &--view-task{
+    align-self: center;
+  }
 }
 
 .task-card__content {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  overflow: hidden;
 }
 
 .task-card__title {
@@ -56,8 +44,6 @@
   font-weight: 700;
   color: #2a3647;
   margin: 0;
-  word-break: break-word;
-  overflow-wrap: break-word;
 }
 
 .task-card__description {
@@ -68,8 +54,6 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  word-break: break-word;
-  overflow-wrap: break-word;
 }
 
 .task-card__progress {
@@ -95,7 +79,6 @@
 .progress-text {
   font-size: 12px;
   color: #000000;
-  white-space: nowrap;
 }
 
 .task-card__footer {
@@ -129,7 +112,7 @@
   }
 
   &.extra-badge {
-    background-color: #f4f4f4;
+    background-color: #f4f4f4 !important;
     color: #2a3647;
   }
 }
@@ -137,5 +120,4 @@
 .task-card__priority {
   width: 32px;
   height: 32px;
-  flex-shrink: 0;
 }

@@ -2,19 +2,22 @@
   <div class="task-column__header">
     <h2 class="task-column__title">{{ title }}</h2>
     @if (status !== 'done') {
-      <button class="task-column__add-btn">
+      <button class="task-column__add-btn" (click)="openAddTask()">
         <img src="assets/img/components/board/plus-button.svg" class="icon-default">
         <img src="assets/img/components/board/plus-button-hover.svg" class="icon-hover">
         <img src="assets/img/components/board/plus-button-press.svg" class="icon-active">
       </button>
     }
   </div>
-  <div class="task-column__content">
-    @if (tasks.length === 0) {
+  <div class="task-column__content"
+       cdkDropList
+       [cdkDropListData]="tasks()"
+       (cdkDropListDropped)="drop($event)">
+    @if (tasks().length === 0) {
       <div class="task-column__empty">No tasks in {{ title }}</div>
     } @else {
-      @for (task of tasks; track task.id) {
-        <app-task-card [task]="task"></app-task-card>
+      @for (task of tasks(); track task.id) {
+        <app-task-card [task]="task" cdkDrag [cdkDragData]="task" [cdkDragStartDelay]="{ touch: 250, mouse: 0 }"></app-task-card>
       }
     }
   </div>

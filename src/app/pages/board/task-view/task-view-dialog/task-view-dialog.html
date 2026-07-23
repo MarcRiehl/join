@@ -1,0 +1,102 @@
+@if (task(); as task) {
+<div class="task-view-wrapper">
+
+    <div class="task-view-top">
+        <div class="task-card__category task-card__category--view-task" [ngClass]="categoryClass">
+            {{ categoryDisplayName }}
+        </div>
+        <div class="task-view-close">
+            <button type="button" class="dialog-close-btn dialog-close-btn--edit" (click)="closeDialog()">
+            </button>
+        </div>
+    </div>
+    <div class="form-scroll form-scroll--edit">
+        <h1 class="dialog-headline dialog-headline--task-view">{{ task.title }}</h1>
+        <div class="task-view-description">
+            {{ task.description }}
+        </div>
+        <div class="task-view-date">
+            <span class="task-view-label">Due date:</span>
+            <div class="task-view-duedate">
+                {{ task.dueDate }}
+            </div>
+        </div>
+
+        <div class="task-view-priority">
+            <div>
+                <span class="task-view-label">Priority:</span>
+            </div>
+            <div class="task-view-priority-name">{{ task.priority }}</div>
+
+            <img [src]="priorityIcon" [alt]="task.priority">
+        </div>
+
+        <div class="task-view-assigned-to">
+            <div class="task-view-assigned-to-list">
+
+                <span class="task-view-label">Assigned to:</span>
+
+                @for (contactId of task.assignedContactIds; track contactId) {
+
+                @if (getContact(contactId); as contact) {
+
+                <div class="task-view-assigned-user">
+
+                    <app-user-bubble [initials]="contact.initials ?? ''" [color]="contact.colors ?? ''" />
+
+                    <span>
+                        {{ contact.firstname }} {{ contact.lastname }}
+                    </span>
+
+                </div>
+
+                }
+
+                }
+
+            </div>
+        </div>
+
+        @if (totalSubtasks > 0) {
+        <div class="task-view-subtask">
+            <span class="task-view-assigned-to-label">Subtasks:</span>
+
+            @for (subtask of task.subtasks; track $index) {
+            <div class="task-view-subtask-list">
+                <button type="button" class="task-view-subtask-item" (click)="toggleSubtask($index)">
+
+                    <img [src]="subtask.done
+               ? '/assets/img/components/task/subtask-checked.svg'
+                : '/assets/img/components/task/subtask-check.svg'" alt="">
+                    <div class="task-view-subtask-description">{{ subtask.title }}</div>
+                </button>
+            </div>
+            }
+
+        </div>
+        }
+    </div>
+
+
+
+    <div class="task-view-footer">
+
+        <button type="button" class="footer-task-view-btn footer-task-view-btn--delete" (click)="deleteTask()">
+
+            <img src="/assets/img/components/task/task-view-delete.svg" alt="">
+            <span data-text="Delete">Delete</span>
+
+        </button>
+
+        <div class="subtasks__divider"></div>
+
+        <button type="button" class="footer-task-view-btn footer-task-view-btn--edit" (click)="editTask()">
+            <img src="/assets/img/components/task/task-view-edit.svg" alt="">
+            <span data-text="Edit">Edit</span>
+
+
+        </button>
+
+    </div>
+</div>
+}

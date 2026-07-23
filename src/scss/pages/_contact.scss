@@ -20,9 +20,9 @@
   box-shadow: 10px 0px 10px -5px rgba(0, 0, 0, 0.1);
 
   @include desktop-s {
-        width: 100%;
-        margin: 0;
-        max-width: 320px;
+    width: 100%;
+    margin: 0;
+    max-width: 320px;
 
   }
 }
@@ -173,8 +173,8 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    bottom: 90px;
-    right: 62px;
+    bottom: 112px;
+    right: 20px;
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -200,8 +200,8 @@
 @include mobile-tablet {
   .contact-list-container {
     height: calc(100vh - 80px);
-    width: 80%;
-    max-width: 456px;
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
     box-shadow: none;
     box-sizing: border-box;
@@ -228,8 +228,8 @@
   }
 
   .btn-mobile-add {
-    bottom: 90px;
-    right: 16px;
+    bottom: 112px;
+    right: 20px;
   }
 }
 

@@ -1,0 +1,32 @@
+<dialog
+  #dialog
+  class="user-dialog"
+  [class.user-dialog--task]="dialogService.current().type === DialogType.AddTask"
+  [class.user-dialog--task-view]="dialogService.current().type === DialogType.TaskDetails"
+  [class.user-dialog--task-view-edit]="dialogService.current().type === DialogType.EditTask"
+  closedby="any"
+  (cancel)="onCancel($event)"
+  (animationend)="animationFinished($event)">
+
+  @if (dialogService.current().type === DialogType.AddTask) {
+    <app-add-task
+      [isDialog]="true"
+      (close)="startCloseAnimation()">
+    </app-add-task>
+  }
+
+  @if (dialogService.current().type === DialogType.TaskDetails) {
+    <app-task-view-dialog
+      (close)="startCloseAnimation()">
+    </app-task-view-dialog>
+  }
+
+  @if (dialogService.current().type === DialogType.EditTask) {
+  <app-add-task
+    [isDialog]="true"
+    [isEditMode]="true"
+    (close)="startCloseAnimation()">
+  </app-add-task>
+}
+
+</dialog>

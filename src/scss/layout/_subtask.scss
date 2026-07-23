@@ -1,0 +1,132 @@
+@use '../abstract/' as *;
+
+.subtasks__input-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.subtasks-icon {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .2s ease;
+}
+
+
+.subtasks__input-row {
+
+    .subtasks-icon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &--delete {
+            right: 60px;
+        }
+    }
+
+    .subtasks-icon--clear {
+        right: 60px;
+    }
+
+    .subtasks-icon--add {
+        right: 30px;
+    }
+}
+
+.subtask-stroke {
+    position: absolute;
+    right: 55px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 1px;
+    background: $grey-task-stroke;
+}
+
+.subtasks__list {
+    // margin: 12px 0 0;
+    padding-left: 24px;
+}
+
+.subtasks__list {
+    list-style: circle;
+}
+
+.subtasks__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 32px;
+    position: relative;
+    padding-left: 12px;
+
+    &::before {
+        content: "•";
+        position: absolute;
+        left: -10px;
+        font-size: 18px;
+    }
+
+    &:hover {
+        .subtasks__actions {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.subtasks__item-title {
+    flex: 1;
+}
+
+.subtasks__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s;
+}
+
+.subtasks__divider {
+    width: 1px;
+    height: 18px;
+    background: $grey-task-stroke;
+}
+
+.subtasks__edit-input {
+    flex: 1;
+    min-width: 0;
+
+}
+
+.subtasks__actions--visible {
+    opacity: 1;
+    visibility: visible;
+    position: absolute;
+    right: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.form-cell-small {
+    padding-bottom: 12px;
+    width: 100%;
+    border-radius: 0;
+    position: relative;
+}
+
+.form-cell-small input {
+    border: 0;
+    border-bottom: 1px solid $grey-form-blue;
+    width: 100%;
+    padding: 4px 16px;
+}
