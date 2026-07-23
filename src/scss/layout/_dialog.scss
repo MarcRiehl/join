@@ -21,7 +21,8 @@ dialog::backdrop {
 
     &--task {
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
-        height: calc(100dvh - 80px);
+        height: calc(100dvh - 50px);
+         height: fit-content;
     }
 
     &--task-view {
@@ -58,8 +59,6 @@ dialog::backdrop {
         bottom: 80px;
         animation: dialogInMobile 250ms ease-out forwards;
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
-
-
     }
 
     @include tablet {
@@ -75,6 +74,17 @@ dialog::backdrop {
         bottom: 80px;
 
     }
+    @include widesscreen{
+        height: calc(60dvh - 80px);
+    }
+}
+
+.user-dialog--task>app-add-task,
+.user-dialog--task-view-edit>app-add-task,
+.user-dialog--task-view>app-task-view-dialog {
+    display: flex;
+    flex: 1;
+    min-height: 0;
 }
 
 .user-dialog.closing {
@@ -220,13 +230,6 @@ dialog::backdrop {
     align-items: center;
     height: 100%;
 
-    &--task {
-        flex: 1;
-        min-height: 0;
-        display: flex;
-        align-items: stretch;
-    }
-
     @include mobile-tablet {
         display: grid;
         grid-template-rows: auto 1fr;
@@ -245,6 +248,22 @@ dialog::backdrop {
         min-height: 0;
 
     }
+
+
+    &--task {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        align-items: stretch;
+
+        @include landscape {
+         align-items: flex-start;
+
+        }
+
+    }
+
+
 }
 
 .backdrop {
@@ -328,14 +347,6 @@ dialog::backdrop {
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
 
-    &--task {
-        background-color: $white;
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
-        justify-content: flex-start;
-        width: unset;
-    }
-
     @include mobile-tablet {
         padding: 16px;
         width: 100%;
@@ -346,6 +357,8 @@ dialog::backdrop {
         position: relative;
 
     }
+
+
 
     @include small-mobile {
         height: 180px;
@@ -362,16 +375,43 @@ dialog::backdrop {
         top: 0;
     }
 
+
+    &--task {
+        background-color: $white;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        justify-content: flex-start;
+        width: unset;
+
+        @include mobile-tablet {
+            height: 100%;
+            padding: 0;
+        }
+
+        @include desktop-s {
+            align-items: flex-start;
+            justify-content: flex-start;
+            // width: 100%;
+            width: fit-content;
+        }
+
+
+        @include landscape {
+            height: 100%;
+            position: unset;
+            padding: 0;
+        }
+
+
+    }
+
+
+
 }
 
 .dialog-right {
 
     display: flex;
-
-    &--task {
-        flex-direction: column;
-    }
-
 
     @include mobile-tablet {
         // flex: 1;
@@ -387,6 +427,23 @@ dialog::backdrop {
     @include landscape {
         flex: 1;
         min-height: 0;
+    }
+
+
+    &--task {
+        flex-direction: column;
+
+        @include desktop-s {
+            align-items: flex-start;
+            justify-content: flex-start;
+            // width: 100%;
+            width: fit-content;
+        }
+
+        @include landscape {
+            width: 100%;
+        }
+
     }
 }
 
@@ -453,16 +510,7 @@ dialog::backdrop {
     font-weight: bold;
     font-size: 61px;
     color: $white;
-
-    &--task {
-        color: $black;
-        padding-bottom: 40px;
-    }
-
-    &--task-view {
-        color: $black;
-        padding-bottom: 20px;
-    }
+    word-break: break-all;
 
 
     @include tablet {
@@ -474,12 +522,45 @@ dialog::backdrop {
     }
 
     @include small-mobile {
-        font-size: 36px;
+        font-size: 30px;
+        padding-right: 6px;
     }
 
     @include landscape {
         font-size: 30px;
     }
+
+
+    &--task {
+        color: $black;
+        padding-bottom: 20px;
+
+        @include tablet {
+            font-size: 47px;
+            padding-top: 0px;
+            padding-bottom: 20px;
+        }
+
+        @include mobile {
+            font-size: 47px;
+            padding-top: 0px;
+            padding-bottom: 20px;
+        }
+
+        @include landscape {
+            font-size: 24px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
+    }
+
+    &--task-view {
+        color: $black;
+        padding-bottom: 20px;
+    }
+
+
 }
 
 .dialog-subline {
@@ -509,15 +590,10 @@ dialog::backdrop {
 
 .dialog-form {
     justify-self: end;
+
     width: 100%;
     flex: 1;
     min-height: 0;
-
-    &--task {
-        display: flex;
-        justify-self: unset;
-        justify-content: space-between;
-    }
 
     @include mobile-tablet {
         justify-self: unset;
@@ -535,6 +611,27 @@ dialog::backdrop {
         padding-top: 20px;
     }
 
+
+    &--task {
+        display: flex;
+        justify-self: unset;
+        justify-content: space-between;
+        // align-items: flex-start;
+
+        @include small-mobile {
+            padding-top: 10px;
+            // width: calc(100dvw - 16px);
+        }
+
+        @include landscape {
+            padding-top: 0px;
+            width: calc(100dvw - 16px);
+        }
+
+    }
+
+
+
 }
 
 .dialog-form form {
@@ -542,6 +639,17 @@ dialog::backdrop {
     flex-direction: column;
     flex: 1;
     min-height: 0;
+}
+
+.dialog-form--task form {
+    @include small-mobile {
+        width: 100%;
+    }
+
+    @include landscape {
+        width: 100%;
+    }
+
 }
 
 .dialog-user-close {
@@ -614,11 +722,31 @@ dialog::backdrop {
     @include small-mobile {
         padding-bottom: 8px;
     }
+
+    &--task {
+        @include small-mobile {
+            width: 100%;
+        }
+
+        @include mobile-tablet {
+            width: 100%;
+        }
+
+        @include landscape {
+            width: 100%;
+        }
+    }
 }
 
 .form-cell:first-child {
     @include landscape {
         margin-top: 20px;
+    }
+
+    &--task {
+        @include landscape {
+            margin-top: 0px;
+        }
     }
 }
 
@@ -630,11 +758,6 @@ dialog::backdrop {
     padding: 13px 40px 13px 21px;
     font-size: 20px;
 
-    &:focus {
-        border-color: $grey-form-blue;
-        outline: none;
-    }
-
     @include mobile-tablet {
         width: 100%;
         height: 41px;
@@ -643,10 +766,35 @@ dialog::backdrop {
 
     @include desktop-s {
         width: 100%;
+        // max-width: 400px;
     }
 
     @include small-mobile {
         height: 36px;
+
+    }
+
+    &:focus {
+        border-color: $grey-form-blue;
+        outline: none;
+    }
+
+
+}
+
+.form-cell--task input {
+
+    @include mobile {
+        font-size: 16px;
+    }
+
+    @include small-mobile {
+        font-size: 16px;
+
+    }
+
+    @include landscape {
+        font-size: 16px;
 
     }
 }
@@ -656,10 +804,36 @@ dialog::backdrop {
     font-size: 20px;
 }
 
+.form-cell--task input::placeholder {
+    @include mobile {
+        font-size: 16px;
+    }
+
+    @include small-mobile {
+        font-size: 16px;
+    }
+
+    @include landscape {
+        font-size: 16px;
+    }
+}
+
 .form-cell date::placeholder {
     color: $grey-form-color;
     font-size: 20px;
 }
+
+.form-cell--task date::placeholder {
+    @include mobile {
+        font-size: 16px;
+    }
+
+    @include small-mobile {
+        font-size: 16px;
+
+    }
+}
+
 
 
 input.ng-invalid.ng-dirty,
@@ -692,33 +866,7 @@ input.ng-invalid.ng-touched {
 }
 
 .form-scroll {
-    flex: 1;
     overflow-y: auto;
-    min-height: 0;
-
-    &--task {
-        flex: 1;
-        min-height: 0;
-        overflow-y: auto;
-
-        display: flex;
-        justify-content: space-between;
-        gap: 48px;
-
-    }
-
-    &--edit {
-        flex: 1;
-        min-height: 0;
-        overflow-y: auto;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 48px;
-      
-
-    }
 
     @include mobile {
         max-height: calc(100dvh - 240px);
@@ -728,6 +876,56 @@ input.ng-invalid.ng-touched {
         margin-top: 30px;
         max-height: calc(100dvh - 240px);
     }
+
+    &--task {
+        justify-content: space-between;
+        // gap: 48px;
+        flex: 1;
+        min-height: 0;
+        display: flex;
+
+        @include mobile-tablet {
+            flex-direction: column;
+            // gap: 48px;
+            max-height: calc(100dvh - 360px);
+
+        }
+
+        @include small-mobile {
+            flex-direction: column;
+            max-height: calc(100dvh - 340px);
+        }
+
+         @include small-mobile-high {
+            flex-direction: column;
+             max-height: calc(100dvh - 360px);
+        }
+
+        @include widesscreen {
+            flex: unset;
+        }
+
+        @include landscape {
+            margin-top: 0px;
+            max-height: calc(100dvh - 245px);
+        }
+
+
+    }
+
+    &--edit {
+        display: flex;
+        flex-direction: column;
+        //  gap: 24px;
+        margin: 30px 0;
+
+             @include small-mobile {
+            flex-direction: column;
+            max-height: calc(100dvh - 200px);
+        }
+    }
+
+
 }
 
 .form-buttons {
@@ -754,10 +952,21 @@ input.ng-invalid.ng-touched {
         width: 100%;
         gap: 20px;
     }
+
+    &--task {
+        padding-top: 20px;
+
+        @include landscape {
+            position: fixed;
+            bottom: 85px;
+            width: 100%;
+            gap: 20px;
+        }
+    }
 }
 
 .form-error-placeholder {
-    height: 20px;
+    height: 15px;
     display: flex;
 }
 

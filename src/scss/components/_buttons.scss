@@ -26,6 +26,8 @@
 
   &:hover {
     background-color: $ligth-blue-color;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+
   }
 
   &:active {
@@ -80,19 +82,16 @@
 
 
 .btn-primary.btn-primary--mobil {
-  // width: 100%;
 
   @include small-mobile {
     font-size: 18px;
-    // width: 100%;
   }
 
   @include mobile-tablet {
-    // width: 100%;
+     font-size: 18px;
   }
 
   @include landscape {
-    // width: 100%;
     font-size: 18px;
   }
 }

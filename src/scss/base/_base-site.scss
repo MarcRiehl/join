@@ -10,6 +10,13 @@ html {
     box-sizing: border-box;
 }
 
+body.dialog-open {
+  overflow: hidden;
+  width: 100%;
+  touch-action: none;
+}
+
+
 #wrapper-join {
     width: 100%;
     // max-width: 1440px;

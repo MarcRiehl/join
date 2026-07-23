@@ -1,20 +1,35 @@
 @use '../abstract/' as *;
 
-
-:host {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-    height: 100%;
-}
-
-
 .add-tasks {
     display: flex;
     flex-direction: column;
     flex: 1;
-    min-height: 0;
     height: 100%;
+    min-height: 0;
+    width: 100%;
+
+    @include desktop-plus {
+        max-width: 60dvw;
+    }
+
+    @include widesscreen {
+        max-width: 50dvw;
+    }
+
+    @include tablet-high {
+        height: unset;
+    }
+
+
+    &--page {
+        @include tablet {
+            padding-top: 96px;
+        }
+
+        @include landscape {
+            padding-top: 80px;
+        }
+    }
 }
 
 
@@ -29,6 +44,17 @@
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+
+
+    @include mobile-tablet {
+        justify-content: flex-end;
+        width: 95%;
+    }
+
+    @include small-mobile {
+        justify-content: flex-end;
+        width: 90%;
+    }
 }
 
 .add-task-footer-required {
@@ -38,17 +64,58 @@
         color: $red-form-color;
         vertical-align: text-top;
     }
+
+    @include mobile-tablet {
+        display: none;
+    }
 }
 
 .content-add-task {
     padding: 48px;
+    display: flex;
+    flex: 1;
+    height: 100%;
+    min-height: 0;
+    width: 100%;
+    flex-direction: column;
+
+    @include tablet {
+        padding: 16px;
+    }
+
+    @include mobile {
+        padding: 8px;
+    }
+
+    @include landscape {
+        padding: 8px;
+    }
+
+    @include desktop-s {
+        padding: 48px 32px;
+    }
+
+
+
+
 }
 
 .add-task-stroke {
+    // border-left: 1px solid $grey-task-stroke;
+    // position: relative;
+    // z-index: 1;
+    background: $grey-task-stroke;
+    width: 1px;
     height: 100%;
-    border-left: 1px solid $grey-task-stroke;
-    position: relative;
-    z-index: 1;
+
+    @include desktop-s {
+        margin: 0 16px;
+      
+    }
+}
+
+.add-task-stroke-placeholder {
+    margin-bottom: 16px;
 }
 
 .form-cell-label label {
@@ -66,7 +133,11 @@
     }
 
     @include mobile {
-        font-size: 20px;
+        font-size: 16px;
+    }
+
+    @include landscape {
+        font-size: 16px;
     }
 }
 
@@ -75,7 +146,7 @@
     border-radius: 10px;
     border: 1px solid $grey-form-color;
     padding: 13px 40px 13px 21px;
-     font-size: 20px;
+    font-size: 20px;
 
     &:focus {
         border-color: $grey-form-blue;
@@ -91,13 +162,46 @@
         width: 100%;
     }
 
-    @include small-mobile {}
+    @include landscape {
+        width: 100%;
+    }
+}
+
+.form-cell--task textarea {
+    @include mobile {
+        font-size: 16px;
+    }
+
+    @include small-mobile {
+        font-size: 16px;
+
+    }
+
+    @include landscape {
+        font-size: 16px;
+    }
 }
 
 .form-cell textarea::placeholder {
     color: $grey-form-color;
-     font-size: 20px;
+    font-size: 20px;
 }
+
+.form-cell--task textarea::placeholder {
+    @include mobile {
+        font-size: 16px;
+    }
+
+    @include small-mobile {
+        font-size: 16px;
+    }
+
+    @include landscape {
+        font-size: 16px;
+    }
+
+}
+
 
 .proirity-wrapper {
     display: flex;
@@ -106,6 +210,10 @@
     gap: 8px;
     width: 100%;
     padding: 0 4px;
+
+    @include small-mobile {
+        gap: 4px;
+    }
 }
 
 .button-task-priority {
@@ -123,12 +231,43 @@
     align-items: center;
     justify-content: center;
 
+
+    @include mobile-tablet {
+        font-size: 16px;
+    }
+
+    @include mobile {
+        padding: 8px 12px;
+    }
+
+    @include desktop-s {
+        font-size: 16px;
+        padding: 12px 12px;
+    }
+
+    @include small-mobile {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
     &:hover {
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     }
 
     img {
         padding-left: 10px;
+
+        @include mobile {
+            width: 20px;
+            height: auto;
+            padding-left: 6px;
+        }
+
+        @include desktop-s {
+            width: 20px;
+            height: auto;
+            padding-left: 6px;
+        }
     }
 }
 
@@ -137,6 +276,18 @@
     color: $white;
     font-size: 21px;
     font-weight: bold;
+
+    @include mobile-tablet {
+        font-size: 16px;
+    }
+
+    @include desktop-s {
+        font-size: 16px;
+    }
+
+    @include small-mobile {
+        font-size: 14px;
+    }
 }
 
 .active-medium {
@@ -144,6 +295,18 @@
     color: $white;
     font-size: 21px;
     font-weight: bold;
+
+    @include mobile-tablet {
+        font-size: 16px;
+    }
+
+    @include desktop-s {
+        font-size: 16px;
+    }
+
+    @include small-mobile {
+        font-size: 14px;
+    }
 }
 
 .active-low {
@@ -151,6 +314,18 @@
     color: $white;
     font-size: 21px;
     font-weight: bold;
+
+    @include mobile-tablet {
+        font-size: 16px;
+    }
+
+    @include desktop-s {
+        font-size: 16px;
+    }
+
+    @include small-mobile {
+        font-size: 14px;
+    }
 }
 
 .input-date {
@@ -175,6 +350,10 @@ mat-datepicker-toggle {
 
 .mat-datepicker-content-container {
     background-color: $white !important;
+}
+
+.mat-calendar-body-disabled {
+    opacity: 0.35 !important;
 }
 
 .category-field {
@@ -210,6 +389,18 @@ mat-datepicker-toggle {
     box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
 
     overflow-y: auto;
+
+    @include small-mobile {
+        width: calc(100dvw - 19px);
+    }
+
+    @include tablet {
+        width: calc(100dvw - 48px);
+    }
+
+    @include mobile {
+        width: calc(100dvw - 32px);
+    }
 }
 
 .category-dropdown__item {

@@ -35,7 +35,7 @@
             <div class="task-view-assigned-to-list">
 
                 <span class="task-view-label">Assigned to:</span>
-
+  <div class="assigned-scroll">
                 @for (contactId of task.assignedContactIds; track contactId) {
 
                 @if (getContact(contactId); as contact) {
@@ -53,26 +53,27 @@
                 }
 
                 }
+                </div>
 
             </div>
         </div>
 
         @if (totalSubtasks > 0) {
         <div class="task-view-subtask">
-            <span class="task-view-assigned-to-label">Subtasks:</span>
+            <span class="task-view-label">Subtasks:</span>
+            <div class="subtask-scroll">
+                @for (subtask of task.subtasks; track $index) {
+                <div class="task-view-subtask-list">
+                    <button type="button" class="task-view-subtask-item" (click)="toggleSubtask($index)">
 
-            @for (subtask of task.subtasks; track $index) {
-            <div class="task-view-subtask-list">
-                <button type="button" class="task-view-subtask-item" (click)="toggleSubtask($index)">
-
-                    <img [src]="subtask.done
+                        <img [src]="subtask.done
                ? '/assets/img/components/task/subtask-checked.svg'
                 : '/assets/img/components/task/subtask-check.svg'" alt="">
-                    <div class="task-view-subtask-description">{{ subtask.title }}</div>
-                </button>
+                        <div class="task-view-subtask-description">{{ subtask.title }}</div>
+                    </button>
+                </div>
+                }
             </div>
-            }
-
         </div>
         }
     </div>
