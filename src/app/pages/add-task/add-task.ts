@@ -263,5 +263,4 @@ export class AddTask {
     this.initialSubtasks = [...task.subtasks];
     this.subtasks.set([...task.subtasks]);
   }
-
 }

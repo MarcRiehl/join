@@ -37,6 +37,7 @@ export class TaskDialog implements AfterViewInit {
 
 ngAfterViewInit(): void {
   this.dialog.nativeElement.showModal();
+  this.lockBodyScroll();
 
   requestAnimationFrame(() => {
     this.moveOverlayIntoDialog();
@@ -50,6 +51,7 @@ ngAfterViewInit(): void {
 
     this.isClosing = true;
     this.dialog.nativeElement.classList.add('closing');
+    this.unlockBodyScroll();
   }
 
   onCancel(event: Event): void {
@@ -99,4 +101,13 @@ private moveOverlayIntoDialog(): void {
       document.body.appendChild(container);
     }
   }
+
+    private lockBodyScroll(): void {
+    document.body.classList.add('dialog-open');
+  }
+
+  private unlockBodyScroll(): void {
+    document.body.classList.remove('dialog-open');
+  }
+
 }

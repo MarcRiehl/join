@@ -12,6 +12,15 @@
         max-width: 60dvw;
     }
 
+    @include widesscreen {
+        max-width: 50dvw;
+    }
+
+    @include tablet-high {
+        height: unset;
+    }
+
+
     &--page {
         @include tablet {
             padding-top: 96px;
@@ -42,7 +51,7 @@
         width: 95%;
     }
 
-        @include small-mobile {
+    @include small-mobile {
         justify-content: flex-end;
         width: 90%;
     }
@@ -82,13 +91,27 @@
         padding: 8px;
     }
 
+    @include desktop-s {
+        padding: 48px 32px;
+    }
+
+
+
 
 }
 
 .add-task-stroke {
-    border-left: 1px solid $grey-task-stroke;
-    position: relative;
-    z-index: 1;
+    // border-left: 1px solid $grey-task-stroke;
+    // position: relative;
+    // z-index: 1;
+    background: $grey-task-stroke;
+    width: 1px;
+    height: 100%;
+
+    @include desktop-s {
+        margin: 0 16px;
+      
+    }
 }
 
 .add-task-stroke-placeholder {
@@ -172,7 +195,8 @@
     @include small-mobile {
         font-size: 16px;
     }
-       @include landscape {
+
+    @include landscape {
         font-size: 16px;
     }
 
@@ -187,7 +211,7 @@
     width: 100%;
     padding: 0 4px;
 
-    @include small-mobile{
+    @include small-mobile {
         gap: 4px;
     }
 }
@@ -220,7 +244,8 @@
         font-size: 16px;
         padding: 12px 12px;
     }
-        @include small-mobile{
+
+    @include small-mobile {
         font-size: 14px;
         padding: 8px 16px;
     }
@@ -259,7 +284,8 @@
     @include desktop-s {
         font-size: 16px;
     }
-    @include small-mobile{
+
+    @include small-mobile {
         font-size: 14px;
     }
 }
@@ -277,7 +303,8 @@
     @include desktop-s {
         font-size: 16px;
     }
-        @include small-mobile{
+
+    @include small-mobile {
         font-size: 14px;
     }
 }
@@ -295,7 +322,8 @@
     @include desktop-s {
         font-size: 16px;
     }
-        @include small-mobile{
+
+    @include small-mobile {
         font-size: 14px;
     }
 }
@@ -325,7 +353,7 @@ mat-datepicker-toggle {
 }
 
 .mat-calendar-body-disabled {
-  opacity: 0.35 !important;
+    opacity: 0.35 !important;
 }
 
 .category-field {

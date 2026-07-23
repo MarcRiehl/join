@@ -22,6 +22,7 @@ dialog::backdrop {
     &--task {
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
         height: calc(100dvh - 50px);
+         height: fit-content;
     }
 
     &--task-view {
@@ -74,7 +75,7 @@ dialog::backdrop {
 
     }
     @include widesscreen{
-        height: calc(75dvh - 80px);
+        height: calc(60dvh - 80px);
     }
 }
 
@@ -391,7 +392,7 @@ dialog::backdrop {
             align-items: flex-start;
             justify-content: flex-start;
             // width: 100%;
-            width: 45%;
+            width: fit-content;
         }
 
 
@@ -436,7 +437,7 @@ dialog::backdrop {
             align-items: flex-start;
             justify-content: flex-start;
             // width: 100%;
-            width: 45%;
+            width: fit-content;
         }
 
         @include landscape {
@@ -521,7 +522,8 @@ dialog::backdrop {
     }
 
     @include small-mobile {
-        font-size: 36px;
+        font-size: 30px;
+        padding-right: 6px;
     }
 
     @include landscape {
@@ -764,7 +766,7 @@ dialog::backdrop {
 
     @include desktop-s {
         width: 100%;
-        max-width: 400px;
+        // max-width: 400px;
     }
 
     @include small-mobile {
@@ -891,7 +893,12 @@ input.ng-invalid.ng-touched {
 
         @include small-mobile {
             flex-direction: column;
-            max-height: calc(100dvh - 200px);
+            max-height: calc(100dvh - 340px);
+        }
+
+         @include small-mobile-high {
+            flex-direction: column;
+             max-height: calc(100dvh - 360px);
         }
 
         @include widesscreen {
@@ -911,6 +918,11 @@ input.ng-invalid.ng-touched {
         flex-direction: column;
         //  gap: 24px;
         margin: 30px 0;
+
+             @include small-mobile {
+            flex-direction: column;
+            max-height: calc(100dvh - 200px);
+        }
     }
 
 

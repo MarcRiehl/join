@@ -23,6 +23,10 @@
         width: calc(100% - 24px);
     }
 
+    @include desktop-s{
+     
+    }
+
 }
 
 .assigned-to__item {
