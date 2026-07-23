@@ -110,6 +110,7 @@ export class ContactService {
         user_lastname: contact.lastname,
         user_mail: contact.email,
         user_phone: contact.phone,
+        auth_user_id: contact.authUserId,
       })
       .select()
       .single();
