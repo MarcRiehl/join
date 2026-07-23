@@ -1,4 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
+import { User } from '@supabase/supabase-js';
 
 import { Contact } from '../../interfaces/contacts/contact';
 import { splitFullName } from '../../utils/name.util/name.util';
@@ -12,8 +13,7 @@ export class AuthService {
   private supabaseService = inject(SupabaseService);
   private contactService = inject(ContactService);
   isLoggedIn = signal<boolean>(false);
-
-  // signInAnonymously() erstellt einen anonymen user
+  currentUser = signal<User | null>(null);
 
   // -> signUp()
   // es kann eine URL angegeben werden, zu der der Benutzer weitergeleitet werden soll -> Summary!
@@ -95,25 +95,38 @@ export class AuthService {
     return true;
   }
 
-  // Aktuell eingeloggten Benutzer laden
-  // -> getUser()
+  /**
+   * Loads the currently logged-in user from Supabase and updates the `currentUser` signal.
+   *
+   * @returns void
+   */
+  async getUser(): Promise<void> {
+    const {
+      data: { user },
+    } = await this.supabaseService.supabase.auth.getUser();
 
-  //  Danach PR -- und Auth Guard machen
+    this.currentUser.set(user);
+  }
 
-  // Session abrufen
-  // -> getSession()
-  // Passwort zurücksetzen
-  // -> resetPassword()
-  // Passwort ändern
-  // -> updateUser()
-  // Prüfen, ob ein Benutzer eingeloggt ist
-  // Auth-Status beobachten
-  // Benutzer abmelden
-  // -> signOut()
-  // Aktuell eingeloggten Benutzer laden
-  // -> getUser()
-  // Session abrufen
-  // -> getSession()
+  /**
+   * Signs in a user anonymously via Supabase (guest access without an account).
+   * Sets the `isLoggedIn` and `currentUser` signals on successful sign-in.
+   *
+   * @returns true if sign-in was successful, false otherwise
+   */
+  async signInAnonymously(): Promise<boolean> {
+    const {
+      data: { user },
+      error,
+    } = await this.supabaseService.supabase.auth.signInAnonymously({});
+    if (error) {
+      return false;
+    }
+    this.isLoggedIn.set(true);
+    this.currentUser.set(user);
+    return true;
+  }
+
   // Passwort zurücksetzen
   // -> resetPassword()
   // Passwort ändern
