@@ -13,6 +13,7 @@
       <input
         type="date"
         formControlName="dueDate"
+        [min]="minDate"
         [class.input-error]="dueDateControl?.invalid && dueDateControl?.touched"
       />
       <div class="error-space">
