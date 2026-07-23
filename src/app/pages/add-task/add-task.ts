@@ -42,7 +42,7 @@ export class AddTask {
   subtasksComponent = viewChild(Subtasks);
   assignedToComponent = viewChild(AssignedTo);
   private toastService = inject(ToastService);
-  today = new Date();
+
 
   addTaskForm = new FormGroup({
     title: new FormControl('', Validators.required),
