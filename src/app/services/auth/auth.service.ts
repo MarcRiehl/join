@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 
 import { Contact } from '../../interfaces/contacts/contact';
 import { splitFullName } from '../../utils/name.util/name.util';
@@ -11,11 +11,9 @@ import { SupabaseService } from '../supabase/supabase.service';
 export class AuthService {
   private supabaseService = inject(SupabaseService);
   private contactService = inject(ContactService);
+  isLoggedIn = signal<boolean>(false);
 
   // signInAnonymously() erstellt einen anonymen user
-
-  // Benutzer registrieren
-  // with mail and password!
 
   // -> signUp()
   // es kann eine URL angegeben werden, zu der der Benutzer weitergeleitet werden soll -> Summary!
@@ -56,20 +54,52 @@ export class AuthService {
     return true;
   }
 
-  // ---cut---
-  async signInWithEmail() {
-    const { data, error } = await this.supabaseService.supabase.auth.signInWithPassword({
-      email: 'valid.email@supabase.io',
-      password: 'example-password',
+  /**
+   * Signs in a user with email and password via Supabase.
+   * Sets the `isLoggedIn` signal to true on successful login.
+   *
+   * @param email - The user's email address
+   * @param password - The user's password
+   * @returns true if login was successful, false if credentials were invalid
+   */
+  async signIn(email: string, password: string): Promise<boolean> {
+    const { error } = await this.supabaseService.supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
     });
+
+    if (error) {
+      console.log(error.message);
+      return false;
+    }
+
+    this.isLoggedIn.set(true);
+    return true;
   }
 
-  // Benutzer anmelden
-  // -> signInWithPassword()
-  // Benutzer abmelden
-  // -> signOut()
+  /**
+   * Signs out the currently logged-in user via Supabase.
+   * Sets the `isLoggedIn` signal to false on successful sign-out.
+   *
+   * @returns true if sign-out was successful, false otherwise
+   */
+  async signOut(): Promise<boolean> {
+    const { error } = await this.supabaseService.supabase.auth.signOut();
+
+    if (error) {
+      console.log(error.message);
+      return false;
+    }
+
+    this.isLoggedIn.set(false);
+    return true;
+  }
+
   // Aktuell eingeloggten Benutzer laden
   // -> getUser()
+
+  //  Danach PR -- und Auth Guard machen
+
   // Session abrufen
   // -> getSession()
   // Passwort zurücksetzen
