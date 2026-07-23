@@ -58,8 +58,6 @@ dialog::backdrop {
         bottom: 80px;
         animation: dialogInMobile 250ms ease-out forwards;
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
-
-
     }
 
     @include tablet {
@@ -74,6 +72,9 @@ dialog::backdrop {
         top: 0;
         bottom: 80px;
 
+    }
+    @include widesscreen{
+        height: calc(75dvh - 80px);
     }
 }
 
@@ -508,6 +509,7 @@ dialog::backdrop {
     font-weight: bold;
     font-size: 61px;
     color: $white;
+    word-break: break-all;
 
 
     @include tablet {

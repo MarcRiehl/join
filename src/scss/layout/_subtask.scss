@@ -142,3 +142,33 @@
     width: 100%;
     padding: 4px 16px;
 }
+
+.subtasks{
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.subtasks-wrapper{
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    max-height: 250px;;
+    
+
+      app-subtasks {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+  }
+}
+
+.subtask-scroll {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column;
+    max-height: 200px;
+}
