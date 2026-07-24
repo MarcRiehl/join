@@ -5,13 +5,16 @@ import { AuthService } from '../../services/auth/auth.service';
 
 export const authGuard: CanActivateFn = async (route, state) => {
   const authService = inject(AuthService);
-  const router = inject(Router);
+  const router = inject(Router); // ist ein Service von Angular!
+  // Der Router wird benötigt, wenn eine nicht angemeldete Person umgeleitet werden soll!
+  //  createUrlTree() beschreibt das Ziel der Umleitung
+  //  return router.createUrlTree(['/summary'])
 
-  // hier musst du jetzt selbst überlegen:
-  // 1. getUser() aufrufen und warten
-  // 2. danach isLoggedIn() (oder currentUser()) prüfen
-  // 3. bei true → true zurückgeben
-  // 4. bei false → router.createUrlTree(['/login']) zurückgeben
+  await authService.getUser();
 
-  return true;
+  if (authService.currentUser()) {
+    return true;
+  }
+
+  return router.createUrlTree(['/login']);
 };
