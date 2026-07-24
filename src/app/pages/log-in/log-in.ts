@@ -14,18 +14,39 @@ export class LogIn {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  addLoginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required),
+  loginForm = new FormGroup({
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
   });
 
   // for Log-In Button:
+  /**
+   * Attempts to sign in the user using the values from the login form.
+   * Navigates to the summary page if the login was successful.
+   *
+   * @returns A promise that resolves when the login process has finished.
+   */
+  async onSubmit(): Promise<void> {
+    if (this.loginForm.invalid) {
+      return;
+    }
 
-  async onSubmit(email: string, password: string): Promise<void> {
+    const email = this.loginForm.controls.email.value;
+    const password = this.loginForm.controls.password.value;
+
     const loginSuccessful = await this.authService.signIn(email, password);
 
-    if (loginSuccessful) {
-      await this.router.navigate(['/summary']);
+    if (!loginSuccessful) {
+      // Fehlermeldung anzeigen
+      return;
     }
+
+    await this.router.navigate(['/summary']);
   }
 }
