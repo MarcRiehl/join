@@ -9,4 +9,17 @@ import { AuthService } from '../../services/auth/auth.service';
   templateUrl: './log-in.html',
   styleUrl: './log-in.scss',
 })
-export class LogIn {}
+export class LogIn {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  // for Log-In Button:
+
+  async onSubmit(email: string, password: string): Promise<void> {
+    const loginSuccessful = await this.authService.signIn(email, password);
+
+    if (loginSuccessful) {
+      await this.router.navigate(['/summary']);
+    }
+  }
+}
