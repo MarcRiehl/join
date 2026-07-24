@@ -3,12 +3,15 @@ import { CanActivateFn, Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth/auth.service';
 
+/**
+ * Protects routes by allowing access only to authenticated users.
+ * Redirects unauthenticated users to the login page.
+ *
+ * @returns `true` for authenticated users, otherwise a redirect to `/login`.
+ */
 export const authGuard: CanActivateFn = async (route, state) => {
   const authService = inject(AuthService);
-  const router = inject(Router); // ist ein Service von Angular!
-  // Der Router wird benötigt, wenn eine nicht angemeldete Person umgeleitet werden soll!
-  //  createUrlTree() beschreibt das Ziel der Umleitung
-  //  return router.createUrlTree(['/summary'])
+  const router = inject(Router);
 
   await authService.getUser();
 

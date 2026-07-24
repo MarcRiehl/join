@@ -30,7 +30,7 @@ export const routes: Routes = [
     title: 'Sign-Up',
   },
   {
-    path: '', //leer da noch kein Login
+    path: '',
     component: MainPage,
     children: [
       {
@@ -82,6 +82,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: '',
   },
 ];
